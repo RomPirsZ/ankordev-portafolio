@@ -12,7 +12,7 @@
 - [x] T05 `BaseLayout`, `Nav`, `Footer` (con reloj de Caracas) y `ThemeSwitcher`
 - [x] T06 Test e2e: el tema cambia y persiste al recargar
 - [x] T07 [P] `vercel.json` con cabeceras, `.env.example`, `.gitignore`
-- [ ] T08 [P] `ci.yml` y `dependabot.yml`
+- [x] T08 [P] `ci.yml` y `dependabot.yml`
 - [ ] T09 Conectar repo a Vercel y verificar despliegue
 
 **Hecho cuando:** sitio en línea, CI en verde, T06 pasa.
