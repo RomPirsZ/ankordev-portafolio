@@ -10,7 +10,7 @@
 - [x] T03 `global.css` con tokens de los 4 temas + script anti-parpadeo en `<head>`
 - [x] T04 Fuentes con `@fontsource` y escala tipográfica fluida
 - [x] T05 `BaseLayout`, `Nav`, `Footer` (con reloj de Caracas) y `ThemeSwitcher`
-- [ ] T06 Test e2e: el tema cambia y persiste al recargar
+- [x] T06 Test e2e: el tema cambia y persiste al recargar
 - [ ] T07 [P] `vercel.json` con cabeceras, `.env.example`, `.gitignore`
 - [ ] T08 [P] `ci.yml` y `dependabot.yml`
 - [ ] T09 Conectar repo a Vercel y verificar despliegue
