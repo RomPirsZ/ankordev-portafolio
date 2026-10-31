@@ -1,0 +1,55 @@
+---
+import ThemeSwitcher from './ThemeSwitcher.astro';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** URL de esta página en el otro idioma; sin ella no se muestra el cambio de idioma */
+  altHref?: string | undefined;
+}
+
+const { lang, altHref } = Astro.props;
+const t = useTranslations(lang);
+const home = lang === 'es' ? '/' : '/en/';
+
+const links = [
+  { href: `${home}#proyectos`, label: t('nav.projects') },
+  { href: `${home}#servicios`, label: t('nav.services') },
+  { href: `${home}#sobre-mi`, label: t('nav.about') },
+  { href: `${home}#contacto`, label: t('nav.contact') },
+];
+---
+
+<header class="border-b border-line">
+  <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-4 sm:px-6">
+    <a href={home} class="text-lg font-bold tracking-tight">
+      {t('site.brand')}<span class="sr-only"> — {t('nav.home')}</span>
+    </a>
+
+    <nav aria-label={t('nav.label')} class="order-last w-full sm:order-none sm:w-auto">
+      <ul class="flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-wider">
+        {
+          links.map((link, i) => (
+            <li>
+              <a href={link.href} class="inline-block py-1 hover:underline">
+                <span class="text-muted" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span> {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <ThemeSwitcher lang={lang} />
+      {
+        altHref && (
+          <a href={altHref} hreflang={lang === 'es' ? 'en' : 'es'} class="font-mono text-xs uppercase tracking-wider hover:underline">
+            <span aria-hidden="true">{lang === 'es' ? 'EN' : 'ES'}</span>
+            <span class="sr-only">{t('nav.lang')}</span>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</header>

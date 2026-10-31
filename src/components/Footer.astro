@@ -1,0 +1,64 @@
+---
+import { SOCIALS } from '../lib/site';
+import { formatCaracasTime } from '../lib/clock';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const socials = SOCIALS.filter((social) => social.url);
+---
+
+<footer class="border-t border-line">
+  <div class="mx-auto grid max-w-7xl gap-6 px-4 py-8 font-mono text-xs uppercase tracking-wider sm:grid-cols-3 sm:px-6">
+    <p>
+      <span class="text-muted">{t('footer.clock')}</span>
+      <!-- Sin JS queda la hora del build; el script la mantiene al día -->
+      <time class="block text-base tabular-nums" data-clock data-lang={lang}>
+        {formatCaracasTime(new Date(), lang).slice(0, 5)} UTC−4
+      </time>
+    </p>
+
+    {
+      socials.length > 0 && (
+        <nav aria-label={t('footer.social')}>
+          <ul class="flex flex-wrap gap-4">
+            {socials.map((social) => (
+              <li>
+                <a href={social.url} rel="me noopener" class="hover:underline">
+                  {social.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+
+    <p class="sm:col-start-3 sm:text-right">
+      {t('footer.madeIn')} · © {new Date().getFullYear()} {t('site.brand')}
+    </p>
+  </div>
+</footer>
+
+<script>
+  import { formatCaracasTime } from '../lib/clock';
+
+  const clocks = document.querySelectorAll<HTMLTimeElement>('[data-clock]');
+
+  function tick() {
+    const now = new Date();
+    clocks.forEach((clock) => {
+      clock.textContent = `${formatCaracasTime(now, clock.dataset['lang'] === 'en' ? 'en' : 'es')} UTC−4`;
+      clock.dateTime = now.toISOString();
+    });
+  }
+
+  if (clocks.length) {
+    tick();
+    setInterval(tick, 1000);
+  }
+</script>

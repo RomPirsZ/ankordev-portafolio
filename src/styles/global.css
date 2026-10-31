@@ -103,3 +103,12 @@
     outline-offset: 3px;
   }
 }
+
+/* Retícula fina de laboratorio (decorativa) */
+.lab-grid {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  background-position: center top;
+}

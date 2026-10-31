@@ -1,0 +1,68 @@
+---
+import { THEMES } from '../lib/themes';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const t = useTranslations(Astro.props.lang);
+---
+
+<!-- Sin JS no puede funcionar, así que nace oculto y el script lo muestra -->
+<div class="theme-switcher flex items-center gap-1.5" role="group" aria-label={t('theme.label')} hidden>
+  {
+    THEMES.map((theme) => (
+      <button
+        type="button"
+        class="swatch size-6 rounded-full border-2 border-fg"
+        data-theme-value={theme}
+        aria-pressed="false"
+        title={t(`theme.${theme}`)}
+      >
+        <span class="sr-only">{t(`theme.${theme}`)}</span>
+      </button>
+    ))
+  }
+</div>
+
+<style>
+  .swatch[data-theme-value='carbon'] { background: #2b2d31; }
+  .swatch[data-theme-value='naranja'] { background: #f2711c; }
+  .swatch[data-theme-value='petroleo'] { background: #1f6f8b; }
+  .swatch[data-theme-value='militar'] { background: #5b6b3a; }
+
+  .swatch[aria-pressed='true'] {
+    outline: 2px solid var(--fg);
+    outline-offset: 2px;
+  }
+</style>
+
+<script>
+  import { DEFAULT_THEME, THEME_STORAGE_KEY, isTheme } from '../lib/themes';
+
+  const root = document.documentElement;
+
+  function sync() {
+    const current = root.dataset['theme'] ?? DEFAULT_THEME;
+    document.querySelectorAll<HTMLButtonElement>('[data-theme-value]').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset['themeValue'] === current));
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('.theme-switcher').forEach((group) => {
+    group.hidden = false;
+    group.addEventListener('click', (event) => {
+      const button = (event.target as Element).closest<HTMLButtonElement>('[data-theme-value]');
+      const theme = button?.dataset['themeValue'];
+      if (!isTheme(theme)) return;
+      root.dataset['theme'] = theme;
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, theme);
+      } catch {}
+      sync();
+    });
+  });
+
+  sync();
+</script>

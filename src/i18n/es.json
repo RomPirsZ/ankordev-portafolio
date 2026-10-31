@@ -1,0 +1,20 @@
+{
+  "site.brand": "{{MARCA}}",
+  "site.title": "{{MARCA}} — Diseño y desarrollo web",
+  "nav.label": "Principal",
+  "nav.skip": "Saltar al contenido",
+  "nav.home": "Inicio",
+  "nav.projects": "Proyectos",
+  "nav.services": "Servicios",
+  "nav.about": "Sobre mí",
+  "nav.contact": "Contacto",
+  "nav.lang": "English",
+  "theme.label": "Tema de color",
+  "theme.carbon": "Carbón",
+  "theme.naranja": "Naranja",
+  "theme.petroleo": "Petróleo",
+  "theme.militar": "Militar",
+  "footer.clock": "Hora en Caracas",
+  "footer.madeIn": "Hecho en Venezuela",
+  "footer.social": "Redes"
+}

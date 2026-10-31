@@ -1,13 +1,19 @@
 ---
 import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 import { DEFAULT_THEME, THEMES, THEME_STORAGE_KEY } from '../lib/themes';
+import { useTranslations, type Lang } from '../i18n/utils';
 
 interface Props {
   title: string;
-  lang?: 'es' | 'en';
+  lang?: Lang;
+  /** URL equivalente en el otro idioma */
+  altHref?: string;
 }
 
-const { title, lang = 'es' } = Astro.props;
+const { title, lang = 'es', altHref } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <html lang={lang} data-theme={DEFAULT_THEME}>
@@ -23,7 +29,17 @@ const { title, lang = 'es' } = Astro.props;
       } catch {}
     </script>
   </head>
-  <body class="min-h-dvh bg-bg text-fg">
-    <slot />
+  <body class="lab-grid flex min-h-dvh flex-col bg-bg text-fg">
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:px-4 focus:py-2 focus:text-on-accent"
+    >
+      {t('nav.skip')}
+    </a>
+    <Nav lang={lang} altHref={altHref} />
+    <main id="contenido" tabindex="-1" class="flex-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
   </body>
 </html>
