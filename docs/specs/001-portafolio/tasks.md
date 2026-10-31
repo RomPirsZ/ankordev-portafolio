@@ -6,7 +6,7 @@
 ## Fase 1 — Base (objetivo: 2 nov)
 
 - [x] T01 Crear proyecto Astro 5 con TypeScript estricto, Tailwind 4 y `@astrojs/vercel`
-- [ ] T02 Configurar Vitest y Playwright; script `npm test`
+- [x] T02 Configurar Vitest y Playwright; script `npm test`
 - [ ] T03 `global.css` con tokens de los 4 temas + script anti-parpadeo en `<head>`
 - [ ] T04 Fuentes con `@fontsource` y escala tipográfica fluida
 - [ ] T05 `BaseLayout`, `Nav`, `Footer` (con reloj de Caracas) y `ThemeSwitcher`
