@@ -1,0 +1,29 @@
+---
+import '../styles/global.css';
+import { DEFAULT_THEME, THEMES, THEME_STORAGE_KEY } from '../lib/themes';
+
+interface Props {
+  title: string;
+  lang?: 'es' | 'en';
+}
+
+const { title, lang = 'es' } = Astro.props;
+---
+
+<html lang={lang} data-theme={DEFAULT_THEME}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <!-- Aplica el tema guardado antes del primer pintado (evita parpadeo) -->
+    <script is:inline define:vars={{ themes: THEMES, key: THEME_STORAGE_KEY }}>
+      try {
+        const saved = localStorage.getItem(key);
+        if (themes.includes(saved)) document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
+  </head>
+  <body class="min-h-dvh bg-bg text-fg">
+    <slot />
+  </body>
+</html>

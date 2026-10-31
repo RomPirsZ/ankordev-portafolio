@@ -1,1 +1,83 @@
 @import 'tailwindcss';
+
+/*
+  Temas (spec §6). Reglas de contraste (constitución III):
+  - --fg y --muted son texto: ≥ 4.5:1 sobre --bg y --surface.
+  - --accent es relleno/decoración. Para texto con color de acento usar
+    --accent-ink (solo sobre --bg). En petróleo y militar el naranja no
+    llega a AA como texto, así que --accent-ink = --fg.
+  - Texto sobre un relleno de acento: --on-accent.
+  - --line es decorativo (retícula, divisores); no sirve como borde de control.
+*/
+:root,
+[data-theme='carbon'] {
+  --bg: #2b2d31;
+  --surface: #3a3d43;
+  --fg: #f3f1ec;
+  --muted: #b7b6b4;
+  --accent: #f2711c;
+  --accent-ink: #f2711c;
+  --on-accent: #1e1f22;
+}
+
+[data-theme='naranja'] {
+  --bg: #f2711c;
+  --surface: #e0631a;
+  --fg: #1e1f22;
+  --muted: #1e1f22;
+  --accent: #1e1f22;
+  --accent-ink: #1e1f22;
+  --on-accent: #f3f1ec;
+}
+
+[data-theme='petroleo'] {
+  --bg: #1f6f8b;
+  --surface: #195c73;
+  --fg: #f3f1ec;
+  --muted: #f3f1ec;
+  --accent: #f2711c;
+  --accent-ink: #f3f1ec;
+  --on-accent: #1e1f22;
+}
+
+[data-theme='militar'] {
+  --bg: #5b6b3a;
+  --surface: #4c5a30;
+  --fg: #f3f1ec;
+  --muted: #f3f1ec;
+  --accent: #f2711c;
+  --accent-ink: #f3f1ec;
+  --on-accent: #1e1f22;
+}
+
+:root {
+  --line: color-mix(in srgb, var(--fg) 18%, transparent);
+  color-scheme: dark;
+}
+
+[data-theme='naranja'] {
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-on-accent: var(--on-accent);
+  --color-line: var(--line);
+}
+
+@layer base {
+  html {
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 3px;
+  }
+}

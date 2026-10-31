@@ -59,7 +59,11 @@ CLAUDE.md          → instrucciones para el agente (apunta a docs/)
 
 ## 4. Temas
 
-Variables CSS en `global.css` por `[data-theme="carbon|naranja|petroleo|militar"]` con `--bg`, `--surface`, `--fg`, `--accent`, `--muted`, `--line`. Tailwind 4 las expone con `@theme`. Un script inline mínimo en `<head>` aplica el tema guardado antes del primer pintado (evita parpadeo); acceso a `localStorage` dentro de try/catch.
+Variables CSS en `global.css` por `[data-theme="carbon|naranja|petroleo|militar"]` con `--bg`, `--surface`, `--fg`, `--accent`, `--accent-ink`, `--on-accent`, `--muted`, `--line`. Tailwind 4 las expone con `@theme`.
+
+**Contraste (decisión 2026-10-30):** el acento `#F2711C` no alcanza AA como texto sobre Petróleo (1.93:1) ni Militar (1.98:1). Se mantiene la paleta de la spec y el acento se usa solo como relleno o decoración. Tokens extra: `--accent-ink` (texto con color de acento, solo sobre `--bg`; en Petróleo y Militar = `--fg`) y `--on-accent` (texto sobre relleno de acento). `--line` es decorativo. `tests/unit/themes.test.ts` verifica los ratios.
+
+Un script inline mínimo en `<head>` aplica el tema guardado antes del primer pintado (evita parpadeo); acceso a `localStorage` dentro de try/catch.
 
 ## 5. Contenido de proyectos
 
