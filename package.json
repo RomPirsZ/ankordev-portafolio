@@ -14,11 +14,11 @@
     "test": "npm run test:unit && npm run test:e2e"
   },
   "dependencies": {
-    "@astrojs/vercel": "9.0.5",
+    "@astrojs/vercel": "11.0.17",
     "@fontsource-variable/jetbrains-mono": "5.3.0",
     "@fontsource-variable/space-grotesk": "5.3.0",
     "@tailwindcss/vite": "4.3.3",
-    "astro": "5.18.2",
+    "astro": "7.4.4",
     "tailwindcss": "4.3.3"
   },
   "devDependencies": {
@@ -29,6 +29,11 @@
     "vitest": "5.0.5"
   },
   "overrides": {
-    "vite": "6.4.5"
+    "@vercel/routing-utils": {
+      "path-to-regexp": "6.3.0"
+    },
+    "@vercel/cli-config": {
+      "zod": "4.6.7"
+    }
   }
 }

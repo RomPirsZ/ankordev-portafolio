@@ -16,9 +16,9 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
   ],
-  // Se prueba el build real, no el servidor de desarrollo
+  // Se prueba el build real, no el servidor de desarrollo. En CI el build es un paso previo.
   webServer: {
-    command: `npm run build && npx astro preview --port ${PORT}`,
+    command: `${process.env['CI'] ? '' : 'npm run build && '}npx astro preview --ignore-lock --port ${PORT}`,
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env['CI'],
     timeout: 120_000,

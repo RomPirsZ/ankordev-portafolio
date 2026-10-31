@@ -19,11 +19,13 @@
 | IX. Bilingüe | Textos en `src/i18n/es.json` y `en.json`; rutas `/` y `/en/` |
 | X. Privacidad | Solo 5 campos en el formulario, aviso de uso, sin trackers (Vercel Analytics opcional) |
 
+**Cambio 2026-10-30:** el plan original fijaba Astro 5, pero esa rama tiene vulnerabilidades críticas sin parche (corregidas en `astro >7.3.1`) y `npm audit --audit-level=high` falla. Se migra a Astro 7.4.4 + `@astrojs/vercel` 11. Dos dependencias transitivas de `@astrojs/vercel` se suben dentro de su mismo major con `overrides` (`path-to-regexp` 6.3.0, `zod` 4.6.7). Quedan avisos moderados en `glob`/`minimatch`, que solo se usan al construir.
+
 **Excepción justificada:** el rate limit en memoria se reinicia entre instancias de la función. Se acepta en v1 porque Turnstile es la defensa principal y el tráfico esperado es bajo.
 
 ## 2. Stack
 
-- **Astro 5** + `@astrojs/vercel` (todo prerenderizado salvo `/api/contact`, con `export const prerender = false`)
+- **Astro 7** + `@astrojs/vercel` (todo prerenderizado salvo `/api/contact`, con `export const prerender = false`)
 - **Tailwind CSS 4**
 - **GSAP** (core, ScrollTrigger, SplitText) + **Lenis**
 - **Supabase** (solo tabla `leads`)
