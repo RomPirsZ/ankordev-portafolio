@@ -22,8 +22,8 @@ function contrast(a: string, b: string): number {
 }
 
 describe('temas', () => {
-  it('hay exactamente dos temas: Carbón (por defecto) y Naranja', () => {
-    expect(THEMES).toEqual(['carbon', 'naranja']);
+  it('hay exactamente dos temas: oscuro (por defecto) y claro', () => {
+    expect(THEMES).toEqual(['oscuro', 'claro']);
   });
 
   it.each(THEMES)('%s define todos los tokens', (theme) => {
@@ -44,7 +44,8 @@ describe('temas', () => {
   });
 
   it('isTheme acepta solo temas conocidos', () => {
-    expect(isTheme('naranja')).toBe(true);
+    expect(isTheme('claro')).toBe(true);
+    expect(isTheme('naranja')).toBe(false);
     expect(isTheme('petroleo')).toBe(false);
     expect(isTheme('rosa')).toBe(false);
     expect(isTheme(null)).toBe(false);

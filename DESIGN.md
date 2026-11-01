@@ -6,9 +6,13 @@ colors:
   carbon-surface: "#3A3D43"
   ceniza: "#B7B6B4"
   naranja: "#F2711C"
-  naranja-surface: "#E0631A"
   hueso: "#F3F1EC"
+  hueso-surface: "#E7E2D9"
   tinta: "#1E1F22"
+  noche: "#202A45"
+  noche-honda: "#141B31"
+  noche-marina: "#1A3253"
+  blanco: "#FFFFFF"
 typography:
   display:
     fontFamily: "Space Grotesk Variable, ui-sans-serif, system-ui, sans-serif"
@@ -52,9 +56,10 @@ components:
     textColor: "{colors.hueso}"
     typography: "{typography.label}"
     padding: "4px 0"
-  theme-swatch:
-    rounded: "{rounded.full}"
-    size: "24px"
+  theme-toggle:
+    textColor: "{colors.hueso}"
+    rounded: "{rounded.none}"
+    size: "32px"
   footer-clock:
     textColor: "{colors.hueso}"
     typography: "{typography.label}"
@@ -73,44 +78,48 @@ La densidad es baja y ordenada: mucho fondo, líneas de 1 px, tipografía grande
 Lo que el sitio rechaza: la plantilla SaaS genérica (gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features»), el ruido de efectos (animación porque sí, glitch constante), lo corporativo frío (fotos de stock de oficina, azul de agencia) y el cliché cyberpunk (verde Matrix, glow neón, terminal falsa).
 
 **Key Characteristics:**
-- Dos temas de color, Carbón y Naranja, que cambian el fondo completo; el visitante elige y el sitio lo recuerda.
-- Fondo de gradiente en los colores del tema: animado en escritorio (WebGL), estático en móvil y con reduced-motion. Es la única animación ambiental.
+- Dos temas, Oscuro y Claro, que cambian el fondo completo; el visitante elige con un interruptor y el sitio lo recuerda.
+- Fondo de gradiente con grano fino: azul noche en el oscuro, blanco y naranja en el claro. Animado en escritorio (WebGL), estático en móvil y con reduced-motion. Es la única animación ambiental.
 - Retícula de 64 px como papel de fondo, siempre decorativa.
 - Display enorme y apretado en Space Grotesk; anotaciones en Monaspace Krypton, mayúsculas y espaciadas.
-- Esquinas rectas en todo; el círculo solo para muestras de color e indicadores.
+- Esquinas rectas en todo; el círculo solo para indicadores de estado.
 - Plano en reposo; la sombra solo aparece como respuesta a un estado.
 - Mezcla sólido + fino: el CTA principal es un bloque sólido y táctil, todo lo demás es línea fina y texto.
 
 ## Colors
 
-Dos ambientes completos, uno oscuro y uno encendido, construidos con dos tintas fijas (Hueso y Tinta) y un acento Naranja que funciona como señal, no como decoración general.
+Dos ambientes completos, uno de noche y uno de día, construidos con dos tintas fijas (Hueso y Tinta) y un acento Naranja que funciona como señal, no como decoración general.
 
 ### Primary
-- **Naranja** (`naranja`): el acento de marca. En Carbón es el relleno del CTA principal, el enlace de salto y los marcadores de estado; en el tema Naranja es el fondo completo. Como texto, solo en Carbón y sobre `--bg` (4.65:1).
-- **Naranja superficie** (`naranja-surface`): la superficie del tema Naranja (paneles, tarjetas).
+- **Naranja** (`naranja`): el acento de marca. En el oscuro es el relleno del CTA principal, el enlace de salto y los marcadores de estado; como texto, solo ahí y sobre `--bg` (4.65:1). En el claro vive en el fondo, como color del gradiente, y no se usa como relleno: se perdería sobre él.
 
 ### Neutral
-- **Carbón** (`carbon`): fondo del tema por defecto.
-- **Carbón superficie** (`carbon-surface`): superficies elevadas por tono en Carbón.
-- **Hueso** (`hueso`): texto principal en Carbón; texto sobre relleno de acento en el tema Naranja.
-- **Tinta** (`tinta`): texto principal en el tema Naranja; texto sobre relleno Naranja en Carbón.
-- **Ceniza** (`ceniza`): texto secundario (`--muted`) solo en Carbón. En Naranja `--muted` es igual a `--fg`.
+- **Carbón** (`carbon`): `--bg` del tema oscuro (detrás del gradiente y en lo que se pinte con el rol).
+- **Carbón superficie** (`carbon-surface`): superficies elevadas por tono en el oscuro.
+- **Hueso** (`hueso`): texto principal en el oscuro; `--bg` del claro y texto sobre relleno de acento en él.
+- **Hueso superficie** (`hueso-surface`): superficies elevadas por tono en el claro.
+- **Tinta** (`tinta`): texto principal, secundario y acento en el claro; texto sobre relleno Naranja en el oscuro.
+- **Ceniza** (`ceniza`): texto secundario (`--muted`) solo en el oscuro. En el claro `--muted` es Tinta, porque también va sobre el naranja del fondo.
 - **Línea** (derivada: `--fg` al 18 % sobre transparente): retícula y divisores. Es decorativa; nunca sirve como borde de un control.
 
 ### Fondo
+- **Noche** (`noche`), **Noche honda** (`noche-honda`) y **Noche marina** (`noche-marina`): el gradiente del oscuro. Azules casi negros y saturados; los grises neutros salían marrones al iluminarse.
+- **Blanco** (`blanco`), **Naranja** y **Hueso**: el gradiente del claro.
 
-Cada tema tiene un fondo de gradiente (`src/lib/gradient.ts`, `--grad-1/2/3`). En escritorio, ShaderGradient lo anima en WebGL: Carbón se ilumina con el HDR `city` y queda carbón con reflejos marinos y cobrizos; Naranja con `lobby` y queda en el naranja de la marca. En móvil, con reduced-motion o sin WebGL, es un gradiente CSS estático con los mismos colores. La retícula va encima del fondo y el contenido encima de todo.
+Cada tema tiene un fondo de gradiente (`src/lib/gradient.ts`, `--grad-1/2/3`) en una capa fija detrás de todo (`.gradient-bg`). En escritorio, ShaderGradient lo anima en WebGL con luz «3d», que respeta los colores (la luz de entorno los teñía: el oscuro salía marrón y el blanco amarillento). En móvil, con reduced-motion o sin WebGL, es un gradiente CSS estático con los mismos colores. Encima, en los dos casos, un grano fino de ruido SVG en mezcla `soft-light` (al 75 % en el oscuro, al 100 % en el claro), al estilo de shadergradient.co. La retícula va encima del fondo y el contenido encima de todo.
 
-**The Ambient-Exception Rule.** El fondo es la única animación que no guía la lectura (constitución II 1.2.0). Nada más se mueve «porque sí», y el texto cumple AA sobre cualquier punto del fondo: Carbón ≤ 0,063 de luminancia, Naranja ≥ 0,236, medido en píxeles por el e2e.
+**The Ambient-Exception Rule.** El fondo es la única animación que no guía la lectura (constitución II 1.2.0). Nada más se mueve «porque sí», y el texto cumple AA sobre cualquier punto del fondo, grano incluido: oscuro ≤ 0,063 de luminancia, claro ≥ 0,236, medido en píxeles por el e2e en escritorio y en móvil.
+
+**The Night-Not-Agency Rule.** El azul noche es fondo, casi negro, y nunca sale de ahí: ni acento, ni relleno, ni texto. Un azul saturado de agencia en un botón o un enlace sigue prohibido.
 
 ### Roles por tema
 
 Los componentes nunca usan un color de tema directamente: usan los roles (`--bg`, `--surface`, `--fg`, `--muted`, `--accent`, `--on-accent`, `--line`), que `src/styles/global.css` resuelve por `[data-theme]` y Tailwind expone como `bg-bg`, `text-fg`, etc.
 
-| Rol | Carbón | Naranja |
+| Rol | Oscuro | Claro |
 |---|---|---|
-| `--bg` | Carbón | Naranja |
-| `--surface` | Carbón superficie | Naranja superficie |
+| `--bg` | Carbón | Hueso |
+| `--surface` | Carbón superficie | Hueso superficie |
 | `--fg` | Hueso | Tinta |
 | `--muted` | Ceniza | Tinta |
 | `--accent` | Naranja | Tinta |
@@ -118,11 +127,11 @@ Los componentes nunca usan un color de tema directamente: usan los roles (`--bg`
 
 ### Named Rules
 
-**The Señal Rule.** El Naranja es una señal: marca la acción principal, el estado activo o el punto de atención. Si en una pantalla hay más de un par de rellenos naranjas compitiendo, uno sobra.
+**The Señal Rule.** El acento es una señal: marca la acción principal, el estado activo o el punto de atención (Naranja en el oscuro, Tinta en el claro). Si en una pantalla hay más de un par de rellenos de acento compitiendo, uno sobra.
 
 **The Accent-On-Ground Rule.** El acento como texto va solo sobre `--bg`: sobre `--surface` no llega a AA. `tests/unit/themes.test.ts` vigila los ratios.
 
-**The Two-Theme Rule.** Toda pieza nueva se verifica en los dos temas antes de darse por terminada. Un componente que solo se ve bien en Carbón está roto.
+**The Two-Theme Rule.** Toda pieza nueva se verifica en los dos temas antes de darse por terminada. Un componente que solo se ve bien en el oscuro está roto.
 
 ## Typography
 
@@ -151,7 +160,7 @@ La escala es fluida entre 360 px y 1440 px de ancho; los pasos intermedios (`tex
 
 El contenido vive en un contenedor centrado de 80rem (`max-w-7xl`) con márgenes laterales de 16 px en móvil y 24 px desde 640 px. El fondo de todo el `body` lleva la retícula de laboratorio (celdas de 64 px, líneas de 1 px en el color Línea, alineada arriba y al centro). Nav y footer se separan del contenido con una línea de 1 px, no con bloques de color.
 
-La navegación pasa de una sola fila en escritorio (marca · enlaces · selector de tema e idioma) a dos filas en móvil, con los enlaces debajo y a todo el ancho. El footer pasa de una columna a tres desde 640 px (reloj · redes · crédito alineado a la derecha). Se diseña primero para el teléfono: es el dispositivo de la mayoría de las visitas.
+La navegación pasa de una sola fila en escritorio (marca · enlaces · interruptor de tema e idioma) a dos filas en móvil, con los enlaces debajo y a todo el ancho. El footer pasa de una columna a tres desde 640 px (reloj · redes · crédito alineado a la derecha). Se diseña primero para el teléfono: es el dispositivo de la mayoría de las visitas.
 
 **The Paper Rule.** La retícula es el papel, no el contenido: nunca lleva información, nunca compite en contraste con el texto y nunca se usa para alinear a la fuerza piezas que no la necesitan.
 
@@ -164,15 +173,15 @@ Las páginas usan una retícula de dos columnas desde 768 px (`.margin-grid`): u
 Sistema plano. En reposo, la profundidad se construye por tono (`--bg` → `--surface`) y por líneas de 1 px, nunca con sombra. La sombra existe solo como respuesta a un estado: un objeto que el visitante está moviendo o que se separa del papel por interacción (por ejemplo, la imagen que sigue al cursor en la vista lista de proyectos). El sistema tiene una única sombra y no se crean otras.
 
 ### Shadow Vocabulary
-- **Objeto en estado** (`box-shadow: 0 1.25rem 2.5rem -0.75rem rgb(0 0 0 / 0.45)`): solo para lo que el puntero levanta del papel. Hoy, la imagen flotante de Proyectos (`.project-float`). Separa la portada del fondo aunque compartan color (la portada 001 sobre el tema Carbón).
+- **Objeto en estado** (`box-shadow: 0 1.25rem 2.5rem -0.75rem rgb(0 0 0 / 0.45)`): solo para lo que el puntero levanta del papel. Hoy, la imagen flotante de Proyectos (`.project-float`). Separa la portada del fondo aunque compartan color (la portada 001 sobre el tema oscuro).
 
 **The Flat-At-Rest Rule.** Ninguna superficie tiene sombra en reposo. Si una tarjeta necesita sombra para separarse del fondo, le falta contraste de tono, no sombra.
 
 ## Shapes
 
-Esquinas rectas (0 px) en botones, tarjetas, campos, imágenes y contenedores. El círculo (`9999px`) queda reservado para muestras de color del selector de tema y puntos o indicadores de estado (por ejemplo, la etiqueta de disponibilidad). Los bordes son de 1 px en el color Línea para divisores; un control interactivo que necesite borde usa `--fg`, porque Línea no cumple contraste de componente.
+Esquinas rectas (0 px) en botones, tarjetas, campos, imágenes y contenedores. El círculo (`9999px`) queda reservado para puntos o indicadores de estado (por ejemplo, la etiqueta de disponibilidad). Los bordes son de 1 px en el color Línea para divisores; un control interactivo que necesite borde usa `--fg`, porque Línea no cumple contraste de componente.
 
-**The Square Rule.** Si tiene esquina, la esquina es recta. El único círculo legítimo es el que representa un color o un estado.
+**The Square Rule.** Si tiene esquina, la esquina es recta. El único círculo legítimo es el que representa un estado.
 
 ## Components
 
@@ -189,9 +198,9 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 - **Estados:** hover con subrayado; foco con el contorno global. El cambio de idioma es una etiqueta mono (`EN` / `ES`) con nombre accesible completo.
 - **Móvil:** los enlaces bajan a una segunda fila a todo el ancho y se reparten con `flex-wrap`.
 
-### Theme Swatches (componente firma)
-- **Forma:** círculos de 24 px con borde de 2 px en `--fg`, pintados con el fondo real de cada tema (Carbón, Naranja).
-- **Estado activo:** `aria-pressed="true"` más un contorno exterior de 2 px en `--fg` con separación de 2 px.
+### Theme Toggle
+- **Forma:** interruptor claro/oscuro con el lenguaje del control de vista: dos botones cuadrados de 32 px (sol a la izquierda, luna a la derecha) con iconos SVG de 16 px y trazo de 1,5 px, dentro de un borde de 1 px en `--fg` y separados por una línea de 1 px en `--fg`.
+- **Estado activo:** invertido (`--fg` de fondo, `--bg` de icono) y `aria-pressed="true"`. Cada botón tiene nombre accesible («Claro», «Oscuro») y `title`; el grupo se llama «Tema».
 - **Sin JS:** el grupo nace oculto (`hidden`) y el script lo muestra; no se ofrece un control que no puede funcionar.
 
 ### Skip Link
@@ -217,17 +226,17 @@ Un solo momento de autor por página: la entrada del titular (`[data-split]`), l
 ## Do's and Don'ts
 
 ### Do:
-- **Do** usar siempre los roles (`--bg`, `--fg`, `--accent`, `--on-accent`…) y nunca un hex de tema directamente en un componente (la excepción son las muestras del selector de tema).
+- **Do** usar siempre los roles (`--bg`, `--fg`, `--accent`, `--on-accent`…) y nunca un hex de tema directamente en un componente.
 - **Do** verificar cada pieza nueva en los dos temas y con `prefers-reduced-motion: reduce`.
 - **Do** poner numeración, etiquetas, fechas y metadatos en Monaspace Krypton mayúscula con tracking 0.05em.
-- **Do** mantener las esquinas rectas (0 px) y reservar el círculo para colores e indicadores.
+- **Do** mantener las esquinas rectas (0 px) y reservar el círculo para indicadores de estado.
 - **Do** separar zonas con línea de 1 px o cambio de tono `--bg` → `--surface`.
 - **Do** animar solo `transform` y `opacity`, y solo para guiar la lectura o confirmar una acción.
 
 ### Don't:
 - **Don't** construir con la estética de plantilla SaaS: gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features».
 - **Don't** añadir ruido de efectos: animación porque sí, glitch constante, cosas que se mueven sin guiar la lectura. El fondo de gradiente es la única excepción ambiental.
-- **Don't** caer en lo corporativo frío: fotos de stock de oficina, azul de agencia, tono de agencia grande.
+- **Don't** caer en lo corporativo frío: fotos de stock de oficina, azul de agencia, tono de agencia grande. El azul noche se queda en el fondo.
 - **Don't** usar el cliché cyberpunk: verde Matrix, glow neón, terminal falsa.
 - **Don't** usar el acento como texto sobre `--surface`; solo sobre `--bg`.
 - **Don't** poner sombra a una superficie en reposo.

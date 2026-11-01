@@ -9,46 +9,27 @@ export interface GradientColors {
 }
 
 /**
- * Colores visibles por tema: la paleta que se ve. Los usa el gradiente
- * estático de global.css (--grad-1/2/3) y el texto (--fg) cumple AA sobre cada uno.
+ * Colores del gradiente por tema. Con luz «3d» el shader los respeta, así que
+ * son los mismos en el fondo animado y en el estático.
+ * - oscuro: azules noche. Los grises neutros salían marrones al iluminarse.
+ * - claro: blanco, naranja y hueso.
+ * El contraste real lo mide el e2e del fondo sobre los píxeles, grano incluido
+ * (oscuro: luminancia ≤ 0,063 para el texto secundario; claro: ≥ 0,236). El grano
+ * en soft-light aclara la media de los oscuros: por eso el oscuro lleva grano al 75 %.
  */
 export const GRADIENT_COLORS: Record<Theme, GradientColors> = {
-  carbon: { color1: '#2B2D31', color2: '#1E1F22', color3: '#5A2A10' },
-  naranja: { color1: '#F2711C', color2: '#FF9A55', color3: '#F68A3E' },
+  oscuro: { color1: '#202A45', color2: '#141B31', color3: '#1A3253' },
+  claro: { color1: '#FFFFFF', color2: '#F2711C', color3: '#F3F1EC' },
 };
 
 /**
- * Colores de entrada del shader. La iluminación de entorno cambia cuánta luz
- * devuelve el material (el HDR «city» deja ~40 %; «lobby» casi todo), así que
- * cada tema recibe los colores que, ya iluminados, se parecen a su paleta.
- * El contraste real lo mide el e2e del fondo sobre los píxeles del canvas
- * (Carbón: luminancia ≤ 0,063 para el texto secundario; Naranja: ≥ 0,236).
+ * Brillo de la luz «3d» por tema. La luz de entorno (HDR) se descartó porque
+ * tiñe la paleta: «city» llevaba el oscuro al marrón y «lobby» amarilleaba el blanco.
  */
-export const SHADER_COLORS: Record<Theme, GradientColors> = {
-  carbon: { color1: '#5A5D66', color2: '#46484F', color3: '#8A4A28' },
-  naranja: { color1: '#F67D2C', color2: '#FF9F5C', color3: '#F99248' },
+export const GRADIENT_BRIGHTNESS: Record<Theme, number> = {
+  oscuro: 1,
+  claro: 1.2,
 };
-
-export type EnvPreset = 'city' | 'dawn' | 'lobby';
-
-export interface GradientLight {
-  lightType: 'env' | '3d';
-  envPreset: EnvPreset;
-  /** Solo afecta a la luz «3d». */
-  brightness: number;
-}
-
-/**
- * Iluminación por tema, con HDR de Poly Haven (CC0) alojados en public/hdr/.
- * ShaderGradient descarga siempre los tres presets: el que no usa ningún tema
- * («dawn») es un HDR mínimo válido de 127 bytes para no descargar 1,5 MB de más.
- */
-export const GRADIENT_LIGHT: Record<Theme, GradientLight> = {
-  carbon: { lightType: 'env', envPreset: 'city', brightness: 1 },
-  naranja: { lightType: 'env', envPreset: 'lobby', brightness: 1 },
-};
-export const ENV_BASE_PATH = '/hdr/';
-export const ENV_PRESETS: readonly EnvPreset[] = ['city', 'dawn', 'lobby'];
 
 /** Forma y movimiento, comunes a los dos temas (base: preset «mandarin»). */
 export const GRADIENT_SHAPE = {
@@ -69,5 +50,8 @@ export const GRADIENT_SHAPE = {
   cDistance: 2.6,
   cameraZoom: 1,
   reflection: 0,
+  lightType: '3d',
+  // El grano del shader altera el color y deja motas negras puras: el grano va
+  // en CSS (soft-light) encima del canvas, el mismo del fondo estático
   grain: 'off',
 } as const;

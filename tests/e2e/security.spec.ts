@@ -51,7 +51,7 @@ test('con la CSP aplicada no hay violaciones', async ({ page }) => {
     await route.fulfill({ response, headers: { ...response.headers(), 'content-security-policy': csp } });
   });
   await page.goto('/');
-  await page.locator('[data-theme-value="naranja"]').click();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'naranja');
+  await page.locator('[data-theme-value="claro"]').click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'claro');
   expect(violations).toEqual([]);
 });

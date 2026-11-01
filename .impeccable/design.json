@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-01T17:33:28.707Z",
+  "generatedAt": "2026-11-01T18:26:25.358Z",
   "title": "Design System: [A]nkordev",
   "extensions": {
     "colorMeta": {
@@ -64,21 +64,6 @@
           "oklch(95% 0.069 47.4)"
         ]
       },
-      "naranja-surface": {
-        "role": "primary",
-        "displayName": "Naranja superficie",
-        "canonical": "oklch(64.6% 0.174 45.1)",
-        "tonalRamp": [
-          "oklch(15% 0.066 45.1)",
-          "oklch(26% 0.115 45.1)",
-          "oklch(38% 0.168 45.1)",
-          "oklch(50% 0.174 45.1)",
-          "oklch(62% 0.174 45.1)",
-          "oklch(74% 0.159 45.1)",
-          "oklch(85% 0.111 45.1)",
-          "oklch(95% 0.066 45.1)"
-        ]
-      },
       "hueso": {
         "role": "neutral",
         "displayName": "Hueso",
@@ -94,6 +79,21 @@
           "oklch(95% 0.003 88.6)"
         ]
       },
+      "hueso-surface": {
+        "role": "neutral",
+        "displayName": "Hueso superficie",
+        "canonical": "oklch(91.4% 0.013 82.4)",
+        "tonalRamp": [
+          "oklch(15% 0.005 82.4)",
+          "oklch(26% 0.009 82.4)",
+          "oklch(38% 0.013 82.4)",
+          "oklch(50% 0.013 82.4)",
+          "oklch(62% 0.013 82.4)",
+          "oklch(74% 0.012 82.4)",
+          "oklch(85% 0.008 82.4)",
+          "oklch(95% 0.005 82.4)"
+        ]
+      },
       "tinta": {
         "role": "neutral",
         "displayName": "Tinta",
@@ -107,6 +107,66 @@
           "oklch(74% 0.005 271.2)",
           "oklch(85% 0.004 271.2)",
           "oklch(95% 0.002 271.2)"
+        ]
+      },
+      "noche": {
+        "role": "tertiary",
+        "displayName": "Noche",
+        "canonical": "oklch(29.0% 0.052 267.7)",
+        "tonalRamp": [
+          "oklch(15% 0.02 267.7)",
+          "oklch(26% 0.034 267.7)",
+          "oklch(38% 0.05 267.7)",
+          "oklch(50% 0.052 267.7)",
+          "oklch(62% 0.052 267.7)",
+          "oklch(74% 0.047 267.7)",
+          "oklch(85% 0.033 267.7)",
+          "oklch(95% 0.02 267.7)"
+        ]
+      },
+      "noche-honda": {
+        "role": "tertiary",
+        "displayName": "Noche honda",
+        "canonical": "oklch(22.8% 0.044 269.3)",
+        "tonalRamp": [
+          "oklch(15% 0.017 269.3)",
+          "oklch(26% 0.029 269.3)",
+          "oklch(38% 0.043 269.3)",
+          "oklch(50% 0.044 269.3)",
+          "oklch(62% 0.044 269.3)",
+          "oklch(74% 0.04 269.3)",
+          "oklch(85% 0.028 269.3)",
+          "oklch(95% 0.017 269.3)"
+        ]
+      },
+      "noche-marina": {
+        "role": "tertiary",
+        "displayName": "Noche marina",
+        "canonical": "oklch(31.6% 0.067 256.8)",
+        "tonalRamp": [
+          "oklch(15% 0.025 256.8)",
+          "oklch(26% 0.044 256.8)",
+          "oklch(38% 0.064 256.8)",
+          "oklch(50% 0.067 256.8)",
+          "oklch(62% 0.067 256.8)",
+          "oklch(74% 0.061 256.8)",
+          "oklch(85% 0.042 256.8)",
+          "oklch(95% 0.025 256.8)"
+        ]
+      },
+      "blanco": {
+        "role": "neutral",
+        "displayName": "Blanco",
+        "canonical": "oklch(100.0% 0 89.9)",
+        "tonalRamp": [
+          "oklch(15% 0 89.9)",
+          "oklch(26% 0 89.9)",
+          "oklch(38% 0 89.9)",
+          "oklch(50% 0 89.9)",
+          "oklch(62% 0 89.9)",
+          "oklch(74% 0 89.9)",
+          "oklch(85% 0 89.9)",
+          "oklch(95% 0 89.9)"
         ]
       }
     },
@@ -166,17 +226,30 @@
       ],
       "source": "src/styles/global.css",
       "values": [
-        "carbon",
-        "naranja"
+        "oscuro",
+        "claro"
       ],
-      "default": "carbon"
+      "default": "oscuro"
     },
     "background": {
-      "static": "radial-gradient ×2 + linear-gradient con --grad-1/2/3 en <html>",
+      "static": "radial-gradient ×2 + linear-gradient con --grad-1/2/3 en la capa fija .gradient-bg",
       "animated": "ShaderGradient (WebGL), solo escritorio con puntero fino y sin reduced-motion",
       "lighting": {
-        "carbon": "env · city",
-        "naranja": "env · lobby"
+        "oscuro": "3d · brillo 1",
+        "claro": "3d · brillo 1.2"
+      },
+      "grain": "ruido SVG (feTurbulence) en ::after, mix-blend-mode soft-light; --grain-opacity 0.75 en oscuro, 1 en claro",
+      "colors": {
+        "oscuro": [
+          "#202A45",
+          "#141B31",
+          "#1A3253"
+        ],
+        "claro": [
+          "#FFFFFF",
+          "#F2711C",
+          "#F3F1EC"
+        ]
       },
       "source": "src/lib/gradient.ts"
     }
@@ -207,12 +280,12 @@
       "css": ".ds-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--line); background: var(--bg); color: var(--fg); } .ds-nav-brand { font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.025em; color: inherit; text-decoration: none; } .ds-nav ul { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin: 0; padding: 0; list-style: none; } .ds-nav ul a { display: inline-block; padding: 0.25rem 0; color: inherit; text-decoration: none; font-family: 'Monaspace Krypton', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; } .ds-nav ul a span { color: var(--muted); } .ds-nav a:hover { text-decoration: underline; } .ds-nav a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }"
     },
     {
-      "name": "Selector de tema",
+      "name": "Interruptor de tema",
       "kind": "custom",
-      "refersTo": "theme-swatch",
-      "description": "Implementado (src/components/ThemeSwitcher.astro): círculos de 24 px con el fondo real de cada tema; el activo lleva contorno exterior.",
-      "html": "<div class=\"ds-swatches\" role=\"group\" aria-label=\"Tema de color\"><button type=\"button\" aria-pressed=\"true\" style=\"background:#2B2D31\" title=\"Carbón\"></button><button type=\"button\" aria-pressed=\"false\" style=\"background:#F2711C\" title=\"Naranja\"></button></div>",
-      "css": ".ds-swatches { display: flex; gap: 0.375rem; } .ds-swatches button { width: 24px; height: 24px; border-radius: 9999px; border: 2px solid var(--fg); padding: 0; cursor: pointer; } .ds-swatches button[aria-pressed=\"true\"] { outline: 2px solid var(--fg); outline-offset: 2px; } .ds-swatches button:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }"
+      "refersTo": "theme-toggle",
+      "description": "Implementado (src/components/ThemeSwitcher.astro): interruptor claro/oscuro con sol y luna, borde de 1 px en --fg y el activo invertido, como el control de vista.",
+      "html": "<div class=\"ds-theme-toggle\" role=\"group\" aria-label=\"Tema\"><button type=\"button\" aria-pressed=\"false\" title=\"Claro\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><circle cx=\"8\" cy=\"8\" r=\"2.75\"/><path d=\"M8 1v1.75M8 13.25V15M1 8h1.75M13.25 8H15M3.05 3.05l1.24 1.24M11.71 11.71l1.24 1.24M3.05 12.95l1.24-1.24M11.71 4.29l1.24-1.24\"/></svg><span class=\"sr-only\">Claro</span></button><button type=\"button\" aria-pressed=\"true\" title=\"Oscuro\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z\"/></svg><span class=\"sr-only\">Oscuro</span></button></div>",
+      "css": ".ds-theme-toggle { display: inline-flex; border: 1px solid var(--fg); } .ds-theme-toggle button { display: inline-grid; place-items: center; width: 2rem; height: 2rem; padding: 0; border: 0; background: transparent; color: var(--fg); cursor: pointer; } .ds-theme-toggle button + button { border-left: 1px solid var(--fg); } .ds-theme-toggle button[aria-pressed=\"true\"] { background: var(--fg); color: var(--bg); } .ds-theme-toggle svg { width: 1rem; height: 1rem; } .ds-theme-toggle button:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; } .ds-theme-toggle .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }"
     },
     {
       "name": "Etiqueta de experimento",
@@ -251,23 +324,28 @@
     "northStar": "El Cuaderno de Laboratorio",
     "overview": "El sitio es la libreta de un experimento en curso. La retícula fina de fondo es el papel cuadriculado; la numeración (`01`, `001`) y las etiquetas mono en mayúsculas (`EXP-001`, `[ 01 / SERVICIOS ]`) son las anotaciones al margen; cada proyecto es un registro con su número. Encima de ese papel, el contenido se escribe en grande: titulares en Space Grotesk que ocupan la pantalla con seguridad. El rigor está en el sistema, no en el adorno: cada marca tiene un sitio, un número y una razón.\n\nLa densidad es baja y ordenada: mucho fondo, líneas de 1 px, tipografía grande y pocas piezas sólidas. El color de cada tema llena el fondo entero; no se reparte en manchas. El movimiento, comprometido en la spec (letras escalonadas en el hero, revelado de títulos, scramble breve en etiquetas, botones magnéticos, línea de progreso del proceso), solo existe para guiar la lectura o confirmar una acción, y desaparece por completo con `prefers-reduced-motion`.\n\nLo que el sitio rechaza: la plantilla SaaS genérica (gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features»), el ruido de efectos (animación porque sí, glitch constante), lo corporativo frío (fotos de stock de oficina, azul de agencia) y el cliché cyberpunk (verde Matrix, glow neón, terminal falsa).",
     "keyCharacteristics": [
-      "Dos temas de color, Carbón y Naranja, que cambian el fondo completo; el visitante elige y el sitio lo recuerda.",
-      "Fondo de gradiente en los colores del tema: animado en escritorio (WebGL), estático en móvil y con reduced-motion. Es la única animación ambiental.",
+      "Dos temas, Oscuro y Claro, que cambian el fondo completo; el visitante elige con un interruptor y el sitio lo recuerda.",
+      "Fondo de gradiente con grano fino: azul noche en el oscuro, blanco y naranja en el claro. Animado en escritorio (WebGL), estático en móvil y con reduced-motion. Es la única animación ambiental.",
       "Retícula de 64 px como papel de fondo, siempre decorativa.",
       "Display enorme y apretado en Space Grotesk; anotaciones en Monaspace Krypton, mayúsculas y espaciadas.",
-      "Esquinas rectas en todo; el círculo solo para muestras de color e indicadores.",
+      "Esquinas rectas en todo; el círculo solo para indicadores de estado.",
       "Plano en reposo; la sombra solo aparece como respuesta a un estado.",
       "Mezcla sólido + fino: el CTA principal es un bloque sólido y táctil, todo lo demás es línea fina y texto."
     ],
     "rules": [
       {
         "name": "The Ambient-Exception Rule",
-        "body": "El fondo es la única animación que no guía la lectura (constitución II 1.2.0). Nada más se mueve «porque sí», y el texto cumple AA sobre cualquier punto del fondo: Carbón ≤ 0,063 de luminancia, Naranja ≥ 0,236, medido en píxeles por el e2e.",
+        "body": "El fondo es la única animación que no guía la lectura (constitución II 1.2.0). Nada más se mueve «porque sí», y el texto cumple AA sobre cualquier punto del fondo, grano incluido: oscuro ≤ 0,063 de luminancia, claro ≥ 0,236, medido en píxeles por el e2e en escritorio y en móvil.",
+        "section": "colors"
+      },
+      {
+        "name": "The Night-Not-Agency Rule",
+        "body": "El azul noche es fondo, casi negro, y nunca sale de ahí: ni acento, ni relleno, ni texto. Un azul saturado de agencia en un botón o un enlace sigue prohibido.",
         "section": "colors"
       },
       {
         "name": "The Señal Rule",
-        "body": "El Naranja es una señal: marca la acción principal, el estado activo o el punto de atención. Si en una pantalla hay más de un par de rellenos naranjas compitiendo, uno sobra.",
+        "body": "El acento es una señal: marca la acción principal, el estado activo o el punto de atención (Naranja en el oscuro, Tinta en el claro). Si en una pantalla hay más de un par de rellenos de acento compitiendo, uno sobra.",
         "section": "colors"
       },
       {
@@ -277,7 +355,7 @@
       },
       {
         "name": "The Two-Theme Rule",
-        "body": "Toda pieza nueva se verifica en los dos temas antes de darse por terminada. Un componente que solo se ve bien en Carbón está roto.",
+        "body": "Toda pieza nueva se verifica en los dos temas antes de darse por terminada. Un componente que solo se ve bien en el oscuro está roto.",
         "section": "colors"
       },
       {
@@ -307,22 +385,22 @@
       },
       {
         "name": "The Square Rule",
-        "body": "Si tiene esquina, la esquina es recta. El único círculo legítimo es el que representa un color o un estado.",
+        "body": "Si tiene esquina, la esquina es recta. El único círculo legítimo es el que representa un estado.",
         "section": "shapes"
       }
     ],
     "dos": [
-      "**Do** usar siempre los roles (`--bg`, `--fg`, `--accent`, `--on-accent`…) y nunca un hex de tema directamente en un componente (la excepción son las muestras del selector de tema).",
+      "**Do** usar siempre los roles (`--bg`, `--fg`, `--accent`, `--on-accent`…) y nunca un hex de tema directamente en un componente.",
       "**Do** verificar cada pieza nueva en los dos temas y con `prefers-reduced-motion: reduce`.",
       "**Do** poner numeración, etiquetas, fechas y metadatos en Monaspace Krypton mayúscula con tracking 0.05em.",
-      "**Do** mantener las esquinas rectas (0 px) y reservar el círculo para colores e indicadores.",
+      "**Do** mantener las esquinas rectas (0 px) y reservar el círculo para indicadores de estado.",
       "**Do** separar zonas con línea de 1 px o cambio de tono `--bg` → `--surface`.",
       "**Do** animar solo `transform` y `opacity`, y solo para guiar la lectura o confirmar una acción."
     ],
     "donts": [
       "**Don't** construir con la estética de plantilla SaaS: gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features».",
       "**Don't** añadir ruido de efectos: animación porque sí, glitch constante, cosas que se mueven sin guiar la lectura. El fondo de gradiente es la única excepción ambiental.",
-      "**Don't** caer en lo corporativo frío: fotos de stock de oficina, azul de agencia, tono de agencia grande.",
+      "**Don't** caer en lo corporativo frío: fotos de stock de oficina, azul de agencia, tono de agencia grande. El azul noche se queda en el fondo.",
       "**Don't** usar el cliché cyberpunk: verde Matrix, glow neón, terminal falsa.",
       "**Don't** usar el acento como texto sobre `--surface`; solo sobre `--bg`.",
       "**Don't** poner sombra a una superficie en reposo.",

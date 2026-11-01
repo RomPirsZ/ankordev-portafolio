@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { ENV_PRESETS, GRADIENT_COLORS, GRADIENT_LIGHT } from '../../src/lib/gradient';
+import { GRADIENT_BRIGHTNESS, GRADIENT_COLORS } from '../../src/lib/gradient';
 import { THEMES } from '../../src/lib/themes';
 
 const css = readFileSync(new URL('../../src/styles/global.css', import.meta.url), 'utf8');
@@ -40,13 +40,7 @@ describe('fondo de gradiente', () => {
     );
   });
 
-  it('los tres HDR existen en el sitio y los que usan los temas son reales', () => {
-    const hdr = (preset: string) => readFileSync(new URL(`../../public/hdr/${preset}.hdr`, import.meta.url));
-    // ShaderGradient descarga siempre los tres: deben existir y ser Radiance válidos
-    for (const preset of ENV_PRESETS) expect(hdr(preset).subarray(0, 10).toString(), preset).toBe('#?RADIANCE');
-    for (const theme of THEMES) {
-      const { lightType, envPreset } = GRADIENT_LIGHT[theme];
-      if (lightType === 'env') expect(hdr(envPreset).length, `${theme}: ${envPreset}`).toBeGreaterThan(500_000);
-    }
+  it.each(THEMES)('%s tiene brillo de luz «3d» definido', (theme) => {
+    expect(GRADIENT_BRIGHTNESS[theme]).toBeGreaterThan(0);
   });
 });

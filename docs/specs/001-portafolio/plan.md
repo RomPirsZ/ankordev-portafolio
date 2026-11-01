@@ -17,7 +17,7 @@
 | VII. Simplicidad | Sin framework de UI salvo la isla del fondo (ver excepción); rate limit en memoria; sin CMS |
 | VIII. Spec antes que código | Este plan + `tasks.md`; efectos WebGL quedan para ODD en v1.1, salvo el fondo (§6.1) |
 | IX. Bilingüe | Textos en `src/i18n/es.json` y `en.json`; rutas `/` y `/en/` |
-| X. Privacidad | Solo 5 campos en el formulario, aviso de uso, sin trackers (Vercel Analytics opcional). El fondo no hace peticiones a terceros: el HDR de iluminación se aloja en el sitio |
+| X. Privacidad | Solo 5 campos en el formulario, aviso de uso, sin trackers (Vercel Analytics opcional). El fondo no hace peticiones a terceros (ni descarga mapas de iluminación) |
 
 **Cambio 2026-10-30:** el plan original fijaba Astro 5, pero esa rama tiene vulnerabilidades críticas sin parche (corregidas en `astro >7.3.1`) y `npm audit --audit-level=high` falla. Se migra a Astro 7.4.4 + `@astrojs/vercel` 11. Dependencias transitivas de `@astrojs/vercel` corregidas con `overrides` en `package.json`: `path-to-regexp` 6.3.0 y `zod` 4.6.7 (mismo major), y `glob` 14.0.3 → `minimatch` 11.0.3 dentro de `@vercel/nft` (salto de major: `nft` pide `^13`, sin parche en esa rama). Verificado que el rastreo de `nft` y el empaquetado de funciones salen idénticos con `glob` 13 y 14. `npm audit` queda en 0. Cada override se elimina cuando el paquete que lo trae publique la versión corregida.
 
@@ -66,11 +66,13 @@ CLAUDE.md          → instrucciones para el agente (apunta a docs/)
 
 ## 4. Temas
 
-Variables CSS en `global.css` por `[data-theme="carbon|naranja"]` con `--bg`, `--surface`, `--fg`, `--accent`, `--on-accent`, `--muted`, `--line`. Tailwind 4 las expone con `@theme`.
+Variables CSS en `global.css` por `[data-theme="oscuro|claro"]` con `--bg`, `--surface`, `--fg`, `--accent`, `--on-accent`, `--muted`, `--line`, más `--grad-1/2/3` y `--grain-opacity` para el fondo (§6.1). Tailwind 4 las expone con `@theme`.
 
-**Contraste:** el acento puede ir como texto solo sobre `--bg` (Naranja sobre Carbón 4.65:1; sobre `--surface` no llega a AA). `--on-accent` es el texto sobre un relleno de acento. `--line` es decorativo. `tests/unit/themes.test.ts` verifica los ratios.
+**Contraste:** el acento puede ir como texto solo sobre `--bg` (naranja sobre el fondo oscuro 4.65:1; sobre `--surface` no llega a AA). En el claro, `--muted` y `--accent` son tinta: también van sobre el naranja del gradiente, donde el gris y un relleno naranja se perderían. `--on-accent` es el texto sobre un relleno de acento. `--line` es decorativo. `tests/unit/themes.test.ts` verifica los ratios.
 
 **Cambio 2026-11-01:** se retiran los temas Petróleo y Militar a petición del cliente; con dos temas, `--accent-ink` era idéntico a `--accent` en ambos y se elimina.
+
+**Cambio 2026-11-01 (T20c):** a petición del cliente, Carbón y Naranja pasan a ser `oscuro` (por defecto) y `claro`, y las muestras de color se sustituyen por un interruptor claro/oscuro: dos botones con icono de sol y luna, nombre accesible y `aria-pressed`, con el mismo lenguaje que el control de vista (borde de 1 px, activo invertido). Quien tuviera guardado un tema antiguo vuelve al oscuro (`isTheme` lo descarta).
 
 Un script inline mínimo en `<head>` aplica el tema guardado antes del primer pintado (evita parpadeo); acceso a `localStorage` dentro de try/catch.
 
@@ -96,11 +98,12 @@ Content Collection `projects` (`src/content.config.ts`, esquema en `src/lib/proj
 
 ### 6.1 Fondo de gradiente (constitución II 1.2.0)
 
-- **Base para todos:** gradiente estático en CSS en el fondo de `<html>`, con los colores del tema activo; la retícula sigue encima. Es lo que ven móvil, reduced-motion, navegadores sin WebGL y visitantes sin JS.
+- **Base para todos:** capa fija `.gradient-bg` (`z-index: -1`) con un gradiente estático en CSS en los colores del tema activo; la retícula y el contenido van encima. Es lo que ven móvil, reduced-motion, navegadores sin WebGL y visitantes sin JS. Va en una capa propia y no en el fondo de `<html>` porque el navegador no aplica mezclas al fondo del elemento raíz.
+- **Grano:** ruido SVG (`feTurbulence`) en un `::after` de la misma capa, en mezcla `soft-light`, encima del gradiente estático y del animado. Es el mismo en móvil y escritorio. El grano propio de ShaderGradient se descartó: alteraba el color y dejaba motas negras puras. En el oscuro va al 75 % (`--grain-opacity`): `soft-light` aclara la media de los tonos oscuros y al 100 % el texto secundario no llegaba a AA.
 - **Escritorio:** isla React `GradientBackground` con `client:media="(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)"`: su JS solo se descarga si se cumple la condición. Renderiza `ShaderGradientCanvas` fijo detrás del contenido (`z-index: -1`), con `transition:persist` para no reiniciarse al navegar.
-- **Iluminación:** `lightType="env"` con HDR alojados en `public/hdr/` (`envBasePath="/hdr/"`): Carbón usa `city` y Naranja `lobby` (con `city`, Naranja no llegaba a AA: el entorno lo apagaba a un marrón). Archivos de Poly Haven (CC0), idénticos a los de drei (verificado por SHA-256). ShaderGradient descarga **siempre los tres presets**; el que no se usa (`dawn`) es un HDR mínimo válido de 127 bytes. Presupuesto en escritorio: ~3 MB de HDR + ~350 KB gzip de JS (React, three, ShaderGradient). Ninguna petición a terceros.
-- **Comportamiento:** en `src/lib/gradient.ts`, colores visibles por tema (los del gradiente estático) y colores de entrada del shader, más claros porque la iluminación de entorno devuelve solo parte de la luz; cambia de colores con el tema, se pausa con la pestaña oculta, se desmonta si el visitante activa reduced-motion, y un error de WebGL deja el gradiente estático.
-- **Contraste:** los colores se eligen para que `--fg` cumpla AA sobre cualquier punto del fondo; un e2e mide los píxeles reales del canvas en ambos temas.
+- **Iluminación:** `lightType="3d"`, con brillo por tema (`GRADIENT_BRIGHTNESS`). La luz de entorno (`env` con HDR) se descartó porque tiñe la paleta: `city` llevaba el oscuro al marrón y `lobby` amarilleaba el blanco. Con luz 3d el shader respeta los colores, que son los mismos del gradiente estático, y no se descarga ningún mapa de iluminación (~3 MB menos). Presupuesto en escritorio: ~350 KB gzip de JS (React, three, ShaderGradient). Ninguna petición a terceros.
+- **Comportamiento:** `src/lib/gradient.ts` define colores (`GRADIENT_COLORS`, iguales a `--grad-1/2/3`), brillo y forma (`GRADIENT_SHAPE`); el fondo cambia de colores con el tema, se pausa con la pestaña oculta, se desmonta si el visitante activa reduced-motion, y un error de WebGL deja el gradiente estático. Los oscuros son azules saturados: los grises neutros salían marrones al iluminarse.
+- **Contraste:** los colores se eligen para que el texto cumpla AA sobre cualquier punto del fondo, grano incluido: en el oscuro, luminancia ≤ 0,063 (`--muted` a 4,5:1); en el claro, ≥ 0,236 (tinta a 4,5:1). Un e2e mide los píxeles reales del canvas en escritorio y del fondo estático en móvil, en ambos temas, tras un desenfoque leve que promedia el grano como lo hace el ojo.
 - **CSP:** las islas añaden dos scripts y un estilo en línea de Astro; sus hashes van en `vercel.json` (`style-src` incluido) y un e2e verifica cada script y estilo en línea.
 - **three.js 0.186.1:** ShaderGradient 2.4.x usa el chunk `cube_uv_reflection_fragment`, que three quitó en 0.187.0. Dependabot no propone three ≥ 0.187 hasta que ShaderGradient lo soporte.
 - **Tests:** el proyecto `desktop` de Playwright corre sin WebGL (prueba el fondo estático y no satura la CPU); `desktop-webgl` usa SwiftShader, el mismo renderizador en local y en CI, para medir el contraste en píxeles de forma reproducible.

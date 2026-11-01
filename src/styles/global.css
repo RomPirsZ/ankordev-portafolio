@@ -4,7 +4,7 @@
 @import '@fontsource/monaspace-krypton/400.css';
 
 /*
-  Temas (spec §6): Carbón (por defecto) y Naranja. Contraste (constitución III):
+  Temas (spec §6): oscuro (por defecto) y claro. Contraste (constitución III):
   - --fg y --muted son texto: ≥ 4.5:1 sobre --bg y --surface.
   - --accent es relleno; como texto solo sobre --bg (sobre --surface no llega a AA).
   - Texto sobre un relleno de acento: --on-accent.
@@ -13,28 +13,33 @@
     (el texto cumple AA sobre cada uno; lo vigilan tests/unit/gradient.test.ts y el e2e).
 */
 :root,
-[data-theme='carbon'] {
+[data-theme='oscuro'] {
   --bg: #2b2d31;
   --surface: #3a3d43;
   --fg: #f3f1ec;
   --muted: #b7b6b4;
   --accent: #f2711c;
   --on-accent: #1e1f22;
-  --grad-1: #2b2d31;
-  --grad-2: #1e1f22;
-  --grad-3: #5a2a10;
+  --grad-1: #202a45;
+  --grad-2: #141b31;
+  --grad-3: #1a3253;
+  /* soft-light aclara la media de los oscuros: grano más suave para mantener AA */
+  --grain-opacity: 0.75;
 }
 
-[data-theme='naranja'] {
-  --bg: #f2711c;
-  --surface: #e0631a;
+[data-theme='claro'] {
+  --bg: #f3f1ec;
+  --surface: #e7e2d9;
   --fg: #1e1f22;
+  /* El texto secundario va también sobre el naranja del gradiente: tinta */
   --muted: #1e1f22;
+  /* Un relleno naranja se perdería sobre el naranja del gradiente: el acento es tinta */
   --accent: #1e1f22;
   --on-accent: #f3f1ec;
-  --grad-1: #f2711c;
-  --grad-2: #ff9a55;
-  --grad-3: #f68a3e;
+  --grad-1: #ffffff;
+  --grad-2: #f2711c;
+  --grad-3: #f3f1ec;
+  --grain-opacity: 1;
 }
 
 :root {
@@ -46,9 +51,12 @@
     radial-gradient(70% 60% at 85% 10%, var(--grad-3), transparent 70%),
     radial-gradient(80% 70% at 10% 95%, var(--grad-2), transparent 70%),
     linear-gradient(160deg, var(--grad-1), var(--grad-2));
+  /* Grano del gradiente (como shadergradient.co): ruido fino en mezcla soft-light,
+     encima del gradiente estático y del animado (.gradient-bg::after) */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='.33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.7'/%3E%3C/svg%3E");
 }
 
-[data-theme='naranja'] {
+[data-theme='claro'] {
   color-scheme: light;
 }
 
@@ -83,8 +91,6 @@
 @layer base {
   html {
     background-color: var(--bg);
-    background-image: var(--bg-gradient);
-    background-attachment: fixed;
     color: var(--fg);
     font-family: var(--font-sans);
     -webkit-text-size-adjust: 100%;
@@ -217,16 +223,31 @@
     }
   }
 
-  /* Fondo animado (plan §6.1): capa fija detrás del contenido y de la retícula.
-     Solo existe en escritorio sin reduced-motion; aparece con un fundido. */
+  /* Fondo (plan §6.1): capa fija detrás del contenido y de la retícula, en todas las
+     páginas. Pinta el gradiente estático; en escritorio, el canvas animado va encima
+     (con un fundido) y el grano, encima de todo. Va aquí y no en <html> porque el
+     navegador no aplica mezclas al fondo del elemento raíz. */
   .gradient-bg {
     position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
+    background-image: var(--bg-gradient);
 
     & canvas {
       animation: gradient-in 1.2s ease-out both;
+    }
+
+    /* Grano encima del gradiente (estático o animado). soft-light apenas mueve el tono,
+       pero aclara un poco los oscuros: por eso la opacidad va por tema */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: var(--grain);
+      background-size: 160px 160px;
+      mix-blend-mode: soft-light;
+      opacity: var(--grain-opacity);
     }
 
     @media print {

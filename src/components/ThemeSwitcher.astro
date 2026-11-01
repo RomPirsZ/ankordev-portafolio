@@ -1,5 +1,5 @@
 ---
-import { THEMES } from '../lib/themes';
+import type { Theme } from '../lib/themes';
 import { useTranslations, type Lang } from '../i18n/utils';
 
 interface Props {
@@ -7,19 +7,25 @@ interface Props {
 }
 
 const t = useTranslations(Astro.props.lang);
+// Orden visual habitual: claro a la izquierda, oscuro a la derecha
+const options: Theme[] = ['claro', 'oscuro'];
 ---
 
-<!-- Sin JS no puede funcionar, así que nace oculto y el script lo muestra -->
-<div class="theme-switcher flex items-center gap-1.5" role="group" aria-label={t('theme.label')} hidden>
+<!-- Interruptor claro/oscuro. Sin JS no puede funcionar: nace oculto y el script lo muestra -->
+<div class="theme-switcher" role="group" aria-label={t('theme.label')} hidden>
   {
-    THEMES.map((theme) => (
-      <button
-        type="button"
-        class="swatch size-6 rounded-full border-2 border-fg"
-        data-theme-value={theme}
-        aria-pressed="false"
-        title={t(`theme.${theme}`)}
-      >
+    options.map((theme) => (
+      <button type="button" data-theme-value={theme} aria-pressed="false" title={t(`theme.${theme}`)}>
+        {theme === 'claro' ? (
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
+            <circle cx="8" cy="8" r="2.75" />
+            <path d="M8 1v1.75M8 13.25V15M1 8h1.75M13.25 8H15M3.05 3.05l1.24 1.24M11.71 11.71l1.24 1.24M3.05 12.95l1.24-1.24M11.71 4.29l1.24-1.24" />
+          </svg>
+        ) : (
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
+            <path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z" />
+          </svg>
+        )}
         <span class="sr-only">{t(`theme.${theme}`)}</span>
       </button>
     ))
@@ -27,12 +33,37 @@ const t = useTranslations(Astro.props.lang);
 </div>
 
 <style>
-  .swatch[data-theme-value='carbon'] { background: #2b2d31; }
-  .swatch[data-theme-value='naranja'] { background: #f2711c; }
+  /* Mismo lenguaje que el control de vista: borde de 1 px y el activo invertido */
+  .theme-switcher {
+    display: inline-flex;
+    border: 1px solid var(--fg);
+  }
 
-  .swatch[aria-pressed='true'] {
-    outline: 2px solid var(--fg);
-    outline-offset: 2px;
+  .theme-switcher[hidden] {
+    display: none;
+  }
+
+  .theme-switcher button {
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    color: var(--fg);
+    cursor: pointer;
+  }
+
+  .theme-switcher button + button {
+    border-left: 1px solid var(--fg);
+  }
+
+  .theme-switcher button[aria-pressed='true'] {
+    background-color: var(--fg);
+    color: var(--bg);
+  }
+
+  .theme-switcher svg {
+    width: 1rem;
+    height: 1rem;
   }
 </style>
 

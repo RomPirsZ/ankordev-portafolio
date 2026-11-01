@@ -1,6 +1,6 @@
-export const THEMES = ['carbon', 'naranja'] as const;
+export const THEMES = ['oscuro', 'claro'] as const;
 export type Theme = (typeof THEMES)[number];
-export const DEFAULT_THEME: Theme = 'carbon';
+export const DEFAULT_THEME: Theme = 'oscuro';
 export const THEME_STORAGE_KEY = 'theme';
 
 export function isTheme(value: unknown): value is Theme {

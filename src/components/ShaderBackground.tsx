@@ -1,9 +1,8 @@
 // Gradiente animado con ShaderGradient (plan §6.1). Sigue al tema activo y se
-// detiene con la pestaña oculta. La iluminación usa el HDR de public/hdr/:
-// ninguna petición a terceros (constitución X).
+// detiene con la pestaña oculta. Luz «3d»: no descarga ningún recurso externo.
 import { ShaderGradient, ShaderGradientCanvas } from '@shadergradient/react';
 import { useEffect, useState } from 'react';
-import { ENV_BASE_PATH, GRADIENT_LIGHT, GRADIENT_SHAPE, SHADER_COLORS } from '../lib/gradient';
+import { GRADIENT_BRIGHTNESS, GRADIENT_COLORS, GRADIENT_SHAPE } from '../lib/gradient';
 import { DEFAULT_THEME, isTheme, type Theme } from '../lib/themes';
 
 function currentTheme(): Theme {
@@ -31,14 +30,13 @@ export default function ShaderBackground() {
       pixelDensity={1}
       pointerEvents="none"
       lazyLoad={false}
-      envBasePath={ENV_BASE_PATH}
       style={{ position: 'absolute', inset: 0 }}
     >
       <ShaderGradient
         control="props"
         {...GRADIENT_SHAPE}
-        {...SHADER_COLORS[theme]}
-        {...GRADIENT_LIGHT[theme]}
+        {...GRADIENT_COLORS[theme]}
+        brightness={GRADIENT_BRIGHTNESS[theme]}
         animate={visible ? 'on' : 'off'}
       />
     </ShaderGradientCanvas>

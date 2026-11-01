@@ -36,6 +36,7 @@
 - [x] T19 View Transitions con reinicio de animaciones
 - [x] T20 Tests e2e 3 y 7
 - [x] T20b Fondo de gradiente (plan §6.1): animado con ShaderGradient en escritorio, estático en móvil y con reduced-motion; contraste AA medido en píxeles + tests
+- [x] T20c Temas Oscuro/Claro con interruptor (plan §4): fondo azul noche y blanco + naranja, luz 3d sin HDR y grano CSS (plan §6.1); contraste AA medido también en móvil
 
 **Hecho cuando:** fluido en un teléfono real; reduced-motion lo desactiva todo.
 

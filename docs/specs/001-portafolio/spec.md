@@ -27,7 +27,7 @@ Un portafolio de marca personal que transmita sensación de **laboratorio creati
 1. **Como dueño de negocio local**, quiero ver rápidamente qué haces, cuánto cuesta y ejemplos, para decidir si te contacto.
 2. **Como cliente internacional**, quiero leer el sitio en inglés y ver casos de estudio con decisiones técnicas, para evaluar tu nivel.
 3. **Como visitante interesado**, quiero contactarte por formulario o WhatsApp en pocos pasos.
-4. **Como visitante**, quiero cambiar el tema de color del sitio, para explorarlo y que la experiencia se sienta de "laboratorio".
+4. **Como visitante**, quiero alternar entre tema claro y oscuro, para leer el sitio como me resulte más cómodo y que la experiencia se sienta de "laboratorio".
 5. **Como visitante con movimiento reducido activado**, quiero leer todo sin animaciones.
 
 ## 4. Páginas
@@ -40,7 +40,7 @@ Un portafolio de marca personal que transmita sensación de **laboratorio creati
 
 ## 5. Secciones del inicio (en orden)
 
-1. **Navegación:** logo, enlaces (Proyectos, Servicios, Sobre mí, Contacto), selector de tema, cambio ES/EN.
+1. **Navegación:** logo, enlaces (Proyectos, Servicios, Sobre mí, Contacto), interruptor claro/oscuro, cambio ES/EN.
 2. **Hero:** titular animado letra por letra (ej. «Diseño y desarrollo webs que se sienten vivas»), subtítulo, botón «Hablemos» y etiqueta de disponibilidad.
 3. **Proyectos:** alternar entre vista **Lista** (filas grandes con imagen que sigue al cursor) y **Cuadrícula** (tarjetas).
 4. **Servicios y paquetes** (precios en USD; la versión en inglés muestra la tarifa internacional):
@@ -56,16 +56,16 @@ Un portafolio de marca personal que transmita sensación de **laboratorio creati
 
 ### Temas de color
 
-| Tema | Fondo | Superficie | Texto | Acento |
-|---|---|---|---|---|
-| Carbón (por defecto) | `#2B2D31` | `#3A3D43` | `#F3F1EC` | `#F2711C` |
-| Naranja | `#F2711C` | `#E0631A` | `#1E1F22` | `#1E1F22` |
+| Tema | Fondo | Superficie | Texto | Acento | Gradiente del fondo |
+|---|---|---|---|---|---|
+| Oscuro (por defecto) | `#2B2D31` | `#3A3D43` | `#F3F1EC` | `#F2711C` | azul noche: `#202A45`, `#141B31`, `#1A3253` |
+| Claro | `#F3F1EC` | `#E7E2D9` | `#1E1F22` | `#1E1F22` | blanco y naranja: `#FFFFFF`, `#F2711C`, `#F3F1EC` |
 
-El tema elegido se recuerda en visitas posteriores. *(2026-11-01: se retiran los temas Petróleo y Militar; quedan dos.)*
+Se cambia de tema con un interruptor claro/oscuro (sol y luna) arriba a la derecha. El tema elegido se recuerda en visitas posteriores. *(2026-11-01: se retiran los temas Petróleo y Militar; quedan dos. Ese mismo día, Carbón y Naranja pasan a ser Oscuro y Claro, con interruptor en lugar de muestras de color: el oscuro deja el marrón por un azul noche y el claro combina blanco y naranja.)*
 
 ### Fondo
 
-Cada tema tiene un fondo de gradiente en sus colores, al estilo de shadergradient.co. En escritorio está animado (WebGL, librería ShaderGradient); en móvil y con movimiento reducido es estático, sin cargar nada pesado. El texto mantiene contraste AA sobre cualquier punto del fondo. *(Añadido 2026-11-01.)*
+Cada tema tiene un fondo de gradiente en sus colores, con grano fino, al estilo de shadergradient.co. En escritorio está animado (WebGL, librería ShaderGradient); en móvil y con movimiento reducido es estático, sin cargar nada pesado. El texto mantiene contraste AA sobre cualquier punto del fondo. *(Añadido 2026-11-01; el grano, el mismo día.)*
 
 ### Tipografía y elementos de laboratorio
 

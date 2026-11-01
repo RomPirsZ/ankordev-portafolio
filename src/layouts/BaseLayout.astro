@@ -42,7 +42,8 @@ const t = useTranslations(lang);
   </head>
   <body class="lab-grid flex min-h-dvh flex-col text-fg">
     <!--
-      Sin bg-bg: el fondo (color + gradiente estático) lo pinta <html> y el canvas va entre ambos.
+      Sin bg-bg: <html> pinta el color del tema y .gradient-bg, encima, el gradiente estático,
+      el canvas (si lo hay) y el grano (global.css).
       Fondo animado (plan §6.1): su JS solo se descarga en escritorio con puntero fino
       y sin reduced-motion. Persiste entre páginas para no reiniciarse al navegar.
     -->
