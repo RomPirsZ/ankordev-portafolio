@@ -16,5 +16,6 @@
   "theme.militar": "Militar",
   "footer.clock": "Hora en Caracas",
   "footer.madeIn": "Hecho en Venezuela",
+  "footer.copyright": "© {year}",
   "footer.social": "Redes"
 }

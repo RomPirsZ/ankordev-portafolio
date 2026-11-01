@@ -1,6 +1,6 @@
 ---
 import ThemeSwitcher from './ThemeSwitcher.astro';
-import { useTranslations, type Lang } from '../i18n/utils';
+import { alternateLang, localizePath, sectionHref, useTranslations, type Lang } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -10,13 +10,14 @@ interface Props {
 
 const { lang, altHref } = Astro.props;
 const t = useTranslations(lang);
-const home = lang === 'es' ? '/' : '/en/';
+const home = localizePath('home', lang);
+const otherLang = alternateLang(lang);
 
 const links = [
-  { href: `${home}#proyectos`, label: t('nav.projects') },
-  { href: `${home}#servicios`, label: t('nav.services') },
-  { href: `${home}#sobre-mi`, label: t('nav.about') },
-  { href: `${home}#contacto`, label: t('nav.contact') },
+  { href: sectionHref('projects', lang), label: t('nav.projects') },
+  { href: sectionHref('services', lang), label: t('nav.services') },
+  { href: sectionHref('about', lang), label: t('nav.about') },
+  { href: sectionHref('contact', lang), label: t('nav.contact') },
 ];
 ---
 
@@ -44,8 +45,8 @@ const links = [
       <ThemeSwitcher lang={lang} />
       {
         altHref && (
-          <a href={altHref} hreflang={lang === 'es' ? 'en' : 'es'} class="font-mono text-xs uppercase tracking-wider hover:underline">
-            <span aria-hidden="true">{lang === 'es' ? 'EN' : 'ES'}</span>
+          <a href={altHref} hreflang={otherLang} lang={otherLang} class="font-mono text-xs uppercase tracking-wider hover:underline">
+            <span aria-hidden="true">{otherLang}</span>
             <span class="sr-only">{t('nav.lang')}</span>
           </a>
         )

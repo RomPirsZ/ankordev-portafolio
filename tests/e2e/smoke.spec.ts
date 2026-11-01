@@ -6,6 +6,21 @@ test('el inicio responde y tiene un h1', async ({ page }) => {
   await expect(page.locator('h1')).toBeVisible();
 });
 
+test('el inicio existe en ambos idiomas y se enlazan entre sí', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+  await page.locator('a[hreflang="en"]').click();
+
+  await expect(page).toHaveURL(/\/en\/$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expect(page).toHaveTitle(/Web design and development/);
+  await expect(page.locator('nav a[href="/en/#projects"]')).toBeVisible();
+
+  await page.locator('a[hreflang="es"]').click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+});
+
 test('las fuentes self-hosted cargan', async ({ page }) => {
   await page.goto('/');
   const loaded = await page.evaluate(async () => {

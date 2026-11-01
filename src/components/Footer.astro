@@ -39,7 +39,9 @@ const socials = SOCIALS.filter((social) => social.url);
     }
 
     <p class="sm:col-start-3 sm:text-right">
-      {t('footer.madeIn')} · © {new Date().getFullYear()} {t('site.brand')}
+      {t('footer.madeIn')} · {t('footer.copyright', { year: new Date().getFullYear() })}
+      <!-- La marca se escribe tal cual, aunque la etiqueta vaya en mayúsculas -->
+      <span class="normal-case">{t('site.brand')}</span>
     </p>
   </div>
 </footer>

@@ -1,12 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { useTranslations } from '../i18n/utils';
+import Home from '../components/Home.astro';
+import { localizePath, useTranslations, type Lang } from '../i18n/utils';
 
-const t = useTranslations('es');
+const lang: Lang = 'es';
+const t = useTranslations(lang);
 ---
 
-<BaseLayout title={t('site.title')} lang="es">
-  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6">
-    <h1 class="text-display font-bold">{t('site.brand')}</h1>
-  </div>
+<BaseLayout title={t('site.title')} lang={lang} altHref={localizePath('home', 'en')}>
+  <Home lang={lang} />
 </BaseLayout>

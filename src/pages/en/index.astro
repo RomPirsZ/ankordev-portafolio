@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Home from '../../components/Home.astro';
+import { localizePath, useTranslations, type Lang } from '../../i18n/utils';
+
+const lang: Lang = 'en';
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={t('site.title')} lang={lang} altHref={localizePath('home', 'es')}>
+  <Home lang={lang} />
+</BaseLayout>
