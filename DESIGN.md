@@ -155,6 +155,10 @@ La navegación pasa de una sola fila en escritorio (marca · enlaces · selector
 
 **The Paper Rule.** La retícula es el papel, no el contenido: nunca lleva información, nunca compite en contraste con el texto y nunca se usa para alinear a la fuerza piezas que no la necesitan.
 
+Las páginas usan una retícula de dos columnas desde 768 px (`.margin-grid`): una **columna de margen** de 11rem para anotaciones (etiquetas de sección, `EXP-001`, coordenadas, ficha del proyecto, «Volver») y la columna de contenido. Las secciones del inicio se separan con una línea de 1 px arriba y 64–96 px de aire vertical. En móvil la columna de margen desaparece y cada anotación cae **debajo** de su título.
+
+**The Margin Rule.** Una etiqueta de laboratorio va al margen, a la altura de su título, nunca encima como antetítulo. Si no hay margen (móvil), va debajo.
+
 ## Elevation & Depth
 
 Sistema plano. En reposo, la profundidad se construye por tono (`--bg` → `--surface`) y por líneas de 1 px, nunca con sombra. La sombra existe solo como respuesta a un estado: un objeto que el visitante está moviendo o que se separa del papel por interacción (por ejemplo, la imagen que sigue al cursor en la vista lista de proyectos). El sistema tiene una única sombra y no se crean otras.
@@ -175,9 +179,8 @@ Esquinas rectas (0 px) en botones, tarjetas, campos, imágenes y contenedores. E
 Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil (relleno de acento, peso visual, magnético en escritorio); todo lo demás es fino y técnico: texto mono, líneas de 1 px, estados claros.
 
 ### Buttons
-Todavía no hay botones implementados. Se aplican estas reglas al construirlos:
 - **Shape:** esquina recta (0 px).
-- **Primary (CTA, ej. «Hablemos»):** relleno `--accent`, texto `--on-accent`, peso de etiqueta o title según el contexto. Es el único bloque sólido de su pantalla. En escritorio con puntero fino es magnético (spec §7); sin JS o con movimiento reducido es un botón normal.
+- **Primary (`[data-magnetic]`; hoy «Ir al inicio» de la 404, mañana el CTA «Hablemos»):** relleno `--accent`, texto `--on-accent` en Space Grotesk 700 `text-lg`, 24×16 px de relleno y una flecha SVG. Es el único bloque sólido de su pantalla. Con puntero fino es magnético: sigue al puntero el 30 % de la distancia a su centro y vuelve al salir; sin JS o con movimiento reducido es un botón normal.
 - **Secundario / fantasma:** sin relleno, texto `--fg` en mono mayúscula, subrayado o borde de 1 px en `--fg` al interactuar.
 - **Hover / Focus:** el foco usa el contorno global (2 px `--fg`, separación 3 px). El hover nunca es la única señal de que algo es interactivo.
 
@@ -196,6 +199,20 @@ Todavía no hay botones implementados. Se aplican estas reglas al construirlos:
 
 ### Footer Clock (componente firma)
 - Etiqueta mono «Hora en Caracas» en `--muted` y hora en tamaño `text-base` con `tabular-nums` y sufijo `UTC−4`. Sin JS muestra la hora del build; con JS se actualiza cada segundo.
+
+### Project Rows (componente firma)
+- **Lista (por defecto, y la única sin JS):** filas a todo el ancho separadas por líneas de 1 px; número `001` en la columna de margen, título en Space Grotesk 700 `text-3xl` (`text-2xl` en móvil), metadatos mono debajo (tipo · origen · estado), año y flecha SVG a la derecha. Toda la fila es el enlace; hover y foco subrayan el título (2 px). No descarga portadas.
+- **Cuadrícula:** el mismo HTML con `data-view="grid"`: tarjetas sin borde ni sombra, portada 16:10 arriba, número, título `text-xl` y metadatos.
+- **Imagen flotante:** en la lista, con puntero fino y movimiento, la portada del proyecto bajo el puntero lo sigue a su derecha (22rem, 16:10) con la única sombra del sistema. Decorativa (`aria-hidden`).
+
+### View Controls
+- Dos botones mono en mayúscula dentro de un borde de 1 px en `--fg`, con icono SVG de 14 px; el activo va invertido (`--fg` de fondo, `--bg` de texto) y lleva `aria-pressed`. Ocultos sin JS. Van al final de la fila del título de la sección, o debajo de su etiqueta en móvil.
+
+### Lab Cursor
+- Anillo de 44 px con borde de 1 px en `--fg` que acompaña al cursor del sistema (no lo oculta), reducido al 35 % en reposo y a tamaño completo sobre lo interactivo. Solo con puntero fino y movimiento; decorativo.
+
+### Movimiento
+Un solo momento de autor por página: la entrada del titular (`[data-split]`), letras desde abajo con máscara y de `blur(6px)` a nítido en 0,6 s, `expo.out`. Los títulos de sección (`[data-reveal]`) se revelan por líneas al entrar en pantalla, más sobrios (`blur(4px)`). Las etiquetas (`[data-scramble]`) hacen un scramble breve. El scroll es suave en escritorio y nativo en táctil, y las páginas cambian con View Transitions. Con reduced-motion no se descarga GSAP ni hay ninguna animación, ni siquiera el fundido entre páginas.
 
 ## Do's and Don'ts
 

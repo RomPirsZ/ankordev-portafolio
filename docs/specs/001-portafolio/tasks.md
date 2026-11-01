@@ -34,7 +34,7 @@
 - [x] T17 Botones magnéticos y cursor (solo puntero fino)
 - [x] T18 Toggle lista/cuadrícula + imagen flotante
 - [x] T19 View Transitions con reinicio de animaciones
-- [ ] T20 Tests e2e 3 y 7
+- [x] T20 Tests e2e 3 y 7
 
 **Hecho cuando:** fluido en un teléfono real; reduced-motion lo desactiva todo.
 

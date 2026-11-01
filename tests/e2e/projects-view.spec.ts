@@ -1,3 +1,4 @@
+// Plan §9, e2e 3: vista Lista/Cuadrícula (control, accesibilidad, memoria) e imagen flotante.
 import { test, expect, type Page } from '@playwright/test';
 
 const projects = (page: Page) => page.locator('[data-projects]');

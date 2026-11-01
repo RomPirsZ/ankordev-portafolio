@@ -137,6 +137,18 @@
   }
 }
 
+/*
+  Con reduced-motion, el cambio de página es directo. Astro quita sus animaciones,
+  pero el navegador seguía haciendo su fundido por defecto (lo detectó el e2e 7).
+*/
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 @layer components {
   /* Retícula de página: columna de margen para anotaciones + columna de contenido */
   .margin-grid {
