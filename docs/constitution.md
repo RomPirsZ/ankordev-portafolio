@@ -2,7 +2,7 @@
 
 > Principios no negociables para **todos** mis proyectos web (portafolio y clientes).
 > Tiene prioridad sobre cualquier spec, plan o tarea. Si algo los contradice, se detiene el trabajo y se pregunta.
-> Versión 1.1.0 · Ratificada: 2026-10-30 · Última enmienda: 2026-11-01
+> Versión 1.2.0 · Ratificada: 2026-10-30 · Última enmienda: 2026-11-01
 
 ---
 
@@ -12,7 +12,7 @@ El contenido es legible y usable sin JavaScript. Animaciones e interactividad so
 
 ## II. Movimiento con propósito
 
-Toda animación guía la lectura o da feedback. Se anima solo `transform` y `opacity`, con una única excepción: `filter: blur()` en la entrada de titulares y textos cortos, con duración ≤ 0,6 s y radio ≤ 8 px, nunca ligado al scroll continuo ni aplicado a imágenes o bloques grandes. Se respeta siempre `prefers-reduced-motion`.
+Toda animación guía la lectura o da feedback. Se anima solo `transform` y `opacity`, con dos excepciones: `filter: blur()` en la entrada de titulares y textos cortos, con duración ≤ 0,6 s y radio ≤ 8 px, nunca ligado al scroll continuo ni aplicado a imágenes o bloques grandes; y un único fondo ambiental animado (gradiente WebGL), que solo se carga en escritorio con puntero fino, nunca en móvil (allí el fondo es estático), se detiene con la pestaña oculta y mantiene el contraste AA del texto en todo momento. Se respeta siempre `prefers-reduced-motion`: con él, el fondo es estático y no se descarga.
 
 ## III. Accesibilidad (WCAG 2.2 AA)
 
@@ -66,3 +66,4 @@ Se recolectan solo los datos necesarios, se informa su uso y no se agregan track
 
 - **1.0.1** (2026-11-01, PATCH): se reemplaza el marcador `{{MARCA}}` del título por el nombre decidido, «[A]nkordev». Sin cambios en los principios.
 - **1.1.0** (2026-11-01, MINOR): el principio II admite `filter: blur()` en entradas breves de titulares y textos cortos (≤ 0,6 s, ≤ 8 px, sin scroll continuo ni elementos grandes). Motivo: entrada de letras del hero y los títulos (spec §7).
+- **1.2.0** (2026-11-01, MINOR): el principio II admite un único fondo ambiental animado (gradiente WebGL) solo en escritorio con puntero fino; estático en móvil y con reduced-motion; contraste AA del texto garantizado. Motivo: identidad visual del sitio, decisión del cliente.

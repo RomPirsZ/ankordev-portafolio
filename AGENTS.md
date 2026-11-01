@@ -21,7 +21,7 @@ Idioma del código y comentarios: español solo donde aporte claridad. Textos de
 - `DESIGN.md` (+ `.impeccable/design.json`): sistema visual «El Cuaderno de Laboratorio». Toda UI nueva lo sigue: roles de color (nunca un hex de tema en un componente), reglas con nombre, esquinas rectas, plano en reposo, los 2 temas verificados.
 - Orden de autoridad: **constitución → spec/plan → DESIGN.md / PRODUCT.md → guía de cualquier skill o herramienta**. Si una herramienta recomienda algo que contradice a los de arriba, gana el de arriba.
 - Si cambias el sistema visual implementado, actualiza `DESIGN.md` en la misma tarea.
-- Se anima solo `transform` y `opacity` (constitución II). Única excepción: `filter: blur()` en la entrada de titulares y textos cortos, ≤ 0,6 s y ≤ 8 px, nunca ligado al scroll continuo ni en imágenes o bloques grandes.
+- Se anima solo `transform` y `opacity` (constitución II). Excepciones: `filter: blur()` en la entrada de titulares y textos cortos (≤ 0,6 s, ≤ 8 px, nunca ligado al scroll continuo ni en imágenes o bloques grandes) y un único fondo ambiental WebGL (plan §6.1), solo en escritorio con puntero fino; estático en móvil y con reduced-motion.
 - Scripts por CDN no: dependencias por npm según el plan (la CSP solo permite `self`). Fotos de stock solo como ambientación, nunca como trabajo o clientes reales.
 
 ## Instalaciones

@@ -9,19 +9,21 @@
 | Principio | Cómo se cumple |
 |---|---|
 | I. Contenido primero | Astro genera HTML estático; animaciones con JS solo como capa; formulario funciona con POST nativo |
-| II. Movimiento con propósito | GSAP sobre `transform`/`opacity`; `filter: blur()` solo en la entrada de titulares y textos cortos (≤ 0,6 s, ≤ 8 px; constitución 1.1.0); todo se desactiva con `prefers-reduced-motion` |
+| II. Movimiento con propósito | GSAP sobre `transform`/`opacity`; `filter: blur()` solo en la entrada de titulares y textos cortos (≤ 0,6 s, ≤ 8 px; constitución 1.1.0); fondo ambiental WebGL solo en escritorio con puntero fino, pausado con la pestaña oculta y con contraste AA verificado (constitución 1.2.0); todo se desactiva con `prefers-reduced-motion` |
 | III. Accesibilidad | HTML semántico, contraste verificado por tema, axe en CI |
-| IV. Rendimiento | Salida estática, fuentes self-hosted, `astro:assets` para imágenes, GSAP solo donde se usa, Lighthouse CI |
+| IV. Rendimiento | Salida estática, fuentes self-hosted, `astro:assets` para imágenes, GSAP solo donde se usa, Lighthouse CI. El fondo WebGL no se descarga en móvil: allí el fondo es CSS estático (0 KB de JS) |
 | V. Seguridad | Formulario vía función de servidor, Zod, Turnstile, RLS + `check`, cabeceras HTTP, secretos en Vercel |
 | VI. Testing | Vitest (unit + integración), Playwright (e2e + axe), CI bloqueante |
-| VII. Simplicidad | Sin framework de UI (solo Astro); rate limit en memoria; sin CMS |
-| VIII. Spec antes que código | Este plan + `tasks.md`; efectos WebGL quedan para ODD en v1.1 |
+| VII. Simplicidad | Sin framework de UI salvo la isla del fondo (ver excepción); rate limit en memoria; sin CMS |
+| VIII. Spec antes que código | Este plan + `tasks.md`; efectos WebGL quedan para ODD en v1.1, salvo el fondo (§6.1) |
 | IX. Bilingüe | Textos en `src/i18n/es.json` y `en.json`; rutas `/` y `/en/` |
-| X. Privacidad | Solo 5 campos en el formulario, aviso de uso, sin trackers (Vercel Analytics opcional) |
+| X. Privacidad | Solo 5 campos en el formulario, aviso de uso, sin trackers (Vercel Analytics opcional). El fondo no hace peticiones a terceros: el HDR de iluminación se aloja en el sitio |
 
 **Cambio 2026-10-30:** el plan original fijaba Astro 5, pero esa rama tiene vulnerabilidades críticas sin parche (corregidas en `astro >7.3.1`) y `npm audit --audit-level=high` falla. Se migra a Astro 7.4.4 + `@astrojs/vercel` 11. Dependencias transitivas de `@astrojs/vercel` corregidas con `overrides` en `package.json`: `path-to-regexp` 6.3.0 y `zod` 4.6.7 (mismo major), y `glob` 14.0.3 → `minimatch` 11.0.3 dentro de `@vercel/nft` (salto de major: `nft` pide `^13`, sin parche en esa rama). Verificado que el rastreo de `nft` y el empaquetado de funciones salen idénticos con `glob` 13 y 14. `npm audit` queda en 0. Cada override se elimina cuando el paquete que lo trae publique la versión corregida.
 
 **Cambio 2026-11-01:** TypeScript 5.9.3 → **6.0.3** (la más reciente que admite `@astrojs/check` 0.9.12, cuyo peer es `^5 || ^6`; TypeScript 7 queda bloqueado en Dependabot hasta que lo admita). Node **26** (LTS más reciente y la predeterminada en Vercel) en CI, `engines` de `package.json` y `@types/node` 26, para que local, CI y Vercel usen la misma versión.
+
+**Excepción justificada (VII):** el fondo usa la librería oficial **ShaderGradient** (React + three.js + React Three Fiber, ~300 KB gzip) para reproducir el aspecto y los presets de shadergradient.co, decisión del cliente. Queda aislada en una sola isla de React que solo se descarga en escritorio con puntero fino y sin reduced-motion; el resto del sitio sigue sin framework de UI.
 
 **Excepción justificada:** el rate limit en memoria se reinicia entre instancias de la función. Se acepta en v1 porque Turnstile es la defensa principal y el tráfico esperado es bajo.
 
@@ -29,7 +31,8 @@
 
 - **Astro 7** + `@astrojs/vercel` (todo prerenderizado salvo `/api/contact`, con `export const prerender = false`)
 - **Tailwind CSS 4**
-- **GSAP** (core, ScrollTrigger, SplitText) + **Lenis**
+- **GSAP** (core, ScrollTrigger, SplitText, ScrambleText) + **Lenis**
+- Fondo (solo escritorio): **@shadergradient/react** + **three** + **@react-three/fiber** + **React 19** vía **@astrojs/react** (§6.1)
 - **Supabase** (solo tabla `leads`)
 - **Zod** (`astro/zod`), **Cloudflare Turnstile**
 - Fuentes `@fontsource`: Space Grotesk, Monaspace Krypton
@@ -90,6 +93,17 @@ Content Collection `projects` (`src/content.config.ts`, esquema en `src/lib/proj
 ## 6. Animaciones
 
 `src/lib/animations.ts` exporta `initAnimations()`, llamado en `astro:page-load`, y `destroyAnimations()` en `astro:before-swap`. Si `matchMedia('(prefers-reduced-motion: reduce)')` coincide, retorna sin hacer nada. Lenis se sincroniza con ScrollTrigger vía `gsap.ticker`. Cursor y magnetismo solo con `(hover: hover) and (pointer: fine)`.
+
+### 6.1 Fondo de gradiente (constitución II 1.2.0)
+
+- **Base para todos:** gradiente estático en CSS en el fondo de `<html>`, con los colores del tema activo; la retícula sigue encima. Es lo que ven móvil, reduced-motion, navegadores sin WebGL y visitantes sin JS.
+- **Escritorio:** isla React `GradientBackground` con `client:media="(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)"`: su JS solo se descarga si se cumple la condición. Renderiza `ShaderGradientCanvas` fijo detrás del contenido (`z-index: -1`), con `transition:persist` para no reiniciarse al navegar.
+- **Iluminación:** `lightType="env"` con el HDR alojado en `public/hdr/` (`envBasePath="/hdr/"`). Archivos de Poly Haven (CC0), idénticos a los de drei; solo se descarga el preset en uso (~1,5 MB, solo escritorio). Ninguna petición a terceros.
+- **Comportamiento:** colores por tema en `src/lib/gradient.ts` (los mismos que el gradiente estático), cambia de colores con el tema, se pausa con la pestaña oculta, se desmonta si el visitante activa reduced-motion, y un error de WebGL deja el gradiente estático.
+- **Contraste:** los colores se eligen para que `--fg` cumpla AA sobre cualquier punto del fondo; un e2e mide los píxeles reales del canvas en ambos temas.
+- **CSP:** las islas añaden un script y un estilo en línea de Astro; sus hashes van en `vercel.json`.
+
+**Cambio 2026-11-01:** se añade el fondo de gradiente (spec §6) a petición del cliente, con la enmienda 1.2.0 de la constitución.
 
 ## 7. Contacto
 

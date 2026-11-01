@@ -63,6 +63,10 @@ Un portafolio de marca personal que transmita sensación de **laboratorio creati
 
 El tema elegido se recuerda en visitas posteriores. *(2026-11-01: se retiran los temas Petróleo y Militar; quedan dos.)*
 
+### Fondo
+
+Cada tema tiene un fondo de gradiente en sus colores, al estilo de shadergradient.co. En escritorio está animado (WebGL, librería ShaderGradient); en móvil y con movimiento reducido es estático, sin cargar nada pesado. El texto mantiene contraste AA sobre cualquier punto del fondo. *(Añadido 2026-11-01.)*
+
 ### Tipografía y elementos de laboratorio
 
 - Display grande y fluida (Space Grotesk); etiquetas en monoespaciada (Monaspace Krypton), mayúsculas.
@@ -107,4 +111,4 @@ Los de la constitución (accesibilidad, rendimiento, seguridad, testing, privaci
 
 ## 11. Fuera de alcance (v1.1, ODD)
 
-Efectos WebGL, sonido de interfaz, sección `/lab` de experimentos, blog y dominio propio.
+Efectos WebGL (salvo el fondo de §6), sonido de interfaz, sección `/lab` de experimentos, blog y dominio propio.
