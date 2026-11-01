@@ -1,6 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const PORT = 4321;
+// Puerto propio: el 4321 es el de `astro dev`, y con reuseExistingServer los
+// tests acabarían probando el servidor de desarrollo en lugar del build.
+const PORT = 4329;
 
 export default defineConfig({
   testDir: 'tests/e2e',
