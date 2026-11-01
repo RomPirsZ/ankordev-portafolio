@@ -8,6 +8,7 @@ import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import { textEffects } from './effects/text';
 import { FINE_POINTER, pointerEffects } from './effects/pointer';
+import { projectEffects } from './effects/projects';
 
 gsap.registerPlugin(ScrollTrigger, SplitText, ScrambleTextPlugin);
 
@@ -29,9 +30,12 @@ export function initAnimations() {
 
   // Todos los efectos viven en un contexto para revertirlos juntos
   context = gsap.context(() => textEffects(document));
-  // Cursor y botones magnéticos solo con puntero fino; se revierten solos si deja de haberlo
+  // Cursor, botones magnéticos e imagen flotante solo con puntero fino; se revierten solos si deja de haberlo
   pointerMedia = gsap.matchMedia();
-  pointerMedia.add(FINE_POINTER, () => pointerEffects(document));
+  pointerMedia.add(FINE_POINTER, () => {
+    const cleanups = [pointerEffects(document), projectEffects(document)];
+    return () => cleanups.forEach((cleanup) => cleanup());
+  });
   // Las entradas ya tienen su estado inicial: el CSS deja de ocultarlas
   document.documentElement.classList.add('motion-ready');
   // Las líneas y posiciones dependen de las fuentes

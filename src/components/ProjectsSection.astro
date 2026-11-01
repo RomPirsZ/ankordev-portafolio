@@ -1,7 +1,7 @@
 ---
 // Proyectos (spec §5.3): vista Lista (filas grandes) y Cuadrícula (tarjetas con
 // portada). Ambas comparten el mismo HTML; solo cambia `data-view`. Sin JS queda
-// la lista, que además no descarga portadas. El control de vista llega en T18.
+// la lista, que además no descarga portadas, y el control de vista no aparece.
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Section from './Section.astro';
@@ -19,7 +19,22 @@ const projects = selectProjects(await getCollection('projects'), lang);
 ---
 
 <Section id={sectionId('projects', lang)} number="01" title={t('projects.title')} wide>
-  <div class="projects" data-view="list" data-projects>
+  <div slot="actions" class="view-controls" role="group" aria-label={t('projects.view')} data-view-controls hidden>
+    <button type="button" data-view-value="list" aria-pressed="true" aria-controls="projects-list">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
+        <path d="M1 3.5h14M1 8h14M1 12.5h14"></path>
+      </svg>
+      {t('projects.viewList')}
+    </button>
+    <button type="button" data-view-value="grid" aria-pressed="false" aria-controls="projects-list">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
+        <path d="M1.75 1.75h5v5h-5zM9.25 1.75h5v5h-5zM1.75 9.25h5v5h-5zM9.25 9.25h5v5h-5z"></path>
+      </svg>
+      {t('projects.viewGrid')}
+    </button>
+  </div>
+
+  <div class="projects" id="projects-list" data-view="list" data-projects>
     <ul class="projects-list" role="list">
       {
         projects.map(({ id, data }) => (
@@ -51,7 +66,56 @@ const projects = selectProjects(await getCollection('projects'), lang);
   </div>
 </Section>
 
+<script>
+  import { initProjectsView } from '../lib/projects-view';
+
+  initProjectsView();
+  // Con View Transitions (T19) cada página nueva vuelve a necesitarlo
+  document.addEventListener('astro:page-load', initProjectsView);
+</script>
+
 <style>
+  /* ——— Control de vista: dos botones finos; el activo, invertido ——— */
+  .view-controls {
+    display: inline-flex;
+    border: 1px solid var(--fg);
+  }
+
+  .view-controls[hidden] {
+    display: none;
+  }
+
+  .view-controls button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--fg);
+    cursor: pointer;
+  }
+
+  .view-controls button + button {
+    border-left: 1px solid var(--fg);
+  }
+
+  .view-controls button[aria-pressed='true'] {
+    background-color: var(--fg);
+    color: var(--bg);
+  }
+
+  .view-controls button:hover:not([aria-pressed='true']) {
+    text-decoration: underline;
+  }
+
+  .view-controls svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
   /* ——— Lista: filas con el número en la columna de margen ——— */
   .project {
     border-top: 1px solid var(--line);

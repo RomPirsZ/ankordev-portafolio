@@ -16,10 +16,22 @@ const { id, number, title, wide = false } = Astro.props;
 
 <section id={id} aria-labelledby={`${id}-title`} class="border-t border-line">
   <div class="margin-grid py-16 md:py-24">
-    <h2 id={`${id}-title`} class="text-3xl font-bold tracking-tight text-balance md:col-start-2 md:row-start-1" data-reveal>
+    <h2
+      id={`${id}-title`}
+      class="text-3xl font-bold tracking-tight text-balance md:col-start-2 md:row-start-1 md:justify-self-start"
+      data-reveal
+    >
       {title}
     </h2>
     <LabLabel text={`[ ${number} / ${title} ]`} class="md:col-start-1 md:row-start-1 md:pt-[0.9em]" />
+    {
+      Astro.slots.has('actions') && (
+        /* relative: por encima de las líneas del título, que SplitText posiciona */
+        <div class="relative mt-6 md:col-start-2 md:row-start-1 md:mt-0 md:self-center md:justify-self-end">
+          <slot name="actions" />
+        </div>
+      )
+    }
     <div class:list={['mt-8 md:mt-12', wide ? 'md:col-span-2' : 'md:col-start-2']}>
       <slot />
     </div>

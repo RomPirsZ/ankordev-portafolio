@@ -192,7 +192,9 @@
         "purpose": "Navegación, numeración, etiquetas EXP-001, reloj y metadatos. Siempre mayúsculas."
       }
     },
-    "shadows": [],
+    "shadows": [
+      { "name": "objeto-en-estado", "value": "0 1.25rem 2.5rem -0.75rem rgb(0 0 0 / 0.45)", "purpose": "Única sombra del sistema: lo que el puntero levanta del papel (imagen flotante de Proyectos)." }
+    ],
     "motion": [],
     "breakpoints": [
       {

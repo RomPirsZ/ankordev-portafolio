@@ -157,7 +157,10 @@ La navegación pasa de una sola fila en escritorio (marca · enlaces · selector
 
 ## Elevation & Depth
 
-Sistema plano. En reposo, la profundidad se construye por tono (`--bg` → `--surface`) y por líneas de 1 px, nunca con sombra. La sombra existe solo como respuesta a un estado: un objeto que el visitante está moviendo o que se separa del papel por interacción (por ejemplo, la imagen que sigue al cursor en la vista lista de proyectos). Todavía no hay un valor de sombra implementado; el primero que se construya debe ser uno solo, sobrio, y quedar registrado aquí.
+Sistema plano. En reposo, la profundidad se construye por tono (`--bg` → `--surface`) y por líneas de 1 px, nunca con sombra. La sombra existe solo como respuesta a un estado: un objeto que el visitante está moviendo o que se separa del papel por interacción (por ejemplo, la imagen que sigue al cursor en la vista lista de proyectos). El sistema tiene una única sombra y no se crean otras.
+
+### Shadow Vocabulary
+- **Objeto en estado** (`box-shadow: 0 1.25rem 2.5rem -0.75rem rgb(0 0 0 / 0.45)`): solo para lo que el puntero levanta del papel. Hoy, la imagen flotante de Proyectos (`.project-float`). Separa la portada del fondo aunque compartan color (la portada 001 sobre el tema Carbón).
 
 **The Flat-At-Rest Rule.** Ninguna superficie tiene sombra en reposo. Si una tarjeta necesita sombra para separarse del fondo, le falta contraste de tono, no sombra.
 
