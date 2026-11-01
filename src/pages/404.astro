@@ -1,0 +1,40 @@
+---
+// Vercel sirve un único 404.html para cualquier ruta: va en español con el
+// bloque en inglés marcado con su idioma.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import LabLabel from '../components/LabLabel.astro';
+import { localizePath, useTranslations } from '../i18n/utils';
+
+const es = useTranslations('es');
+const en = useTranslations('en');
+---
+
+<BaseLayout title={`${es('notFound.title')} — ${es('site.brand')}`} lang="es" altHref={localizePath('home', 'en')}>
+  <div class="margin-grid min-h-[60svh] content-center py-20 md:py-28">
+    <h1 class="max-w-[14ch] text-display font-bold text-balance md:col-start-2 md:row-start-1" data-split>
+      {es('notFound.title')}
+    </h1>
+    <LabLabel text="ERR-404" class="md:col-start-1 md:row-start-1 md:pt-[0.8em]" />
+    <div class="mt-6 md:col-start-2">
+      <p class="max-w-[50ch] text-lg text-pretty">{es('notFound.text')}</p>
+      <a
+        href={localizePath('home', 'es')}
+        class="mt-8 inline-flex items-center gap-3 bg-accent px-6 py-4 text-lg font-bold text-on-accent"
+        data-magnetic
+      >
+        {es('notFound.home')}
+        <ArrowIcon />
+      </a>
+
+      <div lang="en" class="mt-14 max-w-[50ch] border-t border-line pt-6">
+        <p class="text-xl font-bold">{en('notFound.title')}</p>
+        <p class="mt-2">{en('notFound.text')}</p>
+        <a href={localizePath('home', 'en')} class="annotation mt-4 inline-flex items-center gap-2 text-fg hover:underline">
+          {en('notFound.home')}
+          <ArrowIcon />
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

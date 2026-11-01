@@ -1,0 +1,27 @@
+---
+// Sección del inicio con columna de margen (DESIGN.md: anotaciones al margen del
+// cuaderno). La etiqueta va a la altura del título, nunca encima; en móvil, debajo.
+import LabLabel from './LabLabel.astro';
+
+interface Props {
+  id: string;
+  number: string;
+  title: string;
+  /** El contenido ocupa también la columna de margen (filas con número al margen). */
+  wide?: boolean;
+}
+
+const { id, number, title, wide = false } = Astro.props;
+---
+
+<section id={id} aria-labelledby={`${id}-title`} class="border-t border-line">
+  <div class="margin-grid py-16 md:py-24">
+    <h2 id={`${id}-title`} class="text-3xl font-bold tracking-tight text-balance md:col-start-2 md:row-start-1" data-reveal>
+      {title}
+    </h2>
+    <LabLabel text={`[ ${number} / ${title} ]`} class="md:col-start-1 md:row-start-1 md:pt-[0.9em]" />
+    <div class:list={['mt-8 md:mt-12', wide ? 'md:col-span-2' : 'md:col-start-2']}>
+      <slot />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,135 @@
+---
+// Caso de estudio (spec §8): Problema → Solución → Decisiones técnicas → Resultado,
+// con ficha al margen, portada, galería, stack y enlaces.
+import { Image } from 'astro:assets';
+import { render, type CollectionEntry } from 'astro:content';
+import ArrowIcon from './ArrowIcon.astro';
+import LabLabel from './LabLabel.astro';
+import { sectionHref, useTranslations } from '../i18n/utils';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const t = useTranslations(data.lang);
+const { Content } = await render(entry);
+
+const details = [
+  { term: t('case.type'), value: t(`project.type.${data.type}`) },
+  { term: t('case.year'), value: String(data.year) },
+  { term: t('case.status'), value: t(`project.status.${data.status}`) },
+  { term: t('case.origin'), value: t(`project.origin.${data.origin}`) },
+  ...(data.stack.length > 0 ? [{ term: t('case.stack'), value: data.stack.join(' · ') }] : []),
+];
+const links = [
+  ...(data.liveUrl ? [{ href: data.liveUrl, label: t('case.live') }] : []),
+  ...(data.repoUrl ? [{ href: data.repoUrl, label: t('case.repo') }] : []),
+];
+---
+
+<article>
+  <header class="margin-grid pt-10 pb-12 md:pt-16 md:pb-16">
+    <a
+      href={sectionHref('projects', data.lang)}
+      class="annotation mb-8 inline-flex items-center gap-2 justify-self-start py-1 text-fg hover:underline md:col-start-1 md:row-start-1 md:mb-12"
+    >
+      <ArrowIcon direction="left" />
+      {t('case.back')}
+    </a>
+    <h1 class="max-w-[16ch] text-display font-bold text-balance md:col-start-2 md:row-start-2" data-split>{data.title}</h1>
+    <p class="mt-4 max-w-[60ch] text-lg text-pretty md:col-start-2 md:row-start-3 md:mt-6">{data.summary}</p>
+    <LabLabel text={`EXP-${data.number}`} class="mt-4 md:col-start-1 md:row-start-2 md:mt-0 md:pt-[0.8em]" />
+  </header>
+
+  <figure class="mx-auto max-w-7xl px-4 sm:px-6">
+    <Image
+      src={data.cover}
+      alt={data.coverAlt}
+      widths={[640, 960, 1280, 1600]}
+      sizes="(min-width: 80rem) 77rem, calc(100vw - 2rem)"
+      loading="eager"
+      class="h-auto w-full"
+    />
+  </figure>
+
+  <div class="margin-grid py-14 md:py-20">
+    <section aria-labelledby="case-details" class="md:col-start-1 md:row-start-1">
+      <h2 id="case-details" class="sr-only">{t('case.details')}</h2>
+      <dl class="annotation grid grid-cols-2 gap-x-6 gap-y-4 md:grid-cols-1">
+        {
+          details.map(({ term, value }) => (
+            <div>
+              <dt>{term}</dt>
+              <dd class="mt-1 text-fg">{value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      {
+        links.length > 0 && (
+          <ul class="mt-8 grid gap-3" role="list">
+            {links.map(({ href, label }) => (
+              <li>
+                <a href={href} rel="noopener" class="annotation inline-flex items-center gap-2 text-fg hover:underline">
+                  {label}
+                  <ArrowIcon direction="up-right" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    <div class="case-body mt-12 max-w-[68ch] md:col-start-2 md:row-start-1 md:mt-0">
+      <Content />
+    </div>
+  </div>
+
+  {
+    data.gallery.length > 0 && (
+      <section aria-labelledby="case-gallery" class="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
+        <h2 id="case-gallery" class="sr-only">
+          {t('case.gallery')}
+        </h2>
+        <ul class="grid gap-6 md:grid-cols-2" role="list">
+          {data.gallery.map(({ src, alt }) => (
+            <li>
+              <Image src={src} alt={alt} widths={[640, 960, 1280]} sizes="(min-width: 48rem) 50vw, 100vw" class="h-auto w-full" />
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</article>
+
+<style>
+  .case-body :global(h2) {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-top: 3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .case-body :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .case-body :global(p) {
+    font-size: var(--text-base);
+    line-height: 1.6;
+  }
+
+  .case-body :global(p + p) {
+    margin-top: 1rem;
+  }
+
+  .case-body :global(a) {
+    text-decoration: underline;
+  }
+</style>

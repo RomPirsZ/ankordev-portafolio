@@ -1,0 +1,181 @@
+---
+// Proyectos (spec §5.3): vista Lista (filas grandes) y Cuadrícula (tarjetas con
+// portada). Ambas comparten el mismo HTML; solo cambia `data-view`. Sin JS queda
+// la lista, que además no descarga portadas. El control de vista llega en T18.
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Section from './Section.astro';
+import ArrowIcon from './ArrowIcon.astro';
+import { localizePath, sectionId, useTranslations, type Lang } from '../i18n/utils';
+import { projectSlug, selectProjects } from '../lib/projects';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const projects = selectProjects(await getCollection('projects'), lang);
+---
+
+<Section id={sectionId('projects', lang)} number="01" title={t('projects.title')} wide>
+  <div class="projects" data-view="list" data-projects>
+    <ul class="projects-list" role="list">
+      {
+        projects.map(({ id, data }) => (
+          <li class="project">
+            <a class="project-link group" href={localizePath('project', lang, { slug: projectSlug(id) })}>
+              <span class="project-number annotation">{data.number}</span>
+              <span class="project-title">{data.title}</span>
+              <span class="project-meta annotation">
+                {t(`project.type.${data.type}`)} · {t(`project.origin.${data.origin}`)} · {t(`project.status.${data.status}`)}
+              </span>
+              <span class="project-year annotation">{data.year}</span>
+              {/* Envuelta: los estilos con ámbito no llegan al SVG del componente hijo */}
+              <span class="project-arrow">
+                <ArrowIcon direction="up-right" />
+              </span>
+              <Image
+                class="project-cover"
+                src={data.cover}
+                alt=""
+                widths={[480, 800, 1200]}
+                sizes="(min-width: 64rem) 30vw, (min-width: 40rem) 45vw, 100vw"
+                loading="lazy"
+              />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Section>
+
+<style>
+  /* ——— Lista: filas con el número en la columna de margen ——— */
+  .project {
+    border-top: 1px solid var(--line);
+  }
+
+  .project:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .project-link {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr) auto;
+    column-gap: 1.5rem;
+    row-gap: 0.5rem;
+    align-items: baseline;
+    padding-block: 1.5rem;
+    text-decoration: none;
+  }
+
+  .project-number {
+    grid-row: span 2;
+  }
+
+  .project-title {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  .project-meta {
+    grid-column: 2;
+  }
+
+  .project-year {
+    display: none;
+  }
+
+  .project-arrow {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: center;
+    font-size: var(--text-xl);
+  }
+
+  .project-cover {
+    display: none;
+  }
+
+  .project-link:hover .project-title,
+  .project-link:focus-visible .project-title {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  @media (width >= 48rem) {
+    .project-link {
+      grid-template-columns: 11rem minmax(0, 1fr) auto auto;
+      padding-block: 2rem;
+    }
+
+    .project-title {
+      font-size: var(--text-3xl);
+    }
+
+    .project-year {
+      display: block;
+      grid-column: 3;
+      grid-row: 1;
+      align-self: center;
+    }
+
+    .project-arrow {
+      grid-column: 4;
+    }
+  }
+
+  /* ——— Cuadrícula: tarjetas con portada, sin bordes ni sombras ——— */
+  [data-view='grid'] .projects-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: 2.5rem 1.5rem;
+  }
+
+  [data-view='grid'] .project {
+    border: 0;
+  }
+
+  [data-view='grid'] .project-link {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding-block: 0;
+  }
+
+  [data-view='grid'] .project-cover {
+    display: block;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    margin-bottom: 0.75rem;
+  }
+
+  [data-view='grid'] .project-number {
+    grid-row: 2 / span 2;
+  }
+
+  [data-view='grid'] .project-title {
+    grid-row: 2;
+    font-size: var(--text-xl);
+  }
+
+  [data-view='grid'] .project-meta {
+    grid-row: 3;
+  }
+
+  [data-view='grid'] .project-year {
+    display: none;
+  }
+
+  [data-view='grid'] .project-arrow {
+    grid-column: 3;
+    grid-row: 2;
+  }
+</style>

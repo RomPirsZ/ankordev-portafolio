@@ -1,0 +1,14 @@
+---
+// Etiqueta de laboratorio (spec §6): `[ 01 / PROYECTOS ]`, `EXP-001`…
+// Es decorativa: se usa solo donde su información ya está en el texto cercano
+// (el título de la sección, el número del proyecto), así que los lectores de
+// pantalla la ignoran y el efecto scramble (T16) no les afecta.
+interface Props {
+  text: string;
+  class?: string;
+}
+
+const { text, class: className } = Astro.props;
+---
+
+<span class:list={['annotation block', className]} aria-hidden="true" data-scramble>{text}</span>

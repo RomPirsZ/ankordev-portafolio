@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CaseStudy from '../../../components/CaseStudy.astro';
+import { localizePath, useTranslations } from '../../../i18n/utils';
+import { projectSlug, selectProjects } from '../../../lib/projects';
+
+export async function getStaticPaths() {
+  return selectProjects(await getCollection('projects'), 'en').map((entry) => ({
+    params: { slug: projectSlug(entry.id) },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const t = useTranslations('en');
+---
+
+<BaseLayout
+  title={`${entry.data.title} — ${t('site.brand')}`}
+  lang="en"
+  altHref={localizePath('project', 'es', { slug: projectSlug(entry.id) })}
+>
+  <CaseStudy entry={entry} />
+</BaseLayout>
