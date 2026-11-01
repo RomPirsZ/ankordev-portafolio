@@ -41,5 +41,9 @@ const t = useTranslations(lang);
       <slot />
     </main>
     <Footer lang={lang} />
+    <script>
+      import { startMotion } from '../lib/motion';
+      startMotion();
+    </script>
   </body>
 </html>
