@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-01T12:47:56.361Z",
+  "title": "Design System: [A]nkordev",
+  "extensions": {
+    "colorMeta": {
+      "carbon": {
+        "role": "neutral",
+        "displayName": "Carbón",
+        "canonical": "oklch(29.7% 0.008 264.4)",
+        "tonalRamp": [
+          "oklch(15% 0.003 264.4)",
+          "oklch(26% 0.005 264.4)",
+          "oklch(38% 0.008 264.4)",
+          "oklch(50% 0.008 264.4)",
+          "oklch(62% 0.008 264.4)",
+          "oklch(74% 0.007 264.4)",
+          "oklch(85% 0.005 264.4)",
+          "oklch(95% 0.003 264.4)"
+        ]
+      },
+      "carbon-surface": {
+        "role": "neutral",
+        "displayName": "Carbón superficie",
+        "canonical": "oklch(35.9% 0.011 264.4)",
+        "tonalRamp": [
+          "oklch(15% 0.004 264.4)",
+          "oklch(26% 0.007 264.4)",
+          "oklch(38% 0.011 264.4)",
+          "oklch(50% 0.011 264.4)",
+          "oklch(62% 0.011 264.4)",
+          "oklch(74% 0.01 264.4)",
+          "oklch(85% 0.007 264.4)",
+          "oklch(95% 0.004 264.4)"
+        ]
+      },
+      "ceniza": {
+        "role": "neutral",
+        "displayName": "Ceniza",
+        "canonical": "oklch(77.6% 0.003 84.6)",
+        "tonalRamp": [
+          "oklch(15% 0.001 84.6)",
+          "oklch(26% 0.002 84.6)",
+          "oklch(38% 0.003 84.6)",
+          "oklch(50% 0.003 84.6)",
+          "oklch(62% 0.003 84.6)",
+          "oklch(74% 0.003 84.6)",
+          "oklch(85% 0.002 84.6)",
+          "oklch(95% 0.001 84.6)"
+        ]
+      },
+      "naranja": {
+        "role": "primary",
+        "displayName": "Naranja",
+        "canonical": "oklch(69.2% 0.181 47.4)",
+        "tonalRamp": [
+          "oklch(15% 0.069 47.4)",
+          "oklch(26% 0.119 47.4)",
+          "oklch(38% 0.175 47.4)",
+          "oklch(50% 0.181 47.4)",
+          "oklch(62% 0.181 47.4)",
+          "oklch(74% 0.165 47.4)",
+          "oklch(85% 0.115 47.4)",
+          "oklch(95% 0.069 47.4)"
+        ]
+      },
+      "naranja-surface": {
+        "role": "primary",
+        "displayName": "Naranja superficie",
+        "canonical": "oklch(64.6% 0.174 45.1)",
+        "tonalRamp": [
+          "oklch(15% 0.066 45.1)",
+          "oklch(26% 0.115 45.1)",
+          "oklch(38% 0.168 45.1)",
+          "oklch(50% 0.174 45.1)",
+          "oklch(62% 0.174 45.1)",
+          "oklch(74% 0.159 45.1)",
+          "oklch(85% 0.111 45.1)",
+          "oklch(95% 0.066 45.1)"
+        ]
+      },
+      "petroleo": {
+        "role": "neutral",
+        "displayName": "Petróleo",
+        "canonical": "oklch(50.8% 0.086 226.2)",
+        "tonalRamp": [
+          "oklch(15% 0.033 226.2)",
+          "oklch(26% 0.057 226.2)",
+          "oklch(38% 0.083 226.2)",
+          "oklch(50% 0.086 226.2)",
+          "oklch(62% 0.086 226.2)",
+          "oklch(74% 0.079 226.2)",
+          "oklch(85% 0.055 226.2)",
+          "oklch(95% 0.033 226.2)"
+        ]
+      },
+      "petroleo-surface": {
+        "role": "neutral",
+        "displayName": "Petróleo superficie",
+        "canonical": "oklch(44.5% 0.074 225.6)",
+        "tonalRamp": [
+          "oklch(15% 0.028 225.6)",
+          "oklch(26% 0.049 225.6)",
+          "oklch(38% 0.072 225.6)",
+          "oklch(50% 0.074 225.6)",
+          "oklch(62% 0.074 225.6)",
+          "oklch(74% 0.068 225.6)",
+          "oklch(85% 0.047 225.6)",
+          "oklch(95% 0.028 225.6)"
+        ]
+      },
+      "militar": {
+        "role": "neutral",
+        "displayName": "Militar",
+        "canonical": "oklch(50.2% 0.074 123.8)",
+        "tonalRamp": [
+          "oklch(15% 0.028 123.8)",
+          "oklch(26% 0.049 123.8)",
+          "oklch(38% 0.072 123.8)",
+          "oklch(50% 0.074 123.8)",
+          "oklch(62% 0.074 123.8)",
+          "oklch(74% 0.068 123.8)",
+          "oklch(85% 0.047 123.8)",
+          "oklch(95% 0.028 123.8)"
+        ]
+      },
+      "militar-surface": {
+        "role": "neutral",
+        "displayName": "Militar superficie",
+        "canonical": "oklch(44.5% 0.066 124.1)",
+        "tonalRamp": [
+          "oklch(15% 0.025 124.1)",
+          "oklch(26% 0.044 124.1)",
+          "oklch(38% 0.064 124.1)",
+          "oklch(50% 0.066 124.1)",
+          "oklch(62% 0.066 124.1)",
+          "oklch(74% 0.06 124.1)",
+          "oklch(85% 0.042 124.1)",
+          "oklch(95% 0.025 124.1)"
+        ]
+      },
+      "hueso": {
+        "role": "neutral",
+        "displayName": "Hueso",
+        "canonical": "oklch(95.8% 0.007 88.6)",
+        "tonalRamp": [
+          "oklch(15% 0.003 88.6)",
+          "oklch(26% 0.005 88.6)",
+          "oklch(38% 0.007 88.6)",
+          "oklch(50% 0.007 88.6)",
+          "oklch(62% 0.007 88.6)",
+          "oklch(74% 0.006 88.6)",
+          "oklch(85% 0.004 88.6)",
+          "oklch(95% 0.003 88.6)"
+        ]
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "oklch(23.9% 0.006 271.2)",
+        "tonalRamp": [
+          "oklch(15% 0.002 271.2)",
+          "oklch(26% 0.004 271.2)",
+          "oklch(38% 0.006 271.2)",
+          "oklch(50% 0.006 271.2)",
+          "oklch(62% 0.006 271.2)",
+          "oklch(74% 0.005 271.2)",
+          "oklch(85% 0.004 271.2)",
+          "oklch(95% 0.002 271.2)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Titular del hero y nombres de proyecto en vista lista. Una por pantalla."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Títulos de sección."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Títulos de tarjeta, paquete o paso del proceso."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido, 65–75 caracteres de ancho máximo."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Navegación, numeración, etiquetas EXP-001, reloj y metadatos. Siempre mayúsculas."
+      }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "fluid-min",
+        "value": "360px"
+      },
+      {
+        "name": "fluid-max",
+        "value": "1440px"
+      }
+    ],
+    "themes": {
+      "roles": [
+        "--bg",
+        "--surface",
+        "--fg",
+        "--muted",
+        "--accent",
+        "--accent-ink",
+        "--on-accent",
+        "--line"
+      ],
+      "source": "src/styles/global.css",
+      "values": [
+        "carbon",
+        "naranja",
+        "petroleo",
+        "militar"
+      ],
+      "default": "carbon"
+    }
+  },
+  "components": [
+    {
+      "name": "CTA principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Propuesta (aún no implementado): el único bloque sólido de su pantalla, ej. «Hablemos». Magnético en escritorio.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#contacto\">Hablemos <span aria-hidden=\"true\">→</span></a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--accent); color: var(--on-accent); padding: 1rem 1.75rem; border-radius: 0; font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif; font-size: 1.125rem; font-weight: 700; text-decoration: none; transition: transform 0.2s ease; } .ds-btn-primary:hover { transform: translateY(-2px); } .ds-btn-primary:active { transform: translateY(0); } .ds-btn-primary:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }"
+    },
+    {
+      "name": "Botón fantasma",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Propuesta (aún no implementado): acción secundaria fina, mono mayúscula con borde de 1 px en --fg.",
+      "html": "<button class=\"ds-btn-ghost\" type=\"button\">Ver caso</button>",
+      "css": ".ds-btn-ghost { background: transparent; color: var(--fg); border: 1px solid var(--fg); border-radius: 0; padding: 0.625rem 1rem; font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: background 0.2s ease, color 0.2s ease; } .ds-btn-ghost:hover { background: var(--fg); color: var(--bg); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }"
+    },
+    {
+      "name": "Navegación",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Implementado (src/components/Nav.astro): marca en grotesca, enlaces numerados en mono mayúscula.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Principal\"><a class=\"ds-nav-brand\" href=\"/\">[A]nkordev</a><ul><li><a href=\"#proyectos\"><span aria-hidden=\"true\">01</span> Proyectos</a></li><li><a href=\"#servicios\"><span aria-hidden=\"true\">02</span> Servicios</a></li><li><a href=\"#sobre-mi\"><span aria-hidden=\"true\">03</span> Sobre mí</a></li><li><a href=\"#contacto\"><span aria-hidden=\"true\">04</span> Contacto</a></li></ul></nav>",
+      "css": ".ds-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--line); background: var(--bg); color: var(--fg); } .ds-nav-brand { font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.025em; color: inherit; text-decoration: none; } .ds-nav ul { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin: 0; padding: 0; list-style: none; } .ds-nav ul a { display: inline-block; padding: 0.25rem 0; color: inherit; text-decoration: none; font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; } .ds-nav ul a span { color: var(--muted); } .ds-nav a:hover { text-decoration: underline; } .ds-nav a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }"
+    },
+    {
+      "name": "Selector de tema",
+      "kind": "custom",
+      "refersTo": "theme-swatch",
+      "description": "Implementado (src/components/ThemeSwitcher.astro): círculos de 24 px con el fondo real de cada tema; el activo lleva contorno exterior.",
+      "html": "<div class=\"ds-swatches\" role=\"group\" aria-label=\"Tema de color\"><button type=\"button\" aria-pressed=\"true\" style=\"background:#2B2D31\" title=\"Carbón\"></button><button type=\"button\" aria-pressed=\"false\" style=\"background:#F2711C\" title=\"Naranja\"></button><button type=\"button\" aria-pressed=\"false\" style=\"background:#1F6F8B\" title=\"Petróleo\"></button><button type=\"button\" aria-pressed=\"false\" style=\"background:#5B6B3A\" title=\"Militar\"></button></div>",
+      "css": ".ds-swatches { display: flex; gap: 0.375rem; } .ds-swatches button { width: 24px; height: 24px; border-radius: 9999px; border: 2px solid var(--fg); padding: 0; cursor: pointer; } .ds-swatches button[aria-pressed=\"true\"] { outline: 2px solid var(--fg); outline-offset: 2px; } .ds-swatches button:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }"
+    },
+    {
+      "name": "Etiqueta de experimento",
+      "kind": "chip",
+      "refersTo": "label",
+      "description": "Propuesta (spec §6, aún no implementado): anotación mono tipo [ 01 / SERVICIOS ] o EXP-001 con indicador de estado circular.",
+      "html": "<span class=\"ds-tag\"><span class=\"ds-tag-dot\" aria-hidden=\"true\"></span>[ 01 / Servicios ]</span>",
+      "css": ".ds-tag { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--fg); font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; } .ds-tag-dot { width: 8px; height: 8px; border-radius: 9999px; background: var(--accent); }"
+    },
+    {
+      "name": "Campo de formulario",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Propuesta (aún no implementado, T25): etiqueta mono arriba, campo recto con línea de 1 px en --fg.",
+      "html": "<label class=\"ds-field\"><span>Nombre</span><input type=\"text\" name=\"name\" autocomplete=\"name\"></label>",
+      "css": ".ds-field { display: grid; gap: 0.5rem; color: var(--fg); } .ds-field span { font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); } .ds-field input { background: transparent; color: var(--fg); border: 0; border-bottom: 1px solid var(--fg); border-radius: 0; padding: 0.75rem 0; font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif; font-size: 1.125rem; } .ds-field input:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }"
+    },
+    {
+      "name": "Tarjeta de proyecto",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Propuesta (aún no implementado, T12): superficie por tono, sin sombra, numeración mono y título en grotesca.",
+      "html": "<article class=\"ds-card\"><p class=\"ds-card-meta\">004 · Iglesia · En progreso</p><h3>LEGO LBN</h3></article>",
+      "css": ".ds-card { background: var(--surface); color: var(--fg); border-radius: 0; padding: 1.5rem; display: grid; gap: 0.75rem; } .ds-card-meta { margin: 0; font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); } .ds-card h3 { margin: 0; font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif; font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; }"
+    },
+    {
+      "name": "Reloj de Caracas",
+      "kind": "custom",
+      "refersTo": "footer-clock",
+      "description": "Implementado (src/components/Footer.astro): etiqueta mono y hora tabular con sufijo UTC−4.",
+      "html": "<p class=\"ds-clock\"><span>Hora en Caracas</span><time>14:32:07 UTC−4</time></p>",
+      "css": ".ds-clock { margin: 0; color: var(--fg); font-family: 'JetBrains Mono Variable', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; } .ds-clock span { color: var(--muted); } .ds-clock time { display: block; font-size: 1.125rem; font-variant-numeric: tabular-nums; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "El Cuaderno de Laboratorio",
+    "overview": "El sitio es la libreta de un experimento en curso. La retícula fina de fondo es el papel cuadriculado; la numeración (`01`, `001`), las etiquetas mono en mayúsculas (`EXP-001`, `[ 01 / SERVICIOS ]`) y las coordenadas decorativas son las anotaciones al margen; cada proyecto es un registro con su número. Encima de ese papel, el contenido se escribe en grande: titulares en Space Grotesk que ocupan la pantalla con seguridad. El rigor está en el sistema, no en el adorno: cada marca tiene un sitio, un número y una razón.\n\nLa densidad es baja y ordenada: mucho fondo, líneas de 1 px, tipografía grande y pocas piezas sólidas. El color de cada tema llena el fondo entero; no se reparte en manchas. El movimiento, comprometido en la spec (letras escalonadas en el hero, revelado de títulos, scramble breve en etiquetas, botones magnéticos, línea de progreso del proceso), solo existe para guiar la lectura o confirmar una acción, y desaparece por completo con `prefers-reduced-motion`.\n\nLo que el sitio rechaza: la plantilla SaaS genérica (gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features»), el ruido de efectos (animación porque sí, glitch constante), lo corporativo frío (fotos de stock de oficina, azul de agencia) y el cliché cyberpunk (verde Matrix, glow neón, terminal falsa).",
+    "keyCharacteristics": [
+      "Cuatro temas de color que cambian el fondo completo; el visitante elige y el sitio lo recuerda.",
+      "Retícula de 64 px como papel de fondo, siempre decorativa.",
+      "Display enorme y apretado en Space Grotesk; anotaciones en JetBrains Mono, mayúsculas y espaciadas.",
+      "Esquinas rectas en todo; el círculo solo para muestras de color e indicadores.",
+      "Plano en reposo; la sombra solo aparece como respuesta a un estado.",
+      "Mezcla sólido + fino: el CTA principal es un bloque sólido y táctil, todo lo demás es línea fina y texto."
+    ],
+    "rules": [
+      {
+        "name": "The Señal Rule",
+        "body": "El Naranja es una señal: marca la acción principal, el estado activo o el punto de atención. Si en una pantalla hay más de un par de rellenos naranjas compitiendo, uno sobra.",
+        "section": "colors"
+      },
+      {
+        "name": "The Accent-Ink Rule",
+        "body": "Texto con color de acento siempre va con `--accent-ink`, y solo sobre `--bg`. El Naranja como texto no llega a AA sobre Petróleo (1.93:1) ni Militar (1.98:1); `tests/unit/themes.test.ts` vigila los ratios.",
+        "section": "colors"
+      },
+      {
+        "name": "The Four-Theme Rule",
+        "body": "Toda pieza nueva se verifica en los cuatro temas antes de darse por terminada. Un componente que solo se ve bien en Carbón está roto.",
+        "section": "colors"
+      },
+      {
+        "name": "The Annotation Rule",
+        "body": "Todo lo que numera, etiqueta, mide o fecha va en mono mayúscula. Todo lo que cuenta algo va en Space Grotesk. Nunca al revés: un párrafo en mono o un número de sección en grotesca rompe el cuaderno.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Números que cambian (reloj, contadores, precios en tabla) usan `tabular-nums` para no bailar.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper Rule",
+        "body": "La retícula es el papel, no el contenido: nunca lleva información, nunca compite en contraste con el texto y nunca se usa para alinear a la fuerza piezas que no la necesitan.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat-At-Rest Rule",
+        "body": "Ninguna superficie tiene sombra en reposo. Si una tarjeta necesita sombra para separarse del fondo, le falta contraste de tono, no sombra.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Square Rule",
+        "body": "Si tiene esquina, la esquina es recta. El único círculo legítimo es el que representa un color o un estado.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** usar siempre los roles (`--bg`, `--fg`, `--accent`, `--accent-ink`, `--on-accent`…) y nunca un hex de tema directamente en un componente (la excepción son las muestras del selector de tema).",
+      "**Do** verificar cada pieza nueva en los cuatro temas y con `prefers-reduced-motion: reduce`.",
+      "**Do** poner numeración, etiquetas, fechas y metadatos en JetBrains Mono mayúscula con tracking 0.05em.",
+      "**Do** mantener las esquinas rectas (0 px) y reservar el círculo para colores e indicadores.",
+      "**Do** separar zonas con línea de 1 px o cambio de tono `--bg` → `--surface`.",
+      "**Do** animar solo `transform` y `opacity`, y solo para guiar la lectura o confirmar una acción."
+    ],
+    "donts": [
+      "**Don't** construir con la estética de plantilla SaaS: gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features».",
+      "**Don't** añadir ruido de efectos: animación porque sí, glitch constante, cosas que se mueven sin guiar la lectura.",
+      "**Don't** caer en lo corporativo frío: fotos de stock de oficina, azul de agencia, tono de agencia grande.",
+      "**Don't** usar el cliché cyberpunk: verde Matrix, glow neón, terminal falsa.",
+      "**Don't** usar el Naranja como texto sobre Petróleo o Militar; para eso existe `--accent-ink`.",
+      "**Don't** poner sombra a una superficie en reposo.",
+      "**Don't** usar el color Línea como borde de un control interactivo."
+    ]
+  }
+}
