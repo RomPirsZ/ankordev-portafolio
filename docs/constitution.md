@@ -1,8 +1,8 @@
-# Constitución de desarrollo — {{MARCA}}
+# Constitución de desarrollo — [A]nkordev
 
 > Principios no negociables para **todos** mis proyectos web (portafolio y clientes).
 > Tiene prioridad sobre cualquier spec, plan o tarea. Si algo los contradice, se detiene el trabajo y se pregunta.
-> Versión 1.0.0 · Ratificada: 2026-10-30
+> Versión 1.0.1 · Ratificada: 2026-10-30 · Última enmienda: 2026-11-01
 
 ---
 
@@ -61,3 +61,7 @@ Se recolectan solo los datos necesarios, se informa su uso y no se agregan track
 
 - Cambiar esta constitución requiere actualizar la versión (MAJOR si se elimina o redefine un principio, MINOR si se agrega, PATCH si se aclara) y anotar el motivo.
 - Cada `plan.md` incluye un "Chequeo de constitución" que confirma el cumplimiento de cada principio o justifica la excepción.
+
+### Historial
+
+- **1.0.1** (2026-11-01, PATCH): se reemplaza el marcador `{{MARCA}}` del título por el nombre decidido, «[A]nkordev». Sin cambios en los principios.
