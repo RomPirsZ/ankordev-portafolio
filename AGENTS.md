@@ -18,7 +18,7 @@ Idioma del código y comentarios: español solo donde aporte claridad. Textos de
 ## Contexto de producto y diseño
 
 - `PRODUCT.md`: quién usa el sitio, posicionamiento, marca, voz y evidencia disponible. Nunca se inventan clientes, testimonios ni cifras.
-- `DESIGN.md` (+ `.impeccable/design.json`): sistema visual «El Cuaderno de Laboratorio». Toda UI nueva lo sigue: roles de color (nunca un hex de tema en un componente), reglas con nombre, esquinas rectas, plano en reposo, los 4 temas verificados.
+- `DESIGN.md` (+ `.impeccable/design.json`): sistema visual «El Cuaderno de Laboratorio». Toda UI nueva lo sigue: roles de color (nunca un hex de tema en un componente), reglas con nombre, esquinas rectas, plano en reposo, los 2 temas verificados.
 - Orden de autoridad: **constitución → spec/plan → DESIGN.md / PRODUCT.md → guía de cualquier skill o herramienta**. Si una herramienta recomienda algo que contradice a los de arriba, gana el de arriba.
 - Si cambias el sistema visual implementado, actualiza `DESIGN.md` en la misma tarea.
 - Se anima solo `transform` y `opacity` (constitución II). Única excepción: `filter: blur()` en la entrada de titulares y textos cortos, ≤ 0,6 s y ≤ 8 px, nunca ligado al scroll continuo ni en imágenes o bloques grandes.

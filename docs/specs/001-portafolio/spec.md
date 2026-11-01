@@ -60,15 +60,13 @@ Un portafolio de marca personal que transmita sensación de **laboratorio creati
 |---|---|---|---|---|
 | Carbón (por defecto) | `#2B2D31` | `#3A3D43` | `#F3F1EC` | `#F2711C` |
 | Naranja | `#F2711C` | `#E0631A` | `#1E1F22` | `#1E1F22` |
-| Petróleo | `#1F6F8B` | `#195C73` | `#F3F1EC` | `#F2711C` |
-| Militar | `#5B6B3A` | `#4C5A30` | `#F3F1EC` | `#F2711C` |
 
-El tema elegido se recuerda en visitas posteriores.
+El tema elegido se recuerda en visitas posteriores. *(2026-11-01: se retiran los temas Petróleo y Militar; quedan dos.)*
 
 ### Tipografía y elementos de laboratorio
 
 - Display grande y fluida (Space Grotesk); etiquetas en monoespaciada (Monaspace Krypton), mayúsculas.
-- Retícula fina de fondo, numeración (`001`, `002`), etiquetas tipo `EXP-001` o `[ 01 / SERVICIOS ]`, coordenadas decorativas, cursor personalizado (solo en escritorio).
+- Retícula fina de fondo, numeración (`001`, `002`), etiquetas tipo `EXP-001` o `[ 01 / SERVICIOS ]`, cursor personalizado (solo en escritorio).
 
 ## 7. Movimiento
 
@@ -99,7 +97,7 @@ Los de la constitución (accesibilidad, rendimiento, seguridad, testing, privaci
 ## 10. Criterios de aceptación
 
 - [ ] Todas las secciones visibles y legibles sin JavaScript.
-- [ ] Los 4 temas funcionan, cumplen contraste AA y persisten.
+- [ ] Los 2 temas funcionan, cumplen contraste AA y persisten.
 - [ ] Vista lista/cuadrícula funciona.
 - [ ] Un envío válido del formulario se guarda; uno inválido muestra errores claros.
 - [ ] ES e EN completos y enlazados entre sí.

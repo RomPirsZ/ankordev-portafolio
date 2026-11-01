@@ -7,18 +7,18 @@ const sameWindow = (page: Page) => page.evaluate(() => (window as unknown as { _
 
 test('navegar a un caso de estudio no recarga la página y conserva el tema', async ({ page }) => {
   await page.goto('/');
-  await page.locator('[data-theme-value="petroleo"]').click();
+  await page.locator('[data-theme-value="naranja"]').click();
   await markWindow(page);
 
   await page.locator('.project-link').first().click();
   await expect(page).toHaveURL(/\/proyectos\/001-restaurante\/$/);
   expect(await sameWindow(page)).toBe(true);
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'petroleo');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'naranja');
 
   // El selector de la página nueva sigue funcionando
-  await expect(page.locator('[data-theme-value="petroleo"]')).toHaveAttribute('aria-pressed', 'true');
-  await page.locator('[data-theme-value="militar"]').click();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'militar');
+  await expect(page.locator('[data-theme-value="naranja"]')).toHaveAttribute('aria-pressed', 'true');
+  await page.locator('[data-theme-value="carbon"]').click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'carbon');
 });
 
 test('tras navegar, las animaciones se reinician en la página nueva', async ({ page }) => {

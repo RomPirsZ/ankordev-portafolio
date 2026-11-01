@@ -1,4 +1,4 @@
-export const THEMES = ['carbon', 'naranja', 'petroleo', 'militar'] as const;
+export const THEMES = ['carbon', 'naranja'] as const;
 export type Theme = (typeof THEMES)[number];
 export const DEFAULT_THEME: Theme = 'carbon';
 export const THEME_STORAGE_KEY = 'theme';

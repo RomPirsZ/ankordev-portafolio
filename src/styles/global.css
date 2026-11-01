@@ -4,11 +4,9 @@
 @import '@fontsource/monaspace-krypton/400.css';
 
 /*
-  Temas (spec §6). Reglas de contraste (constitución III):
+  Temas (spec §6): Carbón (por defecto) y Naranja. Contraste (constitución III):
   - --fg y --muted son texto: ≥ 4.5:1 sobre --bg y --surface.
-  - --accent es relleno/decoración. Para texto con color de acento usar
-    --accent-ink (solo sobre --bg). En petróleo y militar el naranja no
-    llega a AA como texto, así que --accent-ink = --fg.
+  - --accent es relleno; como texto solo sobre --bg (sobre --surface no llega a AA).
   - Texto sobre un relleno de acento: --on-accent.
   - --line es decorativo (retícula, divisores); no sirve como borde de control.
 */
@@ -19,7 +17,6 @@
   --fg: #f3f1ec;
   --muted: #b7b6b4;
   --accent: #f2711c;
-  --accent-ink: #f2711c;
   --on-accent: #1e1f22;
 }
 
@@ -29,28 +26,7 @@
   --fg: #1e1f22;
   --muted: #1e1f22;
   --accent: #1e1f22;
-  --accent-ink: #1e1f22;
   --on-accent: #f3f1ec;
-}
-
-[data-theme='petroleo'] {
-  --bg: #1f6f8b;
-  --surface: #195c73;
-  --fg: #f3f1ec;
-  --muted: #f3f1ec;
-  --accent: #f2711c;
-  --accent-ink: #f3f1ec;
-  --on-accent: #1e1f22;
-}
-
-[data-theme='militar'] {
-  --bg: #5b6b3a;
-  --surface: #4c5a30;
-  --fg: #f3f1ec;
-  --muted: #f3f1ec;
-  --accent: #f2711c;
-  --accent-ink: #f3f1ec;
-  --on-accent: #1e1f22;
 }
 
 :root {
@@ -68,7 +44,6 @@
   --color-fg: var(--fg);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
-  --color-accent-ink: var(--accent-ink);
   --color-on-accent: var(--on-accent);
   --color-line: var(--line);
 }
@@ -98,7 +73,7 @@
     font-family: var(--font-sans);
     -webkit-text-size-adjust: 100%;
     /* Superficies del navegador con la paleta del tema */
-    caret-color: var(--accent-ink);
+    caret-color: var(--accent);
     accent-color: var(--accent);
     scrollbar-color: color-mix(in srgb, var(--fg) 45%, transparent) var(--bg);
   }
@@ -168,7 +143,7 @@
     }
   }
 
-  /* Anotación al margen del cuaderno (numeración, metadatos, coordenadas) */
+  /* Anotación al margen del cuaderno (numeración, metadatos) */
   .annotation {
     font-family: var(--font-mono);
     font-size: var(--text-xs);

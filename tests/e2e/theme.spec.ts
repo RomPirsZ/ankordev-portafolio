@@ -5,22 +5,23 @@ test('el tema cambia y persiste al recargar', async ({ page }) => {
   const html = page.locator('html');
   await expect(html).toHaveAttribute('data-theme', 'carbon');
 
-  const petroleo = page.locator('[data-theme-value="petroleo"]');
-  await petroleo.click();
-  await expect(html).toHaveAttribute('data-theme', 'petroleo');
-  await expect(petroleo).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(31, 111, 139)');
+  await expect(page.locator('[data-theme-value]')).toHaveCount(2);
+  const naranja = page.locator('[data-theme-value="naranja"]');
+  await naranja.click();
+  await expect(html).toHaveAttribute('data-theme', 'naranja');
+  await expect(naranja).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(242, 113, 28)');
 
   await page.reload();
-  await expect(html).toHaveAttribute('data-theme', 'petroleo');
-  await expect(petroleo).toHaveAttribute('aria-pressed', 'true');
+  await expect(html).toHaveAttribute('data-theme', 'naranja');
+  await expect(naranja).toHaveAttribute('aria-pressed', 'true');
 });
 
 test('el selector de tema funciona con teclado', async ({ page }) => {
   await page.goto('/');
-  await page.locator('[data-theme-value="militar"]').focus();
+  await page.locator('[data-theme-value="naranja"]').focus();
   await page.keyboard.press('Enter');
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'militar');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'naranja');
 });
 
 test.describe('sin JavaScript', () => {

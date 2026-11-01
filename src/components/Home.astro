@@ -3,7 +3,6 @@
 // servicios (Vercel Hobby): hero sin CTA ni disponibilidad, y Proyectos.
 // Servicios, Proceso, Sobre mí, Contacto y el CTA llegan al pasar a Pro (T12).
 import ProjectsSection from './ProjectsSection.astro';
-import { COORDINATES } from '../lib/site';
 import { useTranslations, type Lang } from '../i18n/utils';
 
 interface Props {
@@ -15,20 +14,10 @@ const t = useTranslations(lang);
 ---
 
 <section aria-labelledby="hero-title" class="margin-grid min-h-[72svh] content-end pt-16 pb-14 md:pb-20">
-  <h1 id="hero-title" class="max-w-[14ch] text-display font-bold text-balance md:col-start-2 md:row-start-1" data-split>
+  <h1 id="hero-title" class="max-w-[14ch] text-display font-bold text-balance md:col-start-2" data-split>
     {t('hero.title')}
   </h1>
   <p class="mt-4 max-w-[46ch] text-lg text-pretty md:col-start-2 md:mt-8">{t('hero.subtitle')}</p>
-  <p class="annotation mt-8 md:col-start-1 md:row-start-1 md:mt-0 md:self-end md:pb-[0.4em]">
-    <span class="block">{t('site.place')}</span>
-    {
-      COORDINATES.split(' · ').map((coordinate) => (
-        <span class="block" aria-hidden="true" data-scramble>
-          {coordinate}
-        </span>
-      ))
-    }
-  </p>
 </section>
 
 <ProjectsSection lang={lang} />

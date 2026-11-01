@@ -7,10 +7,6 @@ colors:
   ceniza: "#B7B6B4"
   naranja: "#F2711C"
   naranja-surface: "#E0631A"
-  petroleo: "#1F6F8B"
-  petroleo-surface: "#195C73"
-  militar: "#5B6B3A"
-  militar-surface: "#4C5A30"
   hueso: "#F3F1EC"
   tinta: "#1E1F22"
 typography:
@@ -70,14 +66,14 @@ components:
 
 **Creative North Star: "El Cuaderno de Laboratorio"**
 
-El sitio es la libreta de un experimento en curso. La retícula fina de fondo es el papel cuadriculado; la numeración (`01`, `001`), las etiquetas mono en mayúsculas (`EXP-001`, `[ 01 / SERVICIOS ]`) y las coordenadas decorativas son las anotaciones al margen; cada proyecto es un registro con su número. Encima de ese papel, el contenido se escribe en grande: titulares en Space Grotesk que ocupan la pantalla con seguridad. El rigor está en el sistema, no en el adorno: cada marca tiene un sitio, un número y una razón.
+El sitio es la libreta de un experimento en curso. La retícula fina de fondo es el papel cuadriculado; la numeración (`01`, `001`) y las etiquetas mono en mayúsculas (`EXP-001`, `[ 01 / SERVICIOS ]`) son las anotaciones al margen; cada proyecto es un registro con su número. Encima de ese papel, el contenido se escribe en grande: titulares en Space Grotesk que ocupan la pantalla con seguridad. El rigor está en el sistema, no en el adorno: cada marca tiene un sitio, un número y una razón.
 
 La densidad es baja y ordenada: mucho fondo, líneas de 1 px, tipografía grande y pocas piezas sólidas. El color de cada tema llena el fondo entero; no se reparte en manchas. El movimiento, comprometido en la spec (letras escalonadas en el hero, revelado de títulos, scramble breve en etiquetas, botones magnéticos, línea de progreso del proceso), solo existe para guiar la lectura o confirmar una acción, y desaparece por completo con `prefers-reduced-motion`.
 
 Lo que el sitio rechaza: la plantilla SaaS genérica (gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features»), el ruido de efectos (animación porque sí, glitch constante), lo corporativo frío (fotos de stock de oficina, azul de agencia) y el cliché cyberpunk (verde Matrix, glow neón, terminal falsa).
 
 **Key Characteristics:**
-- Cuatro temas de color que cambian el fondo completo; el visitante elige y el sitio lo recuerda.
+- Dos temas de color, Carbón y Naranja, que cambian el fondo completo; el visitante elige y el sitio lo recuerda.
 - Retícula de 64 px como papel de fondo, siempre decorativa.
 - Display enorme y apretado en Space Grotesk; anotaciones en Monaspace Krypton, mayúsculas y espaciadas.
 - Esquinas rectas en todo; el círculo solo para muestras de color e indicadores.
@@ -86,43 +82,40 @@ Lo que el sitio rechaza: la plantilla SaaS genérica (gradientes morados, tarjet
 
 ## Colors
 
-Cuatro ambientes completos construidos con dos tintas fijas (Hueso y Tinta) y un acento Naranja que funciona como señal, no como decoración general.
+Dos ambientes completos, uno oscuro y uno encendido, construidos con dos tintas fijas (Hueso y Tinta) y un acento Naranja que funciona como señal, no como decoración general.
 
 ### Primary
-- **Naranja** (`naranja`): el acento de marca. En Carbón, Petróleo y Militar es el relleno del CTA principal, el enlace de salto y los marcadores de estado; en el tema Naranja es el fondo completo. Solo es texto en Carbón (vía `--accent-ink`), donde cumple AA.
+- **Naranja** (`naranja`): el acento de marca. En Carbón es el relleno del CTA principal, el enlace de salto y los marcadores de estado; en el tema Naranja es el fondo completo. Como texto, solo en Carbón y sobre `--bg` (4.65:1).
 - **Naranja superficie** (`naranja-surface`): la superficie del tema Naranja (paneles, tarjetas).
 
 ### Neutral
 - **Carbón** (`carbon`): fondo del tema por defecto.
 - **Carbón superficie** (`carbon-surface`): superficies elevadas por tono en Carbón.
-- **Petróleo** / **Petróleo superficie** (`petroleo`, `petroleo-surface`): fondo y superficie del tema Petróleo.
-- **Militar** / **Militar superficie** (`militar`, `militar-surface`): fondo y superficie del tema Militar.
-- **Hueso** (`hueso`): texto principal en Carbón, Petróleo y Militar; texto sobre relleno de acento en el tema Naranja.
-- **Tinta** (`tinta`): texto principal en el tema Naranja; texto sobre relleno Naranja en el resto de temas.
-- **Ceniza** (`ceniza`): texto secundario (`--muted`) solo en Carbón. En los demás temas `--muted` es igual a `--fg`.
+- **Hueso** (`hueso`): texto principal en Carbón; texto sobre relleno de acento en el tema Naranja.
+- **Tinta** (`tinta`): texto principal en el tema Naranja; texto sobre relleno Naranja en Carbón.
+- **Ceniza** (`ceniza`): texto secundario (`--muted`) solo en Carbón. En Naranja `--muted` es igual a `--fg`.
 - **Línea** (derivada: `--fg` al 18 % sobre transparente): retícula y divisores. Es decorativa; nunca sirve como borde de un control.
 
 ### Roles por tema
 
-Los componentes nunca usan un color de tema directamente: usan los roles (`--bg`, `--surface`, `--fg`, `--muted`, `--accent`, `--accent-ink`, `--on-accent`, `--line`), que `src/styles/global.css` resuelve por `[data-theme]` y Tailwind expone como `bg-bg`, `text-fg`, etc.
+Los componentes nunca usan un color de tema directamente: usan los roles (`--bg`, `--surface`, `--fg`, `--muted`, `--accent`, `--on-accent`, `--line`), que `src/styles/global.css` resuelve por `[data-theme]` y Tailwind expone como `bg-bg`, `text-fg`, etc.
 
-| Rol | Carbón | Naranja | Petróleo | Militar |
-|---|---|---|---|---|
-| `--bg` | Carbón | Naranja | Petróleo | Militar |
-| `--surface` | Carbón superficie | Naranja superficie | Petróleo superficie | Militar superficie |
-| `--fg` | Hueso | Tinta | Hueso | Hueso |
-| `--muted` | Ceniza | Tinta | Hueso | Hueso |
-| `--accent` | Naranja | Tinta | Naranja | Naranja |
-| `--accent-ink` | Naranja | Tinta | Hueso | Hueso |
-| `--on-accent` | Tinta | Hueso | Tinta | Tinta |
+| Rol | Carbón | Naranja |
+|---|---|---|
+| `--bg` | Carbón | Naranja |
+| `--surface` | Carbón superficie | Naranja superficie |
+| `--fg` | Hueso | Tinta |
+| `--muted` | Ceniza | Tinta |
+| `--accent` | Naranja | Tinta |
+| `--on-accent` | Tinta | Hueso |
 
 ### Named Rules
 
 **The Señal Rule.** El Naranja es una señal: marca la acción principal, el estado activo o el punto de atención. Si en una pantalla hay más de un par de rellenos naranjas compitiendo, uno sobra.
 
-**The Accent-Ink Rule.** Texto con color de acento siempre va con `--accent-ink`, y solo sobre `--bg`. El Naranja como texto no llega a AA sobre Petróleo (1.93:1) ni Militar (1.98:1); `tests/unit/themes.test.ts` vigila los ratios.
+**The Accent-On-Ground Rule.** El acento como texto va solo sobre `--bg`: sobre `--surface` no llega a AA. `tests/unit/themes.test.ts` vigila los ratios.
 
-**The Four-Theme Rule.** Toda pieza nueva se verifica en los cuatro temas antes de darse por terminada. Un componente que solo se ve bien en Carbón está roto.
+**The Two-Theme Rule.** Toda pieza nueva se verifica en los dos temas antes de darse por terminada. Un componente que solo se ve bien en Carbón está roto.
 
 ## Typography
 
@@ -155,7 +148,7 @@ La navegación pasa de una sola fila en escritorio (marca · enlaces · selector
 
 **The Paper Rule.** La retícula es el papel, no el contenido: nunca lleva información, nunca compite en contraste con el texto y nunca se usa para alinear a la fuerza piezas que no la necesitan.
 
-Las páginas usan una retícula de dos columnas desde 768 px (`.margin-grid`): una **columna de margen** de 11rem para anotaciones (etiquetas de sección, `EXP-001`, coordenadas, ficha del proyecto, «Volver») y la columna de contenido. Las secciones del inicio se separan con una línea de 1 px arriba y 64–96 px de aire vertical. En móvil la columna de margen desaparece y cada anotación cae **debajo** de su título.
+Las páginas usan una retícula de dos columnas desde 768 px (`.margin-grid`): una **columna de margen** de 11rem para anotaciones (etiquetas de sección, `EXP-001`, ficha del proyecto, «Volver») y la columna de contenido. Las secciones del inicio se separan con una línea de 1 px arriba y 64–96 px de aire vertical. En móvil la columna de margen desaparece y cada anotación cae **debajo** de su título.
 
 **The Margin Rule.** Una etiqueta de laboratorio va al margen, a la altura de su título, nunca encima como antetítulo. Si no hay margen (móvil), va debajo.
 
@@ -190,7 +183,7 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 - **Móvil:** los enlaces bajan a una segunda fila a todo el ancho y se reparten con `flex-wrap`.
 
 ### Theme Swatches (componente firma)
-- **Forma:** círculos de 24 px con borde de 2 px en `--fg`, pintados con el fondo real de cada tema (Carbón, Naranja, Petróleo, Militar).
+- **Forma:** círculos de 24 px con borde de 2 px en `--fg`, pintados con el fondo real de cada tema (Carbón, Naranja).
 - **Estado activo:** `aria-pressed="true"` más un contorno exterior de 2 px en `--fg` con separación de 2 px.
 - **Sin JS:** el grupo nace oculto (`hidden`) y el script lo muestra; no se ofrece un control que no puede funcionar.
 
@@ -202,7 +195,7 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 
 ### Project Rows (componente firma)
 - **Lista (por defecto, y la única sin JS):** filas a todo el ancho separadas por líneas de 1 px; número `001` en la columna de margen, título en Space Grotesk 700 `text-3xl` (`text-2xl` en móvil), metadatos mono debajo (tipo · origen · estado), año y flecha SVG a la derecha. Toda la fila es el enlace; hover y foco subrayan el título (2 px). No descarga portadas.
-- **Cuadrícula:** el mismo HTML con `data-view="grid"`: tarjetas sin borde ni sombra, portada 16:10 arriba, número, título `text-xl` y metadatos.
+- **Cuadrícula:** el mismo HTML con `data-view="grid"`: tarjetas sin sombra, portada 16:10 arriba con una línea de 1 px en `--line` (la separa del fondo cuando comparten color), número, título `text-xl` y metadatos.
 - **Imagen flotante:** en la lista, con puntero fino y movimiento, la portada del proyecto bajo el puntero lo sigue a su derecha (22rem, 16:10) con la única sombra del sistema. Decorativa (`aria-hidden`).
 
 ### View Controls
@@ -217,8 +210,8 @@ Un solo momento de autor por página: la entrada del titular (`[data-split]`), l
 ## Do's and Don'ts
 
 ### Do:
-- **Do** usar siempre los roles (`--bg`, `--fg`, `--accent`, `--accent-ink`, `--on-accent`…) y nunca un hex de tema directamente en un componente (la excepción son las muestras del selector de tema).
-- **Do** verificar cada pieza nueva en los cuatro temas y con `prefers-reduced-motion: reduce`.
+- **Do** usar siempre los roles (`--bg`, `--fg`, `--accent`, `--on-accent`…) y nunca un hex de tema directamente en un componente (la excepción son las muestras del selector de tema).
+- **Do** verificar cada pieza nueva en los dos temas y con `prefers-reduced-motion: reduce`.
 - **Do** poner numeración, etiquetas, fechas y metadatos en Monaspace Krypton mayúscula con tracking 0.05em.
 - **Do** mantener las esquinas rectas (0 px) y reservar el círculo para colores e indicadores.
 - **Do** separar zonas con línea de 1 px o cambio de tono `--bg` → `--surface`.
@@ -229,6 +222,6 @@ Un solo momento de autor por página: la entrada del titular (`[data-split]`), l
 - **Don't** añadir ruido de efectos: animación porque sí, glitch constante, cosas que se mueven sin guiar la lectura.
 - **Don't** caer en lo corporativo frío: fotos de stock de oficina, azul de agencia, tono de agencia grande.
 - **Don't** usar el cliché cyberpunk: verde Matrix, glow neón, terminal falsa.
-- **Don't** usar el Naranja como texto sobre Petróleo o Militar; para eso existe `--accent-ink`.
+- **Don't** usar el acento como texto sobre `--surface`; solo sobre `--bg`.
 - **Don't** poner sombra a una superficie en reposo.
 - **Don't** usar el color Línea como borde de un control interactivo.

@@ -63,9 +63,11 @@ CLAUDE.md          → instrucciones para el agente (apunta a docs/)
 
 ## 4. Temas
 
-Variables CSS en `global.css` por `[data-theme="carbon|naranja|petroleo|militar"]` con `--bg`, `--surface`, `--fg`, `--accent`, `--accent-ink`, `--on-accent`, `--muted`, `--line`. Tailwind 4 las expone con `@theme`.
+Variables CSS en `global.css` por `[data-theme="carbon|naranja"]` con `--bg`, `--surface`, `--fg`, `--accent`, `--on-accent`, `--muted`, `--line`. Tailwind 4 las expone con `@theme`.
 
-**Contraste (decisión 2026-10-30):** el acento `#F2711C` no alcanza AA como texto sobre Petróleo (1.93:1) ni Militar (1.98:1). Se mantiene la paleta de la spec y el acento se usa solo como relleno o decoración. Tokens extra: `--accent-ink` (texto con color de acento, solo sobre `--bg`; en Petróleo y Militar = `--fg`) y `--on-accent` (texto sobre relleno de acento). `--line` es decorativo. `tests/unit/themes.test.ts` verifica los ratios.
+**Contraste:** el acento puede ir como texto solo sobre `--bg` (Naranja sobre Carbón 4.65:1; sobre `--surface` no llega a AA). `--on-accent` es el texto sobre un relleno de acento. `--line` es decorativo. `tests/unit/themes.test.ts` verifica los ratios.
+
+**Cambio 2026-11-01:** se retiran los temas Petróleo y Militar a petición del cliente; con dos temas, `--accent-ink` era idéntico a `--accent` en ambos y se elimina.
 
 Un script inline mínimo en `<head>` aplica el tema guardado antes del primer pintado (evita parpadeo); acceso a `localStorage` dentro de try/catch.
 
@@ -124,7 +126,7 @@ Variables (en Vercel, nunca `PUBLIC_` salvo la site key): `SUPABASE_URL`, `SUPAB
 | Unitario | `contact-schema`, `i18n/utils`, `clock`, `rate-limit` |
 | Integración | Handler de `/api/contact` con Supabase y Turnstile simulados: 200, 400, 403, 405, 413, 429, honeypot |
 | E2E | 1) inicio carga · 2) tema persiste · 3) lista/cuadrícula · 4) caso de estudio y volver · 5) ES↔EN · 6) formulario (API simulada) · 7) reduced motion · 8) sin JS · 9) solo teclado |
-| Accesibilidad | axe en inicio y caso de estudio × 4 temas |
+| Accesibilidad | axe en inicio y caso de estudio × 2 temas |
 | Rendimiento | Lighthouse CI sobre el preview de Vercel |
 
 CI (`ci.yml`): `npm ci` → `astro check` → `vitest run` → `astro build` → `playwright test` → `npm audit --audit-level=high`.

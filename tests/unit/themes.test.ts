@@ -22,9 +22,13 @@ function contrast(a: string, b: string): number {
 }
 
 describe('temas', () => {
+  it('hay exactamente dos temas: Carbón (por defecto) y Naranja', () => {
+    expect(THEMES).toEqual(['carbon', 'naranja']);
+  });
+
   it.each(THEMES)('%s define todos los tokens', (theme) => {
     expect(Object.keys(tokens(theme)).sort()).toEqual(
-      ['accent', 'accent-ink', 'bg', 'fg', 'muted', 'on-accent', 'surface'].sort(),
+      ['accent', 'bg', 'fg', 'muted', 'on-accent', 'surface'].sort(),
     );
   });
 
@@ -34,12 +38,14 @@ describe('temas', () => {
       expect(contrast(t[text]!, t['bg']!)).toBeGreaterThanOrEqual(4.5);
       expect(contrast(t[text]!, t['surface']!)).toBeGreaterThanOrEqual(4.5);
     }
-    expect(contrast(t['accent-ink']!, t['bg']!)).toBeGreaterThanOrEqual(4.5);
+    // El acento puede ir como texto, pero solo sobre --bg
+    expect(contrast(t['accent']!, t['bg']!)).toBeGreaterThanOrEqual(4.5);
     expect(contrast(t['on-accent']!, t['accent']!)).toBeGreaterThanOrEqual(4.5);
   });
 
   it('isTheme acepta solo temas conocidos', () => {
-    expect(isTheme('petroleo')).toBe(true);
+    expect(isTheme('naranja')).toBe(true);
+    expect(isTheme('petroleo')).toBe(false);
     expect(isTheme('rosa')).toBe(false);
     expect(isTheme(null)).toBe(false);
   });

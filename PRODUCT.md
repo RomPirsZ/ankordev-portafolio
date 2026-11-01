@@ -45,7 +45,7 @@ Lo creativo y lo técnico pesan lo mismo: el sitio es un **laboratorio creativo*
 - **Nombre:** «[A]nkordev», con corchetes. Así se escribe en el logotipo, el título y los textos. Sustituye al marcador `{{MARCA}}` / la propuesta «Ankor» de la spec.
 - **Voz:** neutra, sin tratar al visitante de tú ni de usted. La primera persona del autor sí se usa («Diseño y desarrollo…», «Sobre mí»). Directa y sin jerga corporativa.
 - Sello de origen «Hecho en Venezuela» y reloj con la hora de Caracas en el footer.
-- Los 4 temas de color, la tipografía (Space Grotesk / Monaspace Krypton) y los elementos de laboratorio están fijados en la spec §6 y ya implementados; los registra DESIGN.md, no este archivo.
+- Los 2 temas de color (Carbón y Naranja), la tipografía (Space Grotesk / Monaspace Krypton) y los elementos de laboratorio están fijados en la spec §6 y ya implementados; los registra DESIGN.md, no este archivo.
 
 ## Evidence on Hand
 
@@ -65,4 +65,4 @@ Lo creativo y lo técnico pesan lo mismo: el sitio es un **laboratorio creativo*
 
 ## Accessibility & Inclusion
 
-WCAG 2.2 AA obligatorio: contraste AA en los 4 temas, navegación completa por teclado, foco visible, HTML semántico, texto alternativo, formularios etiquetados, cero violaciones serias o críticas de axe. Sin animaciones con `prefers-reduced-motion`. Lighthouse móvil ≥ 95 en accesibilidad.
+WCAG 2.2 AA obligatorio: contraste AA en los 2 temas, navegación completa por teclado, foco visible, HTML semántico, texto alternativo, formularios etiquetados, cero violaciones serias o críticas de axe. Sin animaciones con `prefers-reduced-motion`. Lighthouse móvil ≥ 95 en accesibilidad.
