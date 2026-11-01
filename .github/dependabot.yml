@@ -11,10 +11,16 @@ updates:
       testing:
         patterns: ['vitest', '@playwright/test', '@axe-core/*']
     ignore:
-      # El plan fija Astro 5; un salto mayor requiere decisión explícita
+      # Un salto mayor de Astro o del adaptador requiere decisión explícita
       - dependency-name: 'astro'
         update-types: ['version-update:semver-major']
       - dependency-name: '@astrojs/vercel'
+        update-types: ['version-update:semver-major']
+      # @astrojs/check 0.9.x solo admite TypeScript ^5 || ^6; quitar al soportar 7
+      - dependency-name: 'typescript'
+        versions: ['>=7']
+      # Va ligado a la versión de Node en uso (engines: 26.x)
+      - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']
   - package-ecosystem: github-actions
     directory: /
