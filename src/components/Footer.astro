@@ -49,18 +49,16 @@ const socials = SOCIALS.filter((social) => social.url);
 <script>
   import { formatCaracasTime } from '../lib/clock';
 
-  const clocks = document.querySelectorAll<HTMLTimeElement>('[data-clock]');
-
+  // Se buscan los relojes en cada tic: tras una View Transition el pie es otro
   function tick() {
     const now = new Date();
-    clocks.forEach((clock) => {
+    document.querySelectorAll<HTMLTimeElement>('[data-clock]').forEach((clock) => {
       clock.textContent = `${formatCaracasTime(now, clock.dataset['lang'] === 'en' ? 'en' : 'es')} UTC−4`;
       clock.dateTime = now.toISOString();
     });
   }
 
-  if (clocks.length) {
-    tick();
-    setInterval(tick, 1000);
-  }
+  tick();
+  setInterval(tick, 1000);
+  document.addEventListener('astro:after-swap', tick);
 </script>

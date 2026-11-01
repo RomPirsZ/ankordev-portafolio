@@ -1,5 +1,6 @@
 // Punto de entrada del movimiento (constitución II). No importa GSAP: con
 // reduced-motion activado el módulo de animaciones ni siquiera se descarga.
+import type { TransitionBeforeSwapEvent } from 'astro:transitions/client';
 
 export interface ReducedMotionQuery {
   matches: boolean;
@@ -33,12 +34,18 @@ export function createMotionController(reduced: ReducedMotionQuery, load: () => 
   return { start, stop };
 }
 
-/** Se llama una vez desde BaseLayout. Los eventos astro:* llegan con las View Transitions (T19). */
+/** Se llama una vez desde BaseLayout; las View Transitions (T19) reinician el movimiento por página. */
 export function startMotion() {
-  const controller = createMotionController(window.matchMedia('(prefers-reduced-motion: reduce)'), () =>
-    import('./animations'),
-  );
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const controller = createMotionController(reduced, () => import('./animations'));
   void controller.start();
-  document.addEventListener('astro:before-swap', controller.stop);
+
+  document.addEventListener('astro:before-swap', (event) => {
+    controller.stop();
+    // El <html> nuevo no pasa por el script de <head>: se marca aquí para que sus
+    // entradas nazcan ocultas (sin motion-ready) hasta que las anime astro:page-load
+    const { newDocument } = event as TransitionBeforeSwapEvent;
+    newDocument.documentElement.classList.toggle('motion', !reduced.matches);
+  });
   document.addEventListener('astro:page-load', () => void controller.start());
 }

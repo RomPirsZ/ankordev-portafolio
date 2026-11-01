@@ -39,6 +39,7 @@ const t = useTranslations(Astro.props.lang);
 </style>
 
 <script>
+  import type { TransitionBeforeSwapEvent } from 'astro:transitions/client';
   import { DEFAULT_THEME, THEME_STORAGE_KEY, isTheme } from '../lib/themes';
 
   const root = document.documentElement;
@@ -50,19 +51,30 @@ const t = useTranslations(Astro.props.lang);
     });
   }
 
-  document.querySelectorAll<HTMLElement>('.theme-switcher').forEach((group) => {
-    group.hidden = false;
-    group.addEventListener('click', (event) => {
-      const button = (event.target as Element).closest<HTMLButtonElement>('[data-theme-value]');
-      const theme = button?.dataset['themeValue'];
-      if (!isTheme(theme)) return;
-      root.dataset['theme'] = theme;
-      try {
-        localStorage.setItem(THEME_STORAGE_KEY, theme);
-      } catch {}
-      sync();
-    });
+  // Cada página (también tras una View Transition) muestra el selector y marca el tema activo
+  function setup() {
+    document.querySelectorAll<HTMLElement>('.theme-switcher').forEach((group) => (group.hidden = false));
+    sync();
+  }
+
+  // Delegación: sigue funcionando aunque el <body> se sustituya al navegar
+  document.addEventListener('click', (event) => {
+    const button = (event.target as Element).closest<HTMLButtonElement>('.theme-switcher [data-theme-value]');
+    const theme = button?.dataset['themeValue'];
+    if (!isTheme(theme)) return;
+    root.dataset['theme'] = theme;
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch {}
+    sync();
   });
 
-  sync();
+  // El <html> de la página nueva trae el tema por defecto: se le pasa el actual antes del cambio
+  document.addEventListener('astro:before-swap', (event) => {
+    const { newDocument } = event as TransitionBeforeSwapEvent;
+    newDocument.documentElement.dataset['theme'] = root.dataset['theme'] ?? DEFAULT_THEME;
+  });
+
+  setup();
+  document.addEventListener('astro:page-load', setup);
 </script>

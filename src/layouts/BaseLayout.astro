@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { DEFAULT_THEME, THEMES, THEME_STORAGE_KEY } from '../lib/themes';
@@ -21,6 +22,8 @@ const t = useTranslations(lang);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    <!-- Transiciones entre páginas (T19); Astro las desactiva con reduced-motion -->
+    <ClientRouter />
     <!--
       Antes del primer pintado: aplica el tema guardado y, si hay movimiento,
       marca la página para que las entradas animadas nazcan ocultas (global.css).
