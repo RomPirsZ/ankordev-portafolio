@@ -43,10 +43,10 @@ Un portafolio de marca personal que transmita sensación de **laboratorio creati
 1. **Navegación:** logo, enlaces (Proyectos, Servicios, Sobre mí, Contacto), selector de tema, cambio ES/EN.
 2. **Hero:** titular animado letra por letra (ej. «Diseño y desarrollo webs que se sienten vivas»), subtítulo, botón «Hablemos» y etiqueta de disponibilidad.
 3. **Proyectos:** alternar entre vista **Lista** (filas grandes con imagen que sigue al cursor) y **Cuadrícula** (tarjetas).
-4. **Servicios y paquetes:**
-   - **Landing** — 1 página, 5–7 días, desde `{{PRECIO}}`
-   - **Sitio para negocio** — hasta 5 páginas, 2–3 semanas, desde `{{PRECIO}}`
-   - **Tienda / App web** — a medida, 3–6 semanas, desde `{{PRECIO}}`
+4. **Servicios y paquetes** (precios en USD; la versión en inglés muestra la tarifa internacional):
+   - **Landing** — 1 página, 5–7 días, desde **$300** (ES) · **$500** (EN)
+   - **Sitio para negocio** — hasta 5 páginas, 2–3 semanas, desde **$750** (ES) · **$1,300** (EN)
+   - **Tienda / App web** — a medida, 3–6 semanas, desde **$1.500** (ES) · **$2,600** (EN)
 5. **Proceso:** Descubrir → Especificar → Construir → Lanzar.
 6. **Sobre mí:** foto o ilustración, texto corto, stack, redes.
 7. **Contacto:** formulario (nombre, email, tipo de proyecto, presupuesto aproximado, mensaje), WhatsApp y email, con aviso breve de privacidad.

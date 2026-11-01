@@ -37,7 +37,7 @@ Lo creativo y lo técnico pesan lo mismo: el sitio es un **laboratorio creativo*
 - Stack fijado: Astro 7 + Tailwind 4, salida estática salvo `/api/contact` en Vercel. Ninguna dependencia nueva sin preguntar.
 - Bilingüe: español por defecto, inglés completo y enlazado (`/` y `/en/`). Todo texto de interfaz va en `src/i18n/`.
 - Contenido legible y usable sin JavaScript; el movimiento es una capa progresiva que solo anima `transform`/`opacity` y respeta `prefers-reduced-motion`.
-- Paquetes de servicios definidos (Landing, Sitio para negocio, Tienda / App web) con alcance y plazos en la spec. **Precios sin decidir** (`{{PRECIO}}`); no se inventan.
+- Paquetes de servicios definidos (Landing, Sitio para negocio, Tienda / App web) con alcance, plazos y precios «desde» en la spec §5 (USD; tarifa local en ES, internacional en EN). Decididos el 2026-11-01; no se cambian ni se añaden servicios u ofertas sin confirmación.
 - Fuera de alcance en v1: WebGL, sonido de interfaz, sección `/lab`, blog y dominio propio.
 
 ## Brand Commitments

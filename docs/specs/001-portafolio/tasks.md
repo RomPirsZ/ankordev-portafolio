@@ -65,4 +65,4 @@
 
 ## Fase 7 — Lanzamiento (11 nov)
 
-- [ ] T35 Reemplazar `{{PRECIO}}`, revisión final, publicar y anunciar
+- [ ] T35 Revisión final, publicar y anunciar
