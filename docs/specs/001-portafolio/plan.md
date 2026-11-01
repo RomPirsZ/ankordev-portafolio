@@ -71,16 +71,19 @@ Un script inline mínimo en `<head>` aplica el tema guardado antes del primer pi
 
 ## 5. Contenido de proyectos
 
-Content Collection `projects` (`src/content.config.ts`):
+Content Collection `projects` (`src/content.config.ts`, esquema en `src/lib/project-schema.ts`). Un archivo por proyecto e idioma en `src/content/projects/{es,en}/<número>-<nombre>.md`; el slug es el nombre del archivo, igual en ambos idiomas. Portadas en `src/assets/projects/<slug>/`.
 
 ```ts
 {
-  title: string; number: string; type: 'landing'|'negocio'|'iglesia'|'tienda'|'app';
-  year: number; status: 'publicado'|'en-progreso'; stack: string[];
-  cover: image(); gallery: image()[]; liveUrl?: string; repoUrl?: string;
-  summary: string; lang: 'es'|'en';
+  title: string; number: string /* 3 dígitos */; type: 'landing'|'negocio'|'iglesia'|'tienda'|'app';
+  year: number; status: 'publicado'|'en-progreso'|'por-construir';
+  origin: 'propio'|'cliente'; stack: string[];
+  cover: image(); coverAlt: string; gallery: { src: image(); alt: string }[];
+  liveUrl?: url; repoUrl?: url; summary: string; lang: 'es'|'en'; draft: boolean /* false */;
 }
 ```
+
+**Cambio 2026-11-01 (T11):** `status` admite `por-construir` (estado de 001–003 en la spec §8). `origin` distingue proyectos propios de encargos reales (PRODUCT.md: no se inventan clientes). `coverAlt` y el `alt` de cada imagen de galería cumplen la constitución III. `draft: true` oculta un proyecto de listados y páginas: el 004 queda como borrador con título genérico hasta que el cliente autorice mostrarlo. Hasta T30 las portadas son provisionales, generadas con ImageMagick en el estilo de `DESIGN.md`.
 
 ## 6. Animaciones
 

@@ -20,7 +20,7 @@
 ## Fase 2 — Contenido (objetivo: 3 nov)
 
 - [x] T10 Sistema i18n (`es.json`, `en.json`, `utils.ts`) + test unitario
-- [ ] T11 Content Collection `projects` con los 4 proyectos (placeholders)
+- [x] T11 Content Collection `projects` con los 4 proyectos (placeholders)
 - [ ] T12 Secciones del inicio: Hero, Proyectos (lista y cuadrícula sin animación), Servicios, Proceso, Sobre mí, Contacto (solo maquetado)
 - [ ] T13 Página `proyectos/[slug]` y `404`
 - [ ] T14 Tests e2e 1, 4, 8, 9 + axe en los 4 temas
