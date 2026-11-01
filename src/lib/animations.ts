@@ -7,11 +7,13 @@ import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import { textEffects } from './effects/text';
+import { FINE_POINTER, pointerEffects } from './effects/pointer';
 
 gsap.registerPlugin(ScrollTrigger, SplitText, ScrambleTextPlugin);
 
 let lenis: Lenis | undefined;
 let context: gsap.Context | undefined;
+let pointerMedia: gsap.MatchMedia | undefined;
 
 // Lenis avanza con el reloj de GSAP para que ScrollTrigger y el scroll suave vayan sincronizados
 const tick = (time: number) => lenis?.raf(time * 1000);
@@ -27,6 +29,9 @@ export function initAnimations() {
 
   // Todos los efectos viven en un contexto para revertirlos juntos
   context = gsap.context(() => textEffects(document));
+  // Cursor y botones magnéticos solo con puntero fino; se revierten solos si deja de haberlo
+  pointerMedia = gsap.matchMedia();
+  pointerMedia.add(FINE_POINTER, () => pointerEffects(document));
   // Las entradas ya tienen su estado inicial: el CSS deja de ocultarlas
   document.documentElement.classList.add('motion-ready');
   // Las líneas y posiciones dependen de las fuentes
@@ -36,6 +41,8 @@ export function initAnimations() {
 export function destroyAnimations() {
   context?.revert();
   context = undefined;
+  pointerMedia?.revert();
+  pointerMedia = undefined;
   ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   gsap.ticker.remove(tick);
   gsap.ticker.lagSmoothing(500, 33);

@@ -31,7 +31,7 @@
 
 - [x] T15 `animations.ts` con guardia de reduced-motion; Lenis + ScrollTrigger
 - [x] T16 SplitText en hero y títulos; scramble en etiquetas
-- [ ] T17 Botones magnéticos y cursor (solo puntero fino)
+- [x] T17 Botones magnéticos y cursor (solo puntero fino)
 - [ ] T18 Toggle lista/cuadrícula + imagen flotante
 - [ ] T19 View Transitions con reinicio de animaciones
 - [ ] T20 Tests e2e 3 y 7
