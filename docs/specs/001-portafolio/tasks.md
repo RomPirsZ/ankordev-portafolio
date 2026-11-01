@@ -1,4 +1,4 @@
-# Tareas 001 — Portafolio {{MARCA}} v1
+# Tareas 001 — Portafolio [A]nkordev v1
 
 > Una tarea a la vez. Marca `[x]` al terminar y haz commit. `[P]` = puede hacerse en paralelo con la anterior.
 > Si hay retrasos: se recortan la versión EN (F6) y el proyecto 003 (F5). Tests y seguridad no se recortan.
@@ -65,4 +65,4 @@
 
 ## Fase 7 — Lanzamiento (11 nov)
 
-- [ ] T35 Reemplazar `{{MARCA}}` y `{{PRECIO}}`, revisión final, publicar y anunciar
+- [ ] T35 Reemplazar `{{PRECIO}}`, revisión final, publicar y anunciar

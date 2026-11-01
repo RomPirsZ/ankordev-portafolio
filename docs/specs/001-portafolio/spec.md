@@ -1,7 +1,7 @@
-# Spec 001 — Portafolio personal {{MARCA}} v1
+# Spec 001 — Portafolio personal [A]nkordev v1
 
 > Qué se construye y por qué. Los detalles técnicos están en `plan.md`.
-> `{{MARCA}}` = nombre pendiente (propuesta: **Ankor**).
+> Marca: **[A]nkordev**, con corchetes (decidida 2026-11-01).
 > Estado: aprobada · Fecha de lanzamiento: **2026-11-11**
 
 ---

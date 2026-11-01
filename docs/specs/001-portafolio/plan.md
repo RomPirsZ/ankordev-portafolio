@@ -1,4 +1,4 @@
-# Plan técnico 001 — Portafolio {{MARCA}} v1
+# Plan técnico 001 — Portafolio [A]nkordev v1
 
 > Cómo se construye lo definido en `spec.md`. Debe cumplir `docs/constitution.md`.
 

@@ -1,6 +1,6 @@
 {
-  "site.brand": "{{MARCA}}",
-  "site.title": "{{MARCA}} — Diseño y desarrollo web",
+  "site.brand": "[A]nkordev",
+  "site.title": "[A]nkordev — Diseño y desarrollo web",
   "nav.label": "Principal",
   "nav.skip": "Saltar al contenido",
   "nav.home": "Inicio",
