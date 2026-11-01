@@ -34,7 +34,7 @@ Cada una tiene un papel. No uses dos para el mismo trabajo.
 | Ajustar duraciones, curvas y escalonados de animaciones existentes | **transitions-polish** (`transitions review` / `transitions polish`) |
 | Imágenes estáticas: OG para redes, portadas provisionales, ilustraciones | **canvas-design**, siempre con paleta y tipografía de `DESIGN.md` |
 | Prototipos o demos sueltos en claude.ai | **web-artifacts-builder** — nunca dentro de este repo |
-| — | **frontend-design**: instalado, sin papel asignado (se solapa con impeccable); no usar salvo petición |
+| Dirección estética en casos que impeccable no cubra | **frontend-design** — secundaria: antes de usarla, di qué no cubre impeccable y por qué |
 
 ### Choques conocidos
 
