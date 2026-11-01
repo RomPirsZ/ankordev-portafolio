@@ -32,7 +32,7 @@
 - **GSAP** (core, ScrollTrigger, SplitText) + **Lenis**
 - **Supabase** (solo tabla `leads`)
 - **Zod** (`astro/zod`), **Cloudflare Turnstile**
-- Fuentes `@fontsource`: Space Grotesk, JetBrains Mono
+- Fuentes `@fontsource`: Space Grotesk, Monaspace Krypton
 - Testing: **Vitest**, **Playwright**, **@axe-core/playwright**, **Lighthouse CI**
 - Calidad: TypeScript estricto, `astro check`, GitHub Actions, Dependabot
 

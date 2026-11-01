@@ -67,7 +67,7 @@ El tema elegido se recuerda en visitas posteriores.
 
 ### Tipografía y elementos de laboratorio
 
-- Display grande y fluida (Space Grotesk); etiquetas en monoespaciada (JetBrains Mono), mayúsculas.
+- Display grande y fluida (Space Grotesk); etiquetas en monoespaciada (Monaspace Krypton), mayúsculas.
 - Retícula fina de fondo, numeración (`001`, `002`), etiquetas tipo `EXP-001` o `[ 01 / SERVICIOS ]`, coordenadas decorativas, cursor personalizado (solo en escritorio).
 
 ## 7. Movimiento

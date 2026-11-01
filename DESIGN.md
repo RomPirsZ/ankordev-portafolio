@@ -34,7 +34,7 @@ typography:
     fontWeight: 400
     lineHeight: 1.5
   label:
-    fontFamily: "JetBrains Mono Variable, ui-monospace, monospace"
+    fontFamily: "Monaspace Krypton, ui-monospace, monospace"
     fontSize: "clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem)"
     fontWeight: 400
     letterSpacing: "0.05em"
@@ -79,7 +79,7 @@ Lo que el sitio rechaza: la plantilla SaaS genérica (gradientes morados, tarjet
 **Key Characteristics:**
 - Cuatro temas de color que cambian el fondo completo; el visitante elige y el sitio lo recuerda.
 - Retícula de 64 px como papel de fondo, siempre decorativa.
-- Display enorme y apretado en Space Grotesk; anotaciones en JetBrains Mono, mayúsculas y espaciadas.
+- Display enorme y apretado en Space Grotesk; anotaciones en Monaspace Krypton, mayúsculas y espaciadas.
 - Esquinas rectas en todo; el círculo solo para muestras de color e indicadores.
 - Plano en reposo; la sombra solo aparece como respuesta a un estado.
 - Mezcla sólido + fino: el CTA principal es un bloque sólido y táctil, todo lo demás es línea fina y texto.
@@ -128,9 +128,9 @@ Los componentes nunca usan un color de tema directamente: usan los roles (`--bg`
 
 **Display Font:** Space Grotesk Variable (con `ui-sans-serif, system-ui, sans-serif`)
 **Body Font:** Space Grotesk Variable (misma familia)
-**Label/Mono Font:** JetBrains Mono Variable (con `ui-monospace, monospace`)
+**Label/Mono Font:** Monaspace Krypton, solo peso 400 (con `ui-monospace, monospace`)
 
-**Character:** Una grotesca geométrica con rarezas (la «a», la «G») que en tamaño display se siente construida a mano, y una mono de programador para las anotaciones del cuaderno. La grotesca habla; la mono numera, etiqueta y mide.
+**Character:** Una grotesca geométrica con rarezas (la «a», la «G») que en tamaño display se siente construida a mano, y Monaspace Krypton, una mono mecánica de trazo técnico, para las anotaciones del cuaderno. La grotesca habla; la mono numera, etiqueta y mide. Si alguna anotación necesita otro peso de Krypton, se importa solo ese peso (cada uno pesa ~43 KB).
 
 ### Hierarchy
 - **Display** (700, `clamp(2.75rem → 6.25rem)`, interlineado 0.95, tracking −0.03em): titular del hero y nombres de proyecto en la vista lista. Una por pantalla.
@@ -199,7 +199,7 @@ Todavía no hay botones implementados. Se aplican estas reglas al construirlos:
 ### Do:
 - **Do** usar siempre los roles (`--bg`, `--fg`, `--accent`, `--accent-ink`, `--on-accent`…) y nunca un hex de tema directamente en un componente (la excepción son las muestras del selector de tema).
 - **Do** verificar cada pieza nueva en los cuatro temas y con `prefers-reduced-motion: reduce`.
-- **Do** poner numeración, etiquetas, fechas y metadatos en JetBrains Mono mayúscula con tracking 0.05em.
+- **Do** poner numeración, etiquetas, fechas y metadatos en Monaspace Krypton mayúscula con tracking 0.05em.
 - **Do** mantener las esquinas rectas (0 px) y reservar el círculo para colores e indicadores.
 - **Do** separar zonas con línea de 1 px o cambio de tono `--bg` → `--surface`.
 - **Do** animar solo `transform` y `opacity`, y solo para guiar la lectura o confirmar una acción.

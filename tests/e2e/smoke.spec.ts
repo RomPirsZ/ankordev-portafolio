@@ -23,10 +23,14 @@ test('el inicio existe en ambos idiomas y se enlazan entre sí', async ({ page }
 
 test('las fuentes self-hosted cargan', async ({ page }) => {
   await page.goto('/');
+  // fonts.check() da true también si la fuente no está declarada: se mira el estado real de cada FontFace
   const loaded = await page.evaluate(async () => {
     await document.fonts.ready;
-    return document.fonts.check('1rem "Space Grotesk Variable"');
+    const isLoaded = (family: string) =>
+      [...document.fonts].some((face) => face.family.replace(/["']/g, '') === family && face.status === 'loaded');
+    return { display: isLoaded('Space Grotesk Variable'), mono: isLoaded('Monaspace Krypton') };
   });
-  expect(loaded).toBe(true);
+  expect(loaded).toEqual({ display: true, mono: true });
   await expect(page.locator('h1')).toHaveCSS('font-family', /Space Grotesk Variable/);
+  await expect(page.locator('nav a').first()).toHaveCSS('font-family', /Monaspace Krypton/);
 });

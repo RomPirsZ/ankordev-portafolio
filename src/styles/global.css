@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/space-grotesk';
-@import '@fontsource-variable/jetbrains-mono';
+/* Mono: solo el peso 400, el único que usa el sitio */
+@import '@fontsource/monaspace-krypton/400.css';
 
 /*
   Temas (spec §6). Reglas de contraste (constitución III):
@@ -72,10 +73,10 @@
   --color-line: var(--line);
 }
 
-/* Tipografía: display y cuerpo en Space Grotesk, etiquetas en JetBrains Mono */
+/* Tipografía: display y cuerpo en Space Grotesk, etiquetas en Monaspace Krypton */
 @theme {
   --font-sans: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --font-mono: 'Monaspace Krypton', ui-monospace, monospace;
 
   /* Escala fluida entre 360px y 1440px de ancho */
   --text-xs: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
