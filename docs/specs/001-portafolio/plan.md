@@ -98,10 +98,12 @@ Content Collection `projects` (`src/content.config.ts`, esquema en `src/lib/proj
 
 - **Base para todos:** gradiente estático en CSS en el fondo de `<html>`, con los colores del tema activo; la retícula sigue encima. Es lo que ven móvil, reduced-motion, navegadores sin WebGL y visitantes sin JS.
 - **Escritorio:** isla React `GradientBackground` con `client:media="(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)"`: su JS solo se descarga si se cumple la condición. Renderiza `ShaderGradientCanvas` fijo detrás del contenido (`z-index: -1`), con `transition:persist` para no reiniciarse al navegar.
-- **Iluminación:** `lightType="env"` con el HDR alojado en `public/hdr/` (`envBasePath="/hdr/"`). Archivos de Poly Haven (CC0), idénticos a los de drei; solo se descarga el preset en uso (~1,5 MB, solo escritorio). Ninguna petición a terceros.
-- **Comportamiento:** colores por tema en `src/lib/gradient.ts` (los mismos que el gradiente estático), cambia de colores con el tema, se pausa con la pestaña oculta, se desmonta si el visitante activa reduced-motion, y un error de WebGL deja el gradiente estático.
+- **Iluminación:** `lightType="env"` con HDR alojados en `public/hdr/` (`envBasePath="/hdr/"`): Carbón usa `city` y Naranja `lobby` (con `city`, Naranja no llegaba a AA: el entorno lo apagaba a un marrón). Archivos de Poly Haven (CC0), idénticos a los de drei (verificado por SHA-256). ShaderGradient descarga **siempre los tres presets**; el que no se usa (`dawn`) es un HDR mínimo válido de 127 bytes. Presupuesto en escritorio: ~3 MB de HDR + ~350 KB gzip de JS (React, three, ShaderGradient). Ninguna petición a terceros.
+- **Comportamiento:** en `src/lib/gradient.ts`, colores visibles por tema (los del gradiente estático) y colores de entrada del shader, más claros porque la iluminación de entorno devuelve solo parte de la luz; cambia de colores con el tema, se pausa con la pestaña oculta, se desmonta si el visitante activa reduced-motion, y un error de WebGL deja el gradiente estático.
 - **Contraste:** los colores se eligen para que `--fg` cumpla AA sobre cualquier punto del fondo; un e2e mide los píxeles reales del canvas en ambos temas.
-- **CSP:** las islas añaden un script y un estilo en línea de Astro; sus hashes van en `vercel.json`.
+- **CSP:** las islas añaden dos scripts y un estilo en línea de Astro; sus hashes van en `vercel.json` (`style-src` incluido) y un e2e verifica cada script y estilo en línea.
+- **three.js 0.186.1:** ShaderGradient 2.4.x usa el chunk `cube_uv_reflection_fragment`, que three quitó en 0.187.0. Dependabot no propone three ≥ 0.187 hasta que ShaderGradient lo soporte.
+- **Tests:** el proyecto `desktop` de Playwright corre sin WebGL (prueba el fondo estático y no satura la CPU); `desktop-webgl` usa SwiftShader, el mismo renderizador en local y en CI, para medir el contraste en píxeles de forma reproducible.
 
 **Cambio 2026-11-01:** se añade el fondo de gradiente (spec §6) a petición del cliente, con la enmienda 1.2.0 de la constitución.
 

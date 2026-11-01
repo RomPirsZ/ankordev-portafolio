@@ -10,7 +10,8 @@ test('el tema cambia y persiste al recargar', async ({ page }) => {
   await naranja.click();
   await expect(html).toHaveAttribute('data-theme', 'naranja');
   await expect(naranja).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(242, 113, 28)');
+  // El fondo lo pinta <html> (el <body> es transparente para dejar ver el gradiente)
+  await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(242, 113, 28)');
 
   await page.reload();
   await expect(html).toHaveAttribute('data-theme', 'naranja');

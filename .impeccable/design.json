@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-01T16:28:55.716Z",
+  "generatedAt": "2026-11-01T17:33:28.707Z",
   "title": "Design System: [A]nkordev",
   "extensions": {
     "colorMeta": {
@@ -170,6 +170,15 @@
         "naranja"
       ],
       "default": "carbon"
+    },
+    "background": {
+      "static": "radial-gradient ×2 + linear-gradient con --grad-1/2/3 en <html>",
+      "animated": "ShaderGradient (WebGL), solo escritorio con puntero fino y sin reduced-motion",
+      "lighting": {
+        "carbon": "env · city",
+        "naranja": "env · lobby"
+      },
+      "source": "src/lib/gradient.ts"
     }
   },
   "components": [
@@ -243,6 +252,7 @@
     "overview": "El sitio es la libreta de un experimento en curso. La retícula fina de fondo es el papel cuadriculado; la numeración (`01`, `001`) y las etiquetas mono en mayúsculas (`EXP-001`, `[ 01 / SERVICIOS ]`) son las anotaciones al margen; cada proyecto es un registro con su número. Encima de ese papel, el contenido se escribe en grande: titulares en Space Grotesk que ocupan la pantalla con seguridad. El rigor está en el sistema, no en el adorno: cada marca tiene un sitio, un número y una razón.\n\nLa densidad es baja y ordenada: mucho fondo, líneas de 1 px, tipografía grande y pocas piezas sólidas. El color de cada tema llena el fondo entero; no se reparte en manchas. El movimiento, comprometido en la spec (letras escalonadas en el hero, revelado de títulos, scramble breve en etiquetas, botones magnéticos, línea de progreso del proceso), solo existe para guiar la lectura o confirmar una acción, y desaparece por completo con `prefers-reduced-motion`.\n\nLo que el sitio rechaza: la plantilla SaaS genérica (gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features»), el ruido de efectos (animación porque sí, glitch constante), lo corporativo frío (fotos de stock de oficina, azul de agencia) y el cliché cyberpunk (verde Matrix, glow neón, terminal falsa).",
     "keyCharacteristics": [
       "Dos temas de color, Carbón y Naranja, que cambian el fondo completo; el visitante elige y el sitio lo recuerda.",
+      "Fondo de gradiente en los colores del tema: animado en escritorio (WebGL), estático en móvil y con reduced-motion. Es la única animación ambiental.",
       "Retícula de 64 px como papel de fondo, siempre decorativa.",
       "Display enorme y apretado en Space Grotesk; anotaciones en Monaspace Krypton, mayúsculas y espaciadas.",
       "Esquinas rectas en todo; el círculo solo para muestras de color e indicadores.",
@@ -250,6 +260,11 @@
       "Mezcla sólido + fino: el CTA principal es un bloque sólido y táctil, todo lo demás es línea fina y texto."
     ],
     "rules": [
+      {
+        "name": "The Ambient-Exception Rule",
+        "body": "El fondo es la única animación que no guía la lectura (constitución II 1.2.0). Nada más se mueve «porque sí», y el texto cumple AA sobre cualquier punto del fondo: Carbón ≤ 0,063 de luminancia, Naranja ≥ 0,236, medido en píxeles por el e2e.",
+        "section": "colors"
+      },
       {
         "name": "The Señal Rule",
         "body": "El Naranja es una señal: marca la acción principal, el estado activo o el punto de atención. Si en una pantalla hay más de un par de rellenos naranjas compitiendo, uno sobra.",
@@ -306,7 +321,7 @@
     ],
     "donts": [
       "**Don't** construir con la estética de plantilla SaaS: gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features».",
-      "**Don't** añadir ruido de efectos: animación porque sí, glitch constante, cosas que se mueven sin guiar la lectura.",
+      "**Don't** añadir ruido de efectos: animación porque sí, glitch constante, cosas que se mueven sin guiar la lectura. El fondo de gradiente es la única excepción ambiental.",
       "**Don't** caer en lo corporativo frío: fotos de stock de oficina, azul de agencia, tono de agencia grande.",
       "**Don't** usar el cliché cyberpunk: verde Matrix, glow neón, terminal falsa.",
       "**Don't** usar el acento como texto sobre `--surface`; solo sobre `--bg`.",

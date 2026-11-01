@@ -16,7 +16,24 @@ export default defineConfig({
   },
   projects: [
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
-    { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
+    // Escritorio sin WebGL: prueba el fondo estático (el respaldo real) y evita que
+    // cada test renderice el gradiente y sature la CPU
+    {
+      name: 'desktop',
+      testIgnore: /gradient\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'], launchOptions: { args: ['--disable-webgl', '--disable-webgl2'] } },
+    },
+    // El fondo animado, con WebGL por software (SwiftShader): mismo renderizador en
+    // local y en CI (sin GPU), así la medición de contraste es reproducible
+    {
+      name: 'desktop-webgl',
+      testMatch: /gradient\.spec\.ts/,
+      fullyParallel: false,
+      use: {
+        ...devices['Desktop Chrome'],
+        launchOptions: { args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader'] },
+      },
+    },
   ],
   // Se prueba el build real, no el servidor de desarrollo. En CI el build es un paso previo.
   webServer: {

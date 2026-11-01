@@ -35,7 +35,7 @@
 - [x] T18 Toggle lista/cuadrícula + imagen flotante
 - [x] T19 View Transitions con reinicio de animaciones
 - [x] T20 Tests e2e 3 y 7
-- [ ] T20b Fondo de gradiente (plan §6.1): animado con ShaderGradient en escritorio, estático en móvil y con reduced-motion; contraste AA medido en píxeles + tests
+- [x] T20b Fondo de gradiente (plan §6.1): animado con ShaderGradient en escritorio, estático en móvil y con reduced-motion; contraste AA medido en píxeles + tests
 
 **Hecho cuando:** fluido en un teléfono real; reduced-motion lo desactiva todo.
 

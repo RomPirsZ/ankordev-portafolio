@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import GradientBackground from '../components/GradientBackground';
 import { DEFAULT_THEME, THEMES, THEME_STORAGE_KEY } from '../lib/themes';
 import { useTranslations, type Lang } from '../i18n/utils';
 
@@ -39,7 +40,15 @@ const t = useTranslations(lang);
       }
     </script>
   </head>
-  <body class="lab-grid flex min-h-dvh flex-col bg-bg text-fg">
+  <body class="lab-grid flex min-h-dvh flex-col text-fg">
+    <!--
+      Sin bg-bg: el fondo (color + gradiente estático) lo pinta <html> y el canvas va entre ambos.
+      Fondo animado (plan §6.1): su JS solo se descarga en escritorio con puntero fino
+      y sin reduced-motion. Persiste entre páginas para no reiniciarse al navegar.
+    -->
+    <div class="gradient-bg" aria-hidden="true" transition:persist="gradient-bg">
+      <GradientBackground client:media="(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)" />
+    </div>
     <a
       href="#contenido"
       class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-accent focus:px-4 focus:py-2 focus:text-on-accent"

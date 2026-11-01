@@ -28,7 +28,7 @@ describe('temas', () => {
 
   it.each(THEMES)('%s define todos los tokens', (theme) => {
     expect(Object.keys(tokens(theme)).sort()).toEqual(
-      ['accent', 'bg', 'fg', 'muted', 'on-accent', 'surface'].sort(),
+      ['accent', 'bg', 'fg', 'grad-1', 'grad-2', 'grad-3', 'muted', 'on-accent', 'surface'].sort(),
     );
   });
 

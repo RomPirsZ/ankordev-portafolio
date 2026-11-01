@@ -9,6 +9,8 @@
   - --accent es relleno; como texto solo sobre --bg (sobre --surface no llega a AA).
   - Texto sobre un relleno de acento: --on-accent.
   - --line es decorativo (retícula, divisores); no sirve como borde de control.
+  - --grad-1/2/3: colores del fondo de gradiente, los mismos que src/lib/gradient.ts
+    (el texto cumple AA sobre cada uno; lo vigilan tests/unit/gradient.test.ts y el e2e).
 */
 :root,
 [data-theme='carbon'] {
@@ -18,6 +20,9 @@
   --muted: #b7b6b4;
   --accent: #f2711c;
   --on-accent: #1e1f22;
+  --grad-1: #2b2d31;
+  --grad-2: #1e1f22;
+  --grad-3: #5a2a10;
 }
 
 [data-theme='naranja'] {
@@ -27,11 +32,20 @@
   --muted: #1e1f22;
   --accent: #1e1f22;
   --on-accent: #f3f1ec;
+  --grad-1: #f2711c;
+  --grad-2: #ff9a55;
+  --grad-3: #f68a3e;
 }
 
 :root {
   --line: color-mix(in srgb, var(--fg) 18%, transparent);
   color-scheme: dark;
+  /* Fondo estático para todos (móvil, reduced-motion, sin WebGL, sin JS); en escritorio
+     el gradiente animado se pinta encima (plan §6.1) */
+  --bg-gradient:
+    radial-gradient(70% 60% at 85% 10%, var(--grad-3), transparent 70%),
+    radial-gradient(80% 70% at 10% 95%, var(--grad-2), transparent 70%),
+    linear-gradient(160deg, var(--grad-1), var(--grad-2));
 }
 
 [data-theme='naranja'] {
@@ -69,6 +83,8 @@
 @layer base {
   html {
     background-color: var(--bg);
+    background-image: var(--bg-gradient);
+    background-attachment: fixed;
     color: var(--fg);
     font-family: var(--font-sans);
     -webkit-text-size-adjust: 100%;
@@ -201,6 +217,23 @@
     }
   }
 
+  /* Fondo animado (plan §6.1): capa fija detrás del contenido y de la retícula.
+     Solo existe en escritorio sin reduced-motion; aparece con un fundido. */
+  .gradient-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    & canvas {
+      animation: gradient-in 1.2s ease-out both;
+    }
+
+    @media print {
+      display: none;
+    }
+  }
+
   /* Retícula fina de laboratorio (decorativa) */
   .lab-grid {
     background-image:
@@ -208,5 +241,11 @@
       linear-gradient(90deg, var(--line) 1px, transparent 1px);
     background-size: 4rem 4rem;
     background-position: center top;
+  }
+}
+
+@keyframes gradient-in {
+  from {
+    opacity: 0;
   }
 }

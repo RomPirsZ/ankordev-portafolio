@@ -31,6 +31,15 @@ test('la CSP permite cada script inline del build', async ({ page }) => {
   }
 });
 
+test('la CSP permite cada estilo inline del build', async ({ page }) => {
+  await page.goto('/');
+  const inline = await page.$$eval('style', (styles) => styles.map((s) => s.textContent ?? ''));
+  for (const code of inline) {
+    const hash = createHash('sha256').update(code).digest('base64');
+    expect(csp, 'actualiza el hash de style-src en vercel.json').toContain(`'sha256-${hash}'`);
+  }
+});
+
 test('con la CSP aplicada no hay violaciones', async ({ page }) => {
   const violations: string[] = [];
   page.on('console', (msg) => {

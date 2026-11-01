@@ -74,6 +74,7 @@ Lo que el sitio rechaza: la plantilla SaaS genérica (gradientes morados, tarjet
 
 **Key Characteristics:**
 - Dos temas de color, Carbón y Naranja, que cambian el fondo completo; el visitante elige y el sitio lo recuerda.
+- Fondo de gradiente en los colores del tema: animado en escritorio (WebGL), estático en móvil y con reduced-motion. Es la única animación ambiental.
 - Retícula de 64 px como papel de fondo, siempre decorativa.
 - Display enorme y apretado en Space Grotesk; anotaciones en Monaspace Krypton, mayúsculas y espaciadas.
 - Esquinas rectas en todo; el círculo solo para muestras de color e indicadores.
@@ -95,6 +96,12 @@ Dos ambientes completos, uno oscuro y uno encendido, construidos con dos tintas 
 - **Tinta** (`tinta`): texto principal en el tema Naranja; texto sobre relleno Naranja en Carbón.
 - **Ceniza** (`ceniza`): texto secundario (`--muted`) solo en Carbón. En Naranja `--muted` es igual a `--fg`.
 - **Línea** (derivada: `--fg` al 18 % sobre transparente): retícula y divisores. Es decorativa; nunca sirve como borde de un control.
+
+### Fondo
+
+Cada tema tiene un fondo de gradiente (`src/lib/gradient.ts`, `--grad-1/2/3`). En escritorio, ShaderGradient lo anima en WebGL: Carbón se ilumina con el HDR `city` y queda carbón con reflejos marinos y cobrizos; Naranja con `lobby` y queda en el naranja de la marca. En móvil, con reduced-motion o sin WebGL, es un gradiente CSS estático con los mismos colores. La retícula va encima del fondo y el contenido encima de todo.
+
+**The Ambient-Exception Rule.** El fondo es la única animación que no guía la lectura (constitución II 1.2.0). Nada más se mueve «porque sí», y el texto cumple AA sobre cualquier punto del fondo: Carbón ≤ 0,063 de luminancia, Naranja ≥ 0,236, medido en píxeles por el e2e.
 
 ### Roles por tema
 
@@ -219,7 +226,7 @@ Un solo momento de autor por página: la entrada del titular (`[data-split]`), l
 
 ### Don't:
 - **Don't** construir con la estética de plantilla SaaS: gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features».
-- **Don't** añadir ruido de efectos: animación porque sí, glitch constante, cosas que se mueven sin guiar la lectura.
+- **Don't** añadir ruido de efectos: animación porque sí, glitch constante, cosas que se mueven sin guiar la lectura. El fondo de gradiente es la única excepción ambiental.
 - **Don't** caer en lo corporativo frío: fotos de stock de oficina, azul de agencia, tono de agencia grande.
 - **Don't** usar el cliché cyberpunk: verde Matrix, glow neón, terminal falsa.
 - **Don't** usar el acento como texto sobre `--surface`; solo sobre `--bg`.

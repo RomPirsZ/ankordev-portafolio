@@ -19,6 +19,12 @@ updates:
       # @astrojs/check 0.9.x solo admite TypeScript ^5 || ^6; quitar al soportar 7
       - dependency-name: 'typescript'
         versions: ['>=7']
+      # @shadergradient/react 2.4.x usa el chunk cube_uv_reflection_fragment, que three
+      # quitó en 0.187.0; quitar cuando ShaderGradient lo soporte (plan §6.1)
+      - dependency-name: 'three'
+        versions: ['>=0.187.0']
+      - dependency-name: '@types/three'
+        versions: ['>=0.187.0']
       # Va ligado a la versión de Node en uso (engines: 26.x)
       - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']
