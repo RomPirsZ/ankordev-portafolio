@@ -119,6 +119,24 @@
   }
 }
 
+/*
+  Entradas animadas (T16). Solo con JS y movimiento (clase `motion`, puesta en
+  <head>) nacen ocultas hasta que GSAP las toma (`motion-ready`). Si el módulo
+  no llega en 2,5 s, se muestran igual: el contenido nunca depende de JS.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  .motion:not(.motion-ready) :is([data-split], [data-reveal]) {
+    opacity: 0;
+    animation: motion-fallback 0s 2.5s forwards;
+  }
+}
+
+@keyframes motion-fallback {
+  to {
+    opacity: 1;
+  }
+}
+
 @layer components {
   /* Retícula de página: columna de margen para anotaciones + columna de contenido */
   .margin-grid {

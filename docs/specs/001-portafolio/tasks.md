@@ -30,7 +30,7 @@
 ## Fase 3 — Movimiento (objetivo: 3–4 nov)
 
 - [x] T15 `animations.ts` con guardia de reduced-motion; Lenis + ScrollTrigger
-- [ ] T16 SplitText en hero y títulos; scramble en etiquetas
+- [x] T16 SplitText en hero y títulos; scramble en etiquetas
 - [ ] T17 Botones magnéticos y cursor (solo puntero fino)
 - [ ] T18 Toggle lista/cuadrícula + imagen flotante
 - [ ] T19 View Transitions con reinicio de animaciones

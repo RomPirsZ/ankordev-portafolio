@@ -21,12 +21,19 @@ const t = useTranslations(lang);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <!-- Aplica el tema guardado antes del primer pintado (evita parpadeo) -->
+    <!--
+      Antes del primer pintado: aplica el tema guardado y, si hay movimiento,
+      marca la página para que las entradas animadas nazcan ocultas (global.css).
+      Si cambia este script, cambia su hash en la CSP de vercel.json.
+    -->
     <script is:inline define:vars={{ themes: THEMES, key: THEME_STORAGE_KEY }}>
       try {
         const saved = localStorage.getItem(key);
         if (themes.includes(saved)) document.documentElement.dataset.theme = saved;
       } catch {}
+      if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+        document.documentElement.classList.add('motion');
+      }
     </script>
   </head>
   <body class="lab-grid flex min-h-dvh flex-col bg-bg text-fg">
