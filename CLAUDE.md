@@ -41,7 +41,7 @@ Cada una tiene un papel. No uses dos para el mismo trabajo.
 - **taste-skill** desaconseja etiquetas mono, líneas finas y retícula: aquí son parte de la spec §6 y de `DESIGN.md`. Mandan ellos.
 - **Scripts por CDN** (GSAP/Lenis en las escenas de taste-skill): no se copian. GSAP y Lenis van por npm según el plan, y la CSP solo permite `self`.
 - **Fotos de stock** (taste-skill descarga de Unsplash/Picsum): solo como ambientación, nunca presentadas como trabajo o clientes reales.
-- **Blur animado** (transitions-polish lo propone): la constitución II solo permite animar `transform` y `opacity`. **Preguntar** antes de integrarlo o descartarlo; integrarlo exige enmendar la constitución.
+- **Blur animado**: la constitución II (1.1.0) lo admite solo en la entrada de titulares y textos cortos, ≤ 0,6 s y ≤ 8 px, nunca ligado al scroll continuo ni en imágenes o bloques grandes. Cualquier otro uso que proponga un skill (p. ej. transitions-polish) se descarta.
 - **Tokens de movimiento** (`_root.css` de transitions-polish): preguntar antes de copiarlos a `global.css`.
 - **web-artifacts-builder** instala React, shadcn y `pnpm`: nunca en este proyecto.
 - Carpetas de trabajo de skills (`.taste-skill/`): fuera de git.

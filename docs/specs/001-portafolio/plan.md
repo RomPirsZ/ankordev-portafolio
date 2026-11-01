@@ -9,7 +9,7 @@
 | Principio | Cómo se cumple |
 |---|---|
 | I. Contenido primero | Astro genera HTML estático; animaciones con JS solo como capa; formulario funciona con POST nativo |
-| II. Movimiento con propósito | GSAP sobre `transform`/`opacity`; todo se desactiva con `prefers-reduced-motion` |
+| II. Movimiento con propósito | GSAP sobre `transform`/`opacity`; `filter: blur()` solo en la entrada de titulares y textos cortos (≤ 0,6 s, ≤ 8 px; constitución 1.1.0); todo se desactiva con `prefers-reduced-motion` |
 | III. Accesibilidad | HTML semántico, contraste verificado por tema, axe en CI |
 | IV. Rendimiento | Salida estática, fuentes self-hosted, `astro:assets` para imágenes, GSAP solo donde se usa, Lighthouse CI |
 | V. Seguridad | Formulario vía función de servidor, Zod, Turnstile, RLS + `check`, cabeceras HTTP, secretos en Vercel |
