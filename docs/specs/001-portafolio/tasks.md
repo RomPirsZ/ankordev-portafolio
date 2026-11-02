@@ -46,7 +46,7 @@
 
 - [x] T21 Crear tabla `leads` en Supabase (SQL del plan) y verificar RLS — *`supabase/leads.sql`; `anon` solo inserta las columnas del formulario; verificado con la API (inserción, `check`, sin lectura/edición/borrado) y Security Advisor sin avisos*
 - [x] T22 `contact-schema.ts` + tests unitarios (escribir tests primero) — *cuenta caracteres como Postgres; un test vigila que coincida con `supabase/leads.sql`*
-- [ ] T23 `rate-limit.ts` + `turnstile.ts` + tests unitarios
+- [x] T23 `rate-limit.ts` + `turnstile.ts` + tests unitarios — *ventana deslizante con memoria acotada; Turnstile falla cerrado (red, timeout o respuesta inválida = no verificado)*
 - [ ] T24 `api/contact.ts` + tests de integración (todos los códigos del plan)
 - [ ] T25 `ContactForm` con Turnstile, honeypot, estados y fallback sin JS; página `gracias`
 - [ ] T26 Test e2e 6; envío real verificado en `leads`

@@ -149,7 +149,7 @@ Variables (en Vercel, nunca `PUBLIC_` salvo la site key): `SUPABASE_URL`, `SUPAB
 | Nivel | Qué |
 |---|---|
 | Estático | `astro check`, TS estricto |
-| Unitario | `contact-schema`, `i18n/utils`, `clock`, `rate-limit` |
+| Unitario | `contact-schema` (con su coherencia con `supabase/leads.sql`), `i18n/utils`, `clock`, `rate-limit`, `turnstile` |
 | Integración | Handler de `/api/contact` con Supabase y Turnstile simulados: 200, 400, 403, 405, 413, 429, honeypot |
 | E2E | 1) inicio carga · 2) tema persiste · 3) lista/cuadrícula · 4) caso de estudio y volver · 5) ES↔EN · 6) formulario (API simulada) · 7) reduced motion · 8) sin JS · 9) solo teclado |
 | Accesibilidad | axe (WCAG 2.2 AA + buenas prácticas) en inicio ES/EN, caso de estudio y 404 × 2 temas × móvil/escritorio; falla con cualquier violación seria o crítica. axe no calcula el contraste sobre el gradiente (lo deja incompleto): lo mide `gradient.spec.ts` en píxeles |
