@@ -45,7 +45,7 @@
 ## Fase 4 — Contacto (objetivo: 4 nov)
 
 - [x] T21 Crear tabla `leads` en Supabase (SQL del plan) y verificar RLS — *`supabase/leads.sql`; `anon` solo inserta las columnas del formulario; verificado con la API (inserción, `check`, sin lectura/edición/borrado) y Security Advisor sin avisos*
-- [ ] T22 `contact-schema.ts` + tests unitarios (escribir tests primero)
+- [x] T22 `contact-schema.ts` + tests unitarios (escribir tests primero) — *cuenta caracteres como Postgres; un test vigila que coincida con `supabase/leads.sql`*
 - [ ] T23 `rate-limit.ts` + `turnstile.ts` + tests unitarios
 - [ ] T24 `api/contact.ts` + tests de integración (todos los códigos del plan)
 - [ ] T25 `ContactForm` con Turnstile, honeypot, estados y fallback sin JS; página `gracias`
