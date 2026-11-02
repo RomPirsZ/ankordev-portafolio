@@ -76,6 +76,8 @@ Variables CSS en `global.css` por `[data-theme="oscuro|claro"]` con `--bg`, `--s
 
 Un script inline mínimo en `<head>` aplica el tema guardado antes del primer pintado (evita parpadeo); acceso a `localStorage` dentro de try/catch.
 
+**Oscurecimiento ajeno (2026-11-01):** el sitio ya tiene tema oscuro, así que se excluye de quien oscurece páginas por su cuenta. `<meta name="darkreader-lock">` desactiva Dark Reader: sin ella, al recargar en claro aplicaba su tema (fondo gris, gradiente borrado) y seguía activo al volver al oscuro, con solo la retícula visible. El claro declara `color-scheme: only light`, la exclusión documentada del oscurecimiento automático de Chromium (flag *force-dark* en Brave y Chrome); en pruebas con ese flag funciona cuando el sistema prefiere oscuro, el caso habitual de quien lo activa.
+
 ## 5. Contenido de proyectos
 
 Content Collection `projects` (`src/content.config.ts`, esquema en `src/lib/project-schema.ts`). Un archivo por proyecto e idioma en `src/content/projects/{es,en}/<número>-<nombre>.md`; el slug es el nombre del archivo, igual en ambos idiomas. Portadas en `src/assets/projects/<slug>/`.

@@ -22,6 +22,12 @@ const t = useTranslations(lang);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      El sitio tiene tema oscuro propio: Dark Reader se desactiva con esta etiqueta.
+      Sin ella oscurecía el tema claro al recargar, borraba el gradiente y seguía
+      activo al volver al oscuro (solo quedaba la retícula).
+    -->
+    <meta name="darkreader-lock" />
     <title>{title}</title>
     <!-- Transiciones entre páginas (T19); Astro las desactiva con reduced-motion -->
     <ClientRouter />

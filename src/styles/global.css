@@ -56,8 +56,12 @@
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='.33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.7'/%3E%3C/svg%3E");
 }
 
+/* «only»: el sitio ya tiene su tema oscuro. Excluye el claro del oscurecimiento
+   automático de Chromium (Auto Dark; flag force-dark de Brave), que invertía el
+   texto al recargar. Las extensiones como Dark Reader se excluyen con
+   <meta name="darkreader-lock"> en BaseLayout. */
 [data-theme='claro'] {
-  color-scheme: light;
+  color-scheme: only light;
 }
 
 @theme inline {

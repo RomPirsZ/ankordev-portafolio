@@ -20,6 +20,19 @@ test('el tema cambia y persiste al recargar', async ({ page }) => {
   await expect(claro).toHaveAttribute('aria-pressed', 'true');
 });
 
+// Dark Reader y el oscurecimiento automático de Chromium transformaban el tema claro
+// al recargar (fondo gris, gradiente perdido). El sitio ya tiene tema oscuro.
+test('el tema claro queda fuera del oscurecimiento automático y de Dark Reader', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('theme', 'claro'));
+  for (const path of ['/', '/en/', '/no-existe']) {
+    await page.goto(path);
+    await expect(page.locator('head meta[name="darkreader-lock"]')).toHaveCount(1);
+  }
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'claro');
+  expect(await page.locator('html').evaluate((el) => getComputedStyle(el).colorScheme)).toMatch(/\bonly\b/);
+});
+
 test('el selector de tema funciona con teclado', async ({ page }) => {
   await page.goto('/');
   await page.locator('[data-theme-value="claro"]').focus();
