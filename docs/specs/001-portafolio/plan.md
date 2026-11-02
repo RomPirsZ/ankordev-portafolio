@@ -57,6 +57,7 @@ src/
   styles/global.css
 tests/
   unit/  integration/  e2e/
+supabase/leads.sql   → esquema de la tabla de contactos (§7)
 .github/workflows/ci.yml
 .github/dependabot.yml
 .env.example
@@ -116,20 +117,14 @@ Content Collection `projects` (`src/content.config.ts`, esquema en `src/lib/proj
 
 Flujo: navegador → `POST /api/contact` → Turnstile → Zod → rate limit → Supabase.
 
-```sql
-create table leads (
-  id uuid primary key default gen_random_uuid(),
-  created_at timestamptz default now(),
-  name text not null check (char_length(name) between 2 and 80),
-  email text not null check (char_length(email) <= 254 and email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$'),
-  project_type text check (project_type in ('landing','negocio','iglesia','tienda','app','otro')),
-  budget text check (char_length(budget) <= 40),
-  message text not null check (char_length(message) between 10 and 2000),
-  lang text not null default 'es' check (lang in ('es','en'))
-);
-alter table leads enable row level security;
-create policy "anon solo inserta" on leads for insert to anon with check (true);
-```
+Tabla `leads` en `supabase/leads.sql`, la fuente única del esquema: columnas con `check` de longitud y formato, RLS y la política «anon solo inserta». Un test unitario comprueba que `contact-schema.ts` acepta lo mismo que esos `check`.
+
+**Cambio 2026-11-02 (T21):**
+- **Grants explícitos.** Desde el 30 de mayo de 2026, Supabase ya no expone a su API las tablas nuevas de `public` sin un `GRANT`. Por eso el SQL revoca todo a `anon` y `authenticated` y da a `anon` solo `insert`, y solo de las 6 columnas del formulario: `id` y `created_at` los pone siempre la base de datos, así que nadie puede fechar un contacto a su gusto. Desde la API pública nadie lee, edita ni borra contactos, ni aunque falle una política.
+- **Security Advisor: sin avisos.** La política de inserción es `with check (true)` a propósito, porque el formulario es público, y está documentada en un `comment on policy`. El lint 0024 la marcaba hasta que el `insert` se limitó a las columnas del formulario. La opción *Enable automatic RLS* del proyecto crea `public.rls_auto_enable()` (`security definer`), que la API podía ejecutar (lints 0028 y 0029). Se le quitó `execute` a `public`, `anon` y `authenticated`, y la activación automática de RLS sigue funcionando al crear tablas.
+- **Consecuencias para el endpoint.** Inserta con `Prefer: return=minimal`, porque sin `select` no puede devolver la fila. Usa la clave *publishable* (rol `anon`), nunca la secreta ni `service_role`.
+- **`created_at` pasa a `not null`.**
+- **Región: East US (North Virginia),** junto a `iad1`, la región por defecto de las funciones de Vercel.
 
 Respuestas del endpoint: `200` éxito (o honeypot lleno, sin guardar) · `400` validación · `403` Turnstile fallido · `405` método · `413` cuerpo > 10 KB · `429` límite (5 / 10 min por IP) · `500` genérico. Con `Accept: text/html` redirige a `/gracias` o vuelve con error; con JSON responde JSON.
 
