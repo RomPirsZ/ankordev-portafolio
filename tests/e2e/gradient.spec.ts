@@ -127,6 +127,33 @@ test('en móvil el fondo es estático y no descarga nada del gradiente', async (
   expect(await page.locator('.gradient-bg').evaluate((element) => getComputedStyle(element).backgroundImage)).toContain('radial-gradient');
 });
 
+// La barra del navegador móvil no se puede emular: se comprueba la regla. Con
+// inset: 0, al ocultarse la barra quedaba una franja sin fondo hasta acabar el scroll.
+test('en móvil el fondo mide el viewport grande y no salta al ocultarse la barra', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'Comprobación para móvil');
+  await page.goto('/');
+  const height = await page.evaluate(() => {
+    const find = (rules: CSSRuleList): string | undefined => {
+      for (const rule of Array.from(rules)) {
+        if (rule instanceof CSSStyleRule && rule.selectorText === '.gradient-bg') return rule.style.height;
+        if ('cssRules' in rule) {
+          const found = find((rule as CSSGroupingRule).cssRules);
+          if (found) return found;
+        }
+      }
+      return undefined;
+    };
+    for (const sheet of Array.from(document.styleSheets)) {
+      const found = find(sheet.cssRules);
+      if (found) return found;
+    }
+    return undefined;
+  });
+  expect(height).toBe('100lvh');
+  const box = await page.locator('.gradient-bg').boundingBox();
+  expect(box?.height).toBeGreaterThanOrEqual(page.viewportSize()!.height);
+});
+
 test.describe('con reduced-motion', () => {
   test.use({ reducedMotion: 'reduce' });
 

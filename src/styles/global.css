@@ -229,7 +229,11 @@
      navegador no aplica mezclas al fondo del elemento raíz. */
   .gradient-bg {
     position: fixed;
-    inset: 0;
+    inset: 0 0 auto;
+    /* Alto del viewport grande (barra del navegador oculta), no inset: 0. En móvil,
+       al ocultarse la barra la capa no crecía hasta acabar el scroll: quedaba una
+       franja abajo y el gradiente se recolocaba de golpe. Con lvh su tamaño no cambia. */
+    height: 100lvh;
     z-index: -1;
     pointer-events: none;
     background-image: var(--bg-gradient);
