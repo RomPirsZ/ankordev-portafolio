@@ -81,8 +81,13 @@ test('navegar con la CSP aplicada no produce violaciones', async ({ page }) => {
     if (msg.type() === 'error' && /Content Security Policy/i.test(msg.text())) violations.push(msg.text());
   });
   await page.route('**/*', async (route) => {
-    const response = await route.fetch();
-    await route.fulfill({ response, headers: { ...response.headers(), 'content-security-policy': csp } });
+    try {
+      const response = await route.fetch();
+      await route.fulfill({ response, headers: { ...response.headers(), 'content-security-policy': csp } });
+    } catch {
+      // Petición cancelada al navegar o aún en curso al acabar el test (p. ej. una precarga):
+      // ya no hay a quién responder. Sin esto, Playwright lo cuenta como error fuera de los tests.
+    }
   });
 
   await page.goto('/');
