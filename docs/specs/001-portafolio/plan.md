@@ -135,6 +135,12 @@ Variables (en Vercel, nunca `PUBLIC_` salvo la site key): `SUPABASE_URL`, `SUPAB
 `Content-Security-Policy` (self + `challenges.cloudflare.com`), `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` (todos los permisos de hardware, pago y seguimiento desactivados), `X-Frame-Options: DENY`, `Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Resource-Policy: same-origin`, `X-Permitted-Cross-Domain-Policies: none`.
 
 **Hardening 2026-11-01 (T09b):**
+**Keep-alive (T21b).** Supabase Free pausa el proyecto tras una semana con poca actividad, y con pocos contactos podría estar pausado justo cuando llega uno.
+- `.github/workflows/keepalive.yml` llama los lunes y jueves a `public.ping()`, definida en `supabase/keepalive.sql`: un `select 1` sin acceso a datos, con `security invoker`, que solo puede ejecutar `anon`.
+- El workflow no usa Actions de terceros y no tiene permisos sobre el repositorio. Usa la URL y la clave publishable como *secrets* de GitHub.
+- Si Supabase no responde, el workflow falla y GitHub avisa por email.
+- Límite: GitHub desactiva los workflows programados de un repositorio público tras 60 días sin actividad, y avisa antes. Se reactiva con un push o desde Actions.
+
 - **CSP:** sin `unsafe-*`; `base-uri 'none'`, `object-src 'none'`, `frame-ancestors 'none'`, `form-action 'self'`. No se activa Trusted Types: el router de Astro (View Transitions) usa `DOMParser` y lo rompería, y el sitio no inserta HTML no confiable (ni `innerHTML` ni `set:html`).
 - **Permissions-Policy:** solo nombres que Chromium y Brave reconocen (uno desconocido genera un aviso en consola): fuera `web-share` (no existe en Chromium para Linux), `browsing-topics` y `otp-credentials` (Brave no los tiene; sin scripts de terceros no protegían nada). No se tocan los permisos de *private state tokens*, que podría usar Turnstile.
 - **COOP y CORP `same-origin`:** aíslan la ventana y los recursos del sitio de otros orígenes. Sin COEP: rompería el iframe de Turnstile. Cuando T32 añada la imagen OG, su ruta lleva `Cross-Origin-Resource-Policy: cross-origin` para que las vistas previas la carguen.

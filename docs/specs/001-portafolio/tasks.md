@@ -45,6 +45,7 @@
 ## Fase 4 — Contacto (objetivo: 4 nov)
 
 - [x] T21 Crear tabla `leads` en Supabase (SQL del plan) y verificar RLS — *`supabase/leads.sql`; `anon` solo inserta las columnas del formulario; verificado con la API (inserción, `check`, sin lectura/edición/borrado) y Security Advisor sin avisos*
+- [x] T21b Keep-alive de Supabase: `supabase/keepalive.sql` (`ping()`) + workflow programado `keepalive.yml` (plan §7) — *lunes y jueves; si Supabase no responde, falla y GitHub avisa por email*
 - [x] T22 `contact-schema.ts` + tests unitarios (escribir tests primero) — *cuenta caracteres como Postgres; un test vigila que coincida con `supabase/leads.sql`*
 - [x] T23 `rate-limit.ts` + `turnstile.ts` + tests unitarios — *ventana deslizante con memoria acotada; Turnstile falla cerrado (red, timeout o respuesta inválida = no verificado)*
 - [ ] T24 `api/contact.ts` + tests de integración (todos los códigos del plan)

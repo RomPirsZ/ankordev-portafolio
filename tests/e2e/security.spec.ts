@@ -103,9 +103,12 @@ test('npm no ejecuta scripts de instalación ni instala desde fuera del registro
 });
 
 test('las Actions de la CI están fijadas por SHA de commit', () => {
+  // Un workflow sin Actions de terceros (p. ej. keepalive.yml, solo curl) es válido
+  let total = 0;
   for (const file of readdirSync('.github/workflows')) {
     const uses = [...readFileSync(`.github/workflows/${file}`, 'utf8').matchAll(/uses:\s*(\S+)/g)].map((m) => m[1]!);
-    expect(uses.length).toBeGreaterThan(0);
+    total += uses.length;
     for (const action of uses) expect(action, file).toMatch(/@[0-9a-f]{40}$/);
   }
+  expect(total).toBeGreaterThan(0);
 });

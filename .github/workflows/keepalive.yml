@@ -1,0 +1,26 @@
+name: Keep-alive de Supabase
+
+# Supabase Free pausa el proyecto tras una semana con poca actividad (plan §7).
+# Dos llamadas por semana a ping() lo mantienen activo; si falla (p. ej. ya está
+# pausado), el workflow falla y GitHub avisa por email.
+# Ojo: GitHub desactiva los workflows programados de un repositorio público tras
+# 60 días sin actividad (avisa antes); se reactiva con un push o desde Actions.
+on:
+  schedule:
+    - cron: '23 14 * * 1,4' # lunes y jueves, 10:23 en Caracas
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Llamar a ping() en Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          curl --fail-with-body -sS --max-time 20 -X POST "$SUPABASE_URL/rest/v1/rpc/ping" \
+            -H "apikey: $SUPABASE_ANON_KEY" -H 'Content-Type: application/json' --data '{}'
