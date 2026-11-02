@@ -21,6 +21,19 @@ test('el inicio existe en ambos idiomas y se enlazan entre sí', async ({ page }
   await expect(page.locator('html')).toHaveAttribute('lang', 'es');
 });
 
+test('cada enlace del menú lleva a una sección que existe', async ({ page }) => {
+  for (const home of ['/', '/en/']) {
+    await page.goto(home);
+    const hrefs = await page.locator('nav a').evaluateAll((links) => links.map((a) => a.getAttribute('href') ?? ''));
+    expect(hrefs.length).toBeGreaterThan(0);
+    for (const href of hrefs) {
+      const [path, id] = href.split('#');
+      expect(path, href).toBe(home);
+      await expect(page.locator(`[id="${id}"]`), href).toHaveCount(1);
+    }
+  }
+});
+
 test('las fuentes self-hosted cargan', async ({ page }) => {
   await page.goto('/');
   // fonts.check() da true también si la fuente no está declarada: se mira el estado real de cada FontFace

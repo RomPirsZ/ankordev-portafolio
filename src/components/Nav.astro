@@ -1,6 +1,6 @@
 ---
 import ThemeSwitcher from './ThemeSwitcher.astro';
-import { alternateLang, localizePath, sectionHref, useTranslations, type Lang } from '../i18n/utils';
+import { alternateLang, localizePath, sectionHref, useTranslations, type Lang, type Section } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -13,12 +13,15 @@ const t = useTranslations(lang);
 const home = localizePath('home', lang);
 const otherLang = alternateLang(lang);
 
-const links = [
-  { href: sectionHref('projects', lang), label: t('nav.projects') },
-  { href: sectionHref('services', lang), label: t('nav.services') },
-  { href: sectionHref('about', lang), label: t('nav.about') },
-  { href: sectionHref('contact', lang), label: t('nav.contact') },
-];
+// Orden del menú (spec §5). Solo se enlazan las secciones que ya existen en el inicio:
+// Servicios, Sobre mí y Contacto vuelven con T12, al pasar a Vercel Pro.
+const NAV_SECTIONS = ['projects', 'services', 'about', 'contact'] as const;
+const BUILT_SECTIONS: readonly Section[] = ['projects'];
+
+const links = NAV_SECTIONS.filter((section) => BUILT_SECTIONS.includes(section)).map((section) => ({
+  href: sectionHref(section, lang),
+  label: t(`nav.${section}`),
+}));
 ---
 
 <header class="border-b border-line">

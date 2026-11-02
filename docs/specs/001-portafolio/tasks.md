@@ -23,7 +23,7 @@
 
 - [x] T10 Sistema i18n (`es.json`, `en.json`, `utils.ts`) + test unitario
 - [x] T11 Content Collection `projects` con los 4 proyectos (placeholders)
-- [ ] T12 Secciones del inicio: Hero, Proyectos (lista y cuadrícula sin animación), Servicios, Proceso, Sobre mí, Contacto (solo maquetado) — *en curso: hero (sin CTA ni disponibilidad) y Proyectos hechos; Servicios, Proceso, Sobre mí, Contacto y el CTA esperan a Vercel Pro*
+- [ ] T12 Secciones del inicio: Hero, Proyectos (lista y cuadrícula sin animación), Servicios, Proceso, Sobre mí, Contacto (solo maquetado) — *en curso: hero (sin CTA ni disponibilidad) y Proyectos hechos; Servicios, Proceso, Sobre mí, Contacto y el CTA esperan a Vercel Pro; al construirlos, el menú recupera sus enlaces (`BUILT_SECTIONS` en `Nav.astro`)*
 - [x] T13 Página `proyectos/[slug]` y `404`
 - [x] T14 Tests e2e 1, 4, 8, 9 + axe en los 2 temas — *1 y 4 ya estaban en `smoke.spec.ts` y `projects.spec.ts`; nuevos `no-js.spec.ts` (8), `keyboard.spec.ts` (9) y `a11y.spec.ts` (axe)*
 
