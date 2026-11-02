@@ -51,16 +51,18 @@ test.describe('escritorio con movimiento', () => {
     expect(errors).toEqual([]);
   });
 
-  test('con la CSP de vercel.json no hay violaciones (isla y WebGL)', async ({ page }) => {
+  test('con las cabeceras de vercel.json no hay errores (isla y WebGL)', async ({ page }) => {
     const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as { headers: { headers: { key: string; value: string }[] }[] };
-    const csp = vercel.headers[0]!.headers.find((h) => h.key === 'Content-Security-Policy')!.value;
+    const injected = Object.fromEntries(vercel.headers[0]!.headers.map((h) => [h.key.toLowerCase(), h.value]));
     const violations: string[] = [];
     page.on('console', (msg) => {
-      if (msg.type() === 'error' && /Content Security Policy/i.test(msg.text())) violations.push(msg.text());
+      if (msg.type() === 'error') violations.push(msg.text());
     });
+    page.on('pageerror', (error) => violations.push(error.message));
+    // Todas las cabeceras (CSP, COOP, CORP, Permissions-Policy…), no solo la CSP
     await page.route('**/*', async (route) => {
       const response = await route.fetch();
-      await route.fulfill({ response, headers: { ...response.headers(), 'content-security-policy': csp } });
+      await route.fulfill({ response, headers: { ...response.headers(), ...injected } });
     });
     await page.goto('/');
     await expect(page.locator('.gradient-bg canvas')).toBeAttached({ timeout: 20_000 });

@@ -5,6 +5,10 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    # Espera 7 días tras cada publicación, como min-release-age en .npmrc (las
+    # actualizaciones de seguridad no esperan)
+    cooldown:
+      default-days: 7
     groups:
       astro:
         patterns: ['astro', '@astrojs/*']
@@ -28,7 +32,10 @@ updates:
       # Va ligado a la versión de Node en uso (engines: 26.x)
       - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']
+  # Actions de la CI, fijadas por SHA en ci.yml
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7

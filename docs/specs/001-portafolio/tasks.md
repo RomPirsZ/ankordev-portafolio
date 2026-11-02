@@ -14,6 +14,7 @@
 - [x] T07 [P] `vercel.json` con cabeceras, `.env.example`, `.gitignore`
 - [x] T08 [P] `ci.yml` y `dependabot.yml`
 - [x] T09 Conectar repo a Vercel y verificar despliegue (https://ankordev-portafolio.vercel.app)
+- [x] T09b Hardening (plan §8): cabeceras ampliadas, `security.txt` + `SECURITY.md`, `.npmrc` de cadena de suministro, Actions por SHA y ajustes de seguridad de GitHub
 
 **Hecho cuando:** sitio en línea, CI en verde, T06 pasa.
 

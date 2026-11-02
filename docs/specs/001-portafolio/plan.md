@@ -12,7 +12,7 @@
 | II. Movimiento con propósito | GSAP sobre `transform`/`opacity`; `filter: blur()` solo en la entrada de titulares y textos cortos (≤ 0,6 s, ≤ 8 px; constitución 1.1.0); fondo ambiental WebGL solo en escritorio con puntero fino, pausado con la pestaña oculta y con contraste AA verificado (constitución 1.2.0); todo se desactiva con `prefers-reduced-motion` |
 | III. Accesibilidad | HTML semántico, contraste verificado por tema, axe en CI |
 | IV. Rendimiento | Salida estática, fuentes self-hosted, `astro:assets` para imágenes, GSAP solo donde se usa, Lighthouse CI. El fondo WebGL no se descarga en móvil: allí el fondo es CSS estático (0 KB de JS) |
-| V. Seguridad | Formulario vía función de servidor, Zod, Turnstile, RLS + `check`, cabeceras HTTP, secretos en Vercel |
+| V. Seguridad | Formulario vía función de servidor, Zod, Turnstile, RLS + `check`, cabeceras HTTP (§8), secretos en Vercel, cadena de suministro protegida (`.npmrc`, Actions por SHA) |
 | VI. Testing | Vitest (unit + integración), Playwright (e2e + axe), CI bloqueante |
 | VII. Simplicidad | Sin framework de UI salvo la isla del fondo (ver excepción); rate limit en memoria; sin CMS |
 | VIII. Spec antes que código | Este plan + `tasks.md`; efectos WebGL quedan para ODD en v1.1, salvo el fondo (§6.1) |
@@ -135,7 +135,17 @@ Variables (en Vercel, nunca `PUBLIC_` salvo la site key): `SUPABASE_URL`, `SUPAB
 
 ## 8. Cabeceras (`vercel.json`)
 
-`Content-Security-Policy` (self + `challenges.cloudflare.com`), `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `X-Frame-Options: DENY`.
+`Content-Security-Policy` (self + `challenges.cloudflare.com`), `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` (todos los permisos de hardware, pago y seguimiento desactivados), `X-Frame-Options: DENY`, `Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Resource-Policy: same-origin`, `X-Permitted-Cross-Domain-Policies: none`.
+
+**Hardening 2026-11-01 (T09b):**
+- **CSP:** sin `unsafe-*`; `base-uri 'none'`, `object-src 'none'`, `frame-ancestors 'none'`, `form-action 'self'`. No se activa Trusted Types: el router de Astro (View Transitions) usa `DOMParser` y lo rompería, y el sitio no inserta HTML no confiable (ni `innerHTML` ni `set:html`).
+- **Permissions-Policy:** solo nombres que Chromium reconoce (uno desconocido genera un aviso en consola; `web-share` no existe en Chromium para Linux). No se tocan los permisos de *private state tokens*, que podría usar Turnstile.
+- **COOP y CORP `same-origin`:** aíslan la ventana y los recursos del sitio de otros orígenes. Sin COEP: rompería el iframe de Turnstile. Cuando T32 añada la imagen OG, su ruta lleva `Cross-Origin-Resource-Policy: cross-origin` para que las vistas previas la carguen.
+- **`/.well-known/security.txt` (RFC 9116) y `SECURITY.md`:** los reportes van al *private vulnerability reporting* de GitHub. `Expires` dura menos de un año: un e2e falla al caducar y hay que renovarlo. Con dominio propio, cambiar `Canonical`.
+- **Cadena de suministro (`.npmrc`):** `ignore-scripts=true` (ninguna dependencia ejecuta código al instalarse; hoy ninguna lo necesita en Linux), `min-release-age=7` (solo versiones con 7 días publicadas; parche urgente con `--min-release-age=0`) y dependencias solo desde el registro (`allow-git/remote/file/directory=none`). Dependabot espera lo mismo (`cooldown: 7`), salvo en actualizaciones de seguridad.
+- **CI:** Actions fijadas por SHA de commit (Dependabot las actualiza), `persist-credentials: false` y permisos de solo lectura.
+- **GitHub:** alertas y actualizaciones de seguridad de Dependabot, escaneo de secretos con *push protection*, reporte privado de vulnerabilidades, regla «Proteger main» (sin borrado ni force push) y wiki desactivada.
+- Los e2e de `security.spec.ts` aplican todas las cabeceras de `vercel.json` a una visita normal y fallan con cualquier error o aviso de `Permissions-Policy`; también vigilan `.npmrc`, el `security.txt` y el fijado por SHA.
 
 ## 9. Estrategia de testing
 
