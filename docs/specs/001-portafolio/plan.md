@@ -115,7 +115,16 @@ Content Collection `projects` (`src/content.config.ts`, esquema en `src/lib/proj
 
 ## 7. Contacto
 
-Flujo: navegador → `POST /api/contact` → Turnstile → Zod → rate limit → Supabase.
+Flujo: navegador → `POST /api/contact` → Turnstile → Zod → rate limit → Supabase → aviso por email.
+
+**Aviso por email (T23b, cambio 2026-11-02).**
+- `src/lib/notify.ts` envía cada contacto guardado al email del dueño, con Resend: una petición `fetch`, sin SDK.
+- El `reply_to` es el email de quien escribió, así que al responder se le escribe directamente.
+- El email va en texto plano, sin HTML, y el asunto en una sola línea: lo que escribe el visitante no puede inyectar nada.
+- Es *best effort*: si Resend falla, el contacto ya está en la tabla, el visitante recibe igualmente el 200 y el fallo va a los logs.
+- Sin dominio propio verificado, Resend envía desde `onboarding@resend.dev` y solo entrega en el email de la cuenta, que es justo el destinatario. Con dominio propio basta cambiar `from`.
+- Plan gratuito: 100 emails al día, 3000 al mes.
+- El aviso de privacidad (T25) dirá que el mensaje se guarda en Supabase y se reenvía por email con Resend (constitución X).
 
 Tabla `leads` en `supabase/leads.sql`, la fuente única del esquema: columnas con `check` de longitud y formato, RLS y la política «anon solo inserta». Un test unitario comprueba que `contact-schema.ts` acepta lo mismo que esos `check`.
 
@@ -126,21 +135,25 @@ Tabla `leads` en `supabase/leads.sql`, la fuente única del esquema: columnas co
 - **`created_at` pasa a `not null`.**
 - **Región: East US (North Virginia),** junto a `iad1`, la región por defecto de las funciones de Vercel.
 
-Respuestas del endpoint: `200` éxito (o honeypot lleno, sin guardar) · `400` validación · `403` Turnstile fallido · `405` método · `413` cuerpo > 10 KB · `429` límite (5 / 10 min por IP) · `500` genérico. Con `Accept: text/html` redirige a `/gracias` o vuelve con error; con JSON responde JSON.
-
-Variables (en Vercel, nunca `PUBLIC_` salvo la site key): `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`.
-
-## 8. Cabeceras (`vercel.json`)
-
-`Content-Security-Policy` (self + `challenges.cloudflare.com`), `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` (todos los permisos de hardware, pago y seguimiento desactivados), `X-Frame-Options: DENY`, `Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Resource-Policy: same-origin`, `X-Permitted-Cross-Domain-Policies: none`.
-
-**Hardening 2026-11-01 (T09b):**
 **Keep-alive (T21b).** Supabase Free pausa el proyecto tras una semana con poca actividad, y con pocos contactos podría estar pausado justo cuando llega uno.
 - `.github/workflows/keepalive.yml` llama los lunes y jueves a `public.ping()`, definida en `supabase/keepalive.sql`: un `select 1` sin acceso a datos, con `security invoker`, que solo puede ejecutar `anon`.
 - El workflow no usa Actions de terceros y no tiene permisos sobre el repositorio. Usa la URL y la clave publishable como *secrets* de GitHub.
 - Si Supabase no responde, el workflow falla y GitHub avisa por email.
 - Límite: GitHub desactiva los workflows programados de un repositorio público tras 60 días sin actividad, y avisa antes. Se reactiva con un push o desde Actions.
 
+Respuestas del endpoint: `200` éxito (o honeypot lleno, sin guardar) · `400` validación · `403` Turnstile fallido · `405` método · `413` cuerpo > 10 KB · `429` límite (5 / 10 min por IP) · `500` genérico. Con `Accept: text/html` redirige a `/gracias` o vuelve con error; con JSON responde JSON.
+
+Variables (en Vercel, nunca `PUBLIC_` salvo la site key): `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`, `RESEND_API_KEY` y `CONTACT_NOTIFY_TO`.
+
+**Claves de Turnstile por entorno.**
+- **Producción (Vercel):** las claves reales del widget `ankordev-portafolio contacto` (modo *Managed*), cuyo único hostname es `ankordev-portafolio.vercel.app`.
+- **Local y CI:** las claves oficiales de prueba de Cloudflare, que siempre pasan: *site key* `1x00000000000000000000AA` y *secret* `1x0000000000000000000000000000000AA`. Así ninguna clave real está en el disco ni en GitHub, y los e2e no necesitan secretos.
+
+## 8. Cabeceras (`vercel.json`)
+
+`Content-Security-Policy` (self + `challenges.cloudflare.com`), `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` (todos los permisos de hardware, pago y seguimiento desactivados), `X-Frame-Options: DENY`, `Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Resource-Policy: same-origin`, `X-Permitted-Cross-Domain-Policies: none`.
+
+**Hardening 2026-11-01 (T09b):**
 - **CSP:** sin `unsafe-*`; `base-uri 'none'`, `object-src 'none'`, `frame-ancestors 'none'`, `form-action 'self'`. No se activa Trusted Types: el router de Astro (View Transitions) usa `DOMParser` y lo rompería, y el sitio no inserta HTML no confiable (ni `innerHTML` ni `set:html`).
 - **Permissions-Policy:** solo nombres que Chromium y Brave reconocen (uno desconocido genera un aviso en consola): fuera `web-share` (no existe en Chromium para Linux), `browsing-topics` y `otp-credentials` (Brave no los tiene; sin scripts de terceros no protegían nada). No se tocan los permisos de *private state tokens*, que podría usar Turnstile.
 - **COOP y CORP `same-origin`:** aíslan la ventana y los recursos del sitio de otros orígenes. Sin COEP: rompería el iframe de Turnstile. Cuando T32 añada la imagen OG, su ruta lleva `Cross-Origin-Resource-Policy: cross-origin` para que las vistas previas la carguen.

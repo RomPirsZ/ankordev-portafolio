@@ -48,6 +48,7 @@
 - [x] T21b Keep-alive de Supabase: `supabase/keepalive.sql` (`ping()`) + workflow programado `keepalive.yml` (plan §7) — *lunes y jueves; si Supabase no responde, falla y GitHub avisa por email*
 - [x] T22 `contact-schema.ts` + tests unitarios (escribir tests primero) — *cuenta caracteres como Postgres; un test vigila que coincida con `supabase/leads.sql`*
 - [x] T23 `rate-limit.ts` + `turnstile.ts` + tests unitarios — *ventana deslizante con memoria acotada; Turnstile falla cerrado (red, timeout o respuesta inválida = no verificado)*
+- [x] T23b `notify.ts`: aviso por email de cada contacto con Resend + tests unitarios (plan §7) — *responder le escribe a quien envió el contacto; verificado con un envío real (entregado, reply-to correcto)*
 - [ ] T24 `api/contact.ts` + tests de integración (todos los códigos del plan)
 - [ ] T25 `ContactForm` con Turnstile, honeypot, estados y fallback sin JS; página `gracias`
 - [ ] T26 Test e2e 6; envío real verificado en `leads`
