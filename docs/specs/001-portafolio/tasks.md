@@ -57,7 +57,7 @@
 
 ## Fase 5 — Proyectos (objetivo: 5–9 nov)
 
-- [ ] T27 Proyecto 001 restaurante — *repo propio en `../restaurante/` (café ficticio «Molienda», Mérida), con su spec, plan y tareas en `docs/specs/001-sitio/`; sin despliegue hasta nuevo aviso*
+- [x] T27 Proyecto 001 restaurante — *repo propio en `../restaurante/` (café ficticio «Molienda», Mérida), con su spec, plan y tareas en `docs/specs/001-sitio/`; M00–M10 hechas (revisión final de impeccable aprobada, `DESIGN.md`, Lighthouse móvil 99–100/100/100/100); sin despliegue hasta nuevo aviso; el caso de estudio va en T30*
 - [ ] T28 Proyecto 002 tienda (`docs/specs/003-tienda/`)
 - [ ] T29 Proyecto 003 reservas, versión mínima (`docs/specs/004-reservas/`)
 - [ ] T30 Casos de estudio con capturas y enlaces reales
