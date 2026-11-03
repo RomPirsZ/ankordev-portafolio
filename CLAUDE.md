@@ -41,7 +41,7 @@ Cada una tiene un papel. No uses dos para el mismo trabajo.
 - **taste-skill** desaconseja etiquetas mono, líneas finas y retícula: aquí son parte de la spec §6 y de `DESIGN.md`. Mandan ellos.
 - **Scripts por CDN** (GSAP/Lenis en las escenas de taste-skill): no se copian. GSAP y Lenis van por npm según el plan, y la CSP solo permite `self`.
 - **Fotos de stock** (taste-skill descarga de Unsplash/Picsum): solo como ambientación, nunca presentadas como trabajo o clientes reales.
-- **Blur animado**: la constitución II lo admite solo en la entrada de titulares y textos cortos, ≤ 0,6 s y ≤ 8 px, nunca ligado al scroll continuo ni en imágenes o bloques grandes. Cualquier otro uso que proponga un skill (p. ej. transitions-polish) se descarta.
+- **Propiedades animables**: desde la constitución 1.3.0 (2026-11-03), el principio II admite, además de `transform` y `opacity`, `clip-path`, `mask`, filtros (blur incluido, también en imágenes y ligado al scroll), color, fondo, borde y `box-shadow`. Siguen vetadas las propiedades que recalculan el diseño (`width`, `height`, `top`, `left`, `margin`…). Los efectos caros solo donde aportan, fluidos en un móvil de gama media. Si un skill propone otra cosa, se descarta.
 - **Fondo animado**: la constitución II (1.2.0) admite un único fondo ambiental WebGL (plan §6.1), solo en escritorio con puntero fino y estático en móvil y con reduced-motion. Es la única animación ambiental: «ruido de efectos» sigue vetado para todo lo demás.
 - **Tokens de movimiento** (`_root.css` de transitions-polish): preguntar antes de copiarlos a `global.css`.
 - **web-artifacts-builder** instala React, shadcn y `pnpm`: nunca en este proyecto.
