@@ -160,7 +160,7 @@ Respuestas del endpoint: `200` éxito (o honeypot lleno, sin guardar) · `400` v
 Variables (secretos del Worker con `npx wrangler secret put` o desde el panel; nunca `PUBLIC_` salvo la site key, que va como variable de build de Workers Builds porque se usa al compilar): `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`, `RESEND_API_KEY` y `CONTACT_NOTIFY_TO`.
 
 **Claves de Turnstile por entorno.**
-- **Producción (Cloudflare):** las claves reales del widget `ankordev-portafolio contacto` (modo *Managed*). Su hostname es `ankordev-portafolio.ankordev.workers.dev`; `ankordev-portafolio.vercel.app` se quita al apagar Vercel.
+- **Producción (Cloudflare):** las claves reales del widget `ankordev-portafolio contacto` (modo *Managed*). Su hostname es `ankordev-portafolio.ankordev.workers.dev` (el de Vercel se quitó al borrar ese proyecto, el 2026-11-06).
 - **Local y CI:** las claves oficiales de prueba de Cloudflare, que siempre pasan: *site key* `1x00000000000000000000AA` y *secret* `1x0000000000000000000000000000000AA`. Así ninguna clave real está en el disco ni en GitHub, y los e2e no necesitan secretos.
 
 ## 8. Cabeceras (`public/_headers`)
