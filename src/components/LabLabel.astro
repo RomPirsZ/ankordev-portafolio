@@ -3,6 +3,7 @@
 // Es decorativa: se usa solo donde su información ya está en el texto cercano
 // (el título de la sección, el número del proyecto), así que los lectores de
 // pantalla la ignoran y el efecto scramble (T16) no les afecta.
+// Va en --code (verde azulado): es la única anotación que se escribe como código.
 interface Props {
   text: string;
   class?: string;
@@ -11,4 +12,4 @@ interface Props {
 const { text, class: className } = Astro.props;
 ---
 
-<span class:list={['annotation block', className]} aria-hidden="true" data-scramble>{text}</span>
+<span class:list={['annotation block text-code', className]} aria-hidden="true" data-scramble>{text}</span>

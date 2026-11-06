@@ -11,15 +11,16 @@ export interface GradientColors {
 /**
  * Colores del gradiente por tema. Con luz «3d» el shader los respeta, así que
  * son los mismos en el fondo animado y en el estático.
- * - oscuro: azules noche. Los grises neutros salían marrones al iluminarse.
- * - claro: blanco, naranja y hueso.
- * El contraste real lo mide el e2e del fondo sobre los píxeles, grano incluido
- * (oscuro: luminancia ≤ 0,063 para el texto secundario; claro: ≥ 0,236). El grano
- * en soft-light aclara la media de los oscuros: por eso el oscuro lleva grano al 75 %.
+ * Paleta «Terminal cálida» (T11b):
+ * - oscuro: carbón cálido casi negro, con un brillo verde azulado tenue.
+ * - claro: blanco, melocotón y papel.
+ * El contraste real lo mide el e2e del fondo sobre los píxeles, grano incluido, con
+ * umbrales sacados de los colores de texto de global.css. El grano en soft-light
+ * aclara la media de los oscuros: por eso el oscuro lleva grano al 75 %.
  */
 export const GRADIENT_COLORS: Record<Theme, GradientColors> = {
-  oscuro: { color1: '#202A45', color2: '#141B31', color3: '#1A3253' },
-  claro: { color1: '#FFFFFF', color2: '#F2711C', color3: '#F3F1EC' },
+  oscuro: { color1: '#23201D', color2: '#151311', color3: '#1E2B29' },
+  claro: { color1: '#FFFFFF', color2: '#FFCDBE', color3: '#F5F0E8' },
 };
 
 /**

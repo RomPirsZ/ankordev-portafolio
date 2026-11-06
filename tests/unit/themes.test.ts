@@ -28,15 +28,16 @@ describe('temas', () => {
 
   it.each(THEMES)('%s define todos los tokens', (theme) => {
     expect(Object.keys(tokens(theme)).sort()).toEqual(
-      ['accent', 'bg', 'fg', 'grad-1', 'grad-2', 'grad-3', 'muted', 'on-accent', 'surface'].sort(),
+      ['accent', 'bg', 'code', 'fg', 'grad-1', 'grad-2', 'grad-3', 'muted', 'on-accent', 'surface'].sort(),
     );
   });
 
   it.each(THEMES)('%s cumple contraste AA de texto', (theme) => {
     const t = tokens(theme);
-    for (const text of ['fg', 'muted']) {
-      expect(contrast(t[text]!, t['bg']!)).toBeGreaterThanOrEqual(4.5);
-      expect(contrast(t[text]!, t['surface']!)).toBeGreaterThanOrEqual(4.5);
+    // --code (etiquetas de laboratorio) es texto como los otros dos
+    for (const text of ['fg', 'muted', 'code']) {
+      expect(contrast(t[text]!, t['bg']!), text).toBeGreaterThanOrEqual(4.5);
+      expect(contrast(t[text]!, t['surface']!), text).toBeGreaterThanOrEqual(4.5);
     }
     // El acento puede ir como texto, pero solo sobre --bg
     expect(contrast(t['accent']!, t['bg']!)).toBeGreaterThanOrEqual(4.5);

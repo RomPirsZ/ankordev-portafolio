@@ -1,0 +1,30 @@
+---
+// Logotipo «Cursor» (T11b, spec §6): [Λ]NKORDEV_ dibujado como trazados, sin fuente.
+// La A pierde el travesaño y un cursor de bloque ocupa su sitio; cierra con «_».
+// Decorativo: el nombre accesible lo da el texto del enlace que lo contiene.
+// Colores por rol: letras en currentColor (--fg), cursor en --accent, «_» en --code.
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg class:list={['logo', className]} viewBox="0 0 88.6 12" aria-hidden="true" focusable="false">
+  <path
+    fill="currentColor"
+    fill-rule="evenodd"
+    d="M1,0L4,0L4,2.4L2.6,2.4L2.6,9.6L4,9.6L4,12L1,12L0,11L0,1Z M7.3,0L11.3,0L13.8,12L11,12L9.3,3.4L7.6,12L4.8,12Z M14.6,0L17.6,0L18.6,1L18.6,11L17.6,12L14.6,12L14.6,9.6L16,9.6L16,2.4L14.6,2.4Z M19.4,0L22.2,0L24.6,6.5L24.6,0L27.4,0L27.4,12L24.6,12L22.2,5.5L22.2,12L19.4,12Z M28.2,0L31,0L31,4.6L33.2,0L36.4,0L33.5,6L36.4,12L33.2,12L31,7.4L31,12L28.2,12Z M39.2,0L43.7,0L45.7,2L45.7,10L43.7,12L39.2,12L37.2,10L37.2,2ZM40.5,2.8L42.4,2.8L42.9,3.3L42.9,8.7L42.4,9.2L40.5,9.2L40,8.7L40,3.3Z M46.5,0L52.7,0L54.7,2L54.7,5L53.3,6.4L54.9,12L52,12L50.8,7.4L49.3,7.4L49.3,12L46.5,12ZM49.3,2.6L51.5,2.6L51.9,3L51.9,4.4L51.5,4.8L49.3,4.8Z M55.7,0L61.7,0L64.2,2.5L64.2,9.5L61.7,12L55.7,12ZM58.5,2.8L60.7,2.8L61.4,3.5L61.4,8.5L60.7,9.2L58.5,9.2Z M65,0L72,0L72,2.6L67.8,2.6L67.8,4.8L71.2,4.8L71.2,7.2L67.8,7.2L67.8,9.4L72,9.4L72,12L65,12Z M72.8,0L75.7,0L77.3,8L78.9,0L81.8,0L79,12L75.6,12Z"
+  ></path>
+  <rect class="fill-accent" x="8.1" y="6.6" width="2.4" height="3"></rect>
+  <path class="fill-code" d="M82.6,9.6L88.6,9.6L88.6,12L82.6,12Z"></path>
+</svg>
+
+<style>
+  .logo {
+    display: block;
+    /* Alto de la versal de la marca en el menú; el ancho sale del viewBox */
+    height: 1.375rem;
+    width: auto;
+  }
+</style>

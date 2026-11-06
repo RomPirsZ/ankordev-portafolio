@@ -26,11 +26,14 @@ const contrast = (a: string, b: string) => {
 };
 
 describe('fondo de gradiente', () => {
-  it.each(THEMES)('%s tiene tres colores y el texto cumple AA sobre cada uno', (theme) => {
+  it.each(THEMES)('%s tiene tres colores y todo el texto cumple AA sobre cada uno', (theme) => {
     const colors = Object.values(GRADIENT_COLORS[theme]);
     expect(colors).toHaveLength(3);
-    const fg = token(theme, 'fg')!;
-    for (const color of colors) expect(contrast(fg, color), `${theme} ${color}`).toBeGreaterThanOrEqual(4.5);
+    // Texto principal, secundario y etiquetas de laboratorio: los tres van sobre el fondo
+    for (const text of ['fg', 'muted', 'code']) {
+      const value = token(theme, text)!;
+      for (const color of colors) expect(contrast(value, color), `${theme} ${text} sobre ${color}`).toBeGreaterThanOrEqual(4.5);
+    }
   });
 
   it.each(THEMES)('%s: el gradiente estático del CSS usa los mismos colores que el animado', (theme) => {

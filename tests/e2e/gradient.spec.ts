@@ -1,6 +1,7 @@
 // Fondo de gradiente (plan §6.1, constitución II 1.2.0).
 import { test, expect, type Page } from '@playwright/test';
 import sharp from 'sharp';
+import { DARK_MAX_BACKGROUND, LIGHT_MIN_BACKGROUND } from './contrast';
 import { SECURITY_HEADERS } from './headers';
 
 const linear = (v: number) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
@@ -73,17 +74,17 @@ test.describe('escritorio con movimiento', () => {
     await page.goto('/');
     await expect(page.locator('.gradient-bg canvas')).toBeAttached({ timeout: 20_000 });
     await page.waitForTimeout(2500);
-    // Ceniza (#B7B6B4) necesita luminancia de fondo ≤ 0,063 para 4,5:1
-    expect((await backgroundLuminance(page)).max).toBeLessThanOrEqual(0.063);
+    // El texto más débil del tema (sale de global.css) necesita este fondo para 4,5:1
+    expect((await backgroundLuminance(page)).max).toBeLessThanOrEqual(DARK_MAX_BACKGROUND);
   });
 
-  test('Claro: la tinta mantiene AA sobre cualquier punto del fondo', async ({ page }) => {
+  test('Claro: el texto secundario mantiene AA sobre cualquier punto del fondo', async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem('theme', 'claro'));
     await page.goto('/');
     await expect(page.locator('.gradient-bg canvas')).toBeAttached({ timeout: 20_000 });
     await page.waitForTimeout(2500);
-    // Tinta (#1E1F22) necesita luminancia de fondo ≥ 0,236 para 4,5:1
-    expect((await backgroundLuminance(page)).min).toBeGreaterThanOrEqual(0.236);
+    // El texto más débil del tema (sale de global.css) necesita este fondo para 4,5:1
+    expect((await backgroundLuminance(page)).min).toBeGreaterThanOrEqual(LIGHT_MIN_BACKGROUND);
   });
 
   test('el fondo sigue al tema y persiste al navegar, sin reiniciarse', async ({ page }) => {
@@ -97,7 +98,7 @@ test.describe('escritorio con movimiento', () => {
     await expect(page).toHaveURL(/\/proyectos\//);
     await expect(page.locator('.gradient-bg canvas')).toHaveAttribute('data-persisted', 'yes');
     await page.waitForTimeout(2500);
-    expect((await backgroundLuminance(page, 2)).min).toBeGreaterThanOrEqual(0.236);
+    expect((await backgroundLuminance(page, 2)).min).toBeGreaterThanOrEqual(LIGHT_MIN_BACKGROUND);
   });
 });
 
@@ -106,13 +107,13 @@ test.describe('fondo estático con grano (móvil)', () => {
 
   test('oscuro: el texto secundario mantiene AA', async ({ page }) => {
     await page.goto('/');
-    expect((await backgroundLuminance(page, 1)).max).toBeLessThanOrEqual(0.063);
+    expect((await backgroundLuminance(page, 1)).max).toBeLessThanOrEqual(DARK_MAX_BACKGROUND);
   });
 
-  test('claro: la tinta mantiene AA', async ({ page }) => {
+  test('claro: el texto secundario mantiene AA', async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem('theme', 'claro'));
     await page.goto('/');
-    expect((await backgroundLuminance(page, 1)).min).toBeGreaterThanOrEqual(0.236);
+    expect((await backgroundLuminance(page, 1)).min).toBeGreaterThanOrEqual(LIGHT_MIN_BACKGROUND);
   });
 });
 

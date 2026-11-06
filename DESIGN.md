@@ -2,16 +2,21 @@
 name: "[A]nkordev"
 description: Portafolio de laboratorio creativo — diseño y desarrollo web.
 colors:
-  carbon: "#2B2D31"
-  carbon-surface: "#3A3D43"
-  ceniza: "#B7B6B4"
-  naranja: "#F2711C"
-  hueso: "#F3F1EC"
-  hueso-surface: "#E7E2D9"
-  tinta: "#1E1F22"
-  noche: "#202A45"
-  noche-honda: "#141B31"
-  noche-marina: "#1A3253"
+  carbon: "#1C1A18"
+  carbon-surface: "#292624"
+  hueso: "#F3EEE6"
+  ceniza: "#B3ACA2"
+  coral: "#FF5B37"
+  turquesa: "#2FC6B3"
+  papel: "#F5F0E8"
+  papel-surface: "#EAE2D6"
+  tierra: "#5A534B"
+  coral-hondo: "#B3381C"
+  turquesa-honda: "#095C55"
+  rescoldo: "#23201D"
+  hollin: "#151311"
+  musgo: "#1E2B29"
+  melocoton: "#FFCDBE"
   blanco: "#FFFFFF"
 typography:
   display:
@@ -47,9 +52,15 @@ spacing:
   grid-cell: "64px"
   container: "80rem"
 components:
+  brand-logo:
+    textColor: "{colors.hueso}"
+    height: "22px"
+  lab-label:
+    textColor: "{colors.turquesa}"
+    typography: "{typography.label}"
   skip-link:
-    backgroundColor: "{colors.naranja}"
-    textColor: "{colors.tinta}"
+    backgroundColor: "{colors.coral}"
+    textColor: "{colors.carbon}"
     rounded: "{rounded.none}"
     padding: "8px 16px"
   nav-link:
@@ -79,7 +90,9 @@ Lo que el sitio rechaza: la plantilla SaaS genérica (gradientes morados, tarjet
 
 **Key Characteristics:**
 - Dos temas, Oscuro y Claro, que cambian el fondo completo; el visitante elige con un interruptor y el sitio lo recuerda.
-- Fondo de gradiente con grano fino: azul noche en el oscuro, blanco y naranja en el claro. Animado en escritorio (WebGL), estático en móvil y con reduced-motion. Es la única animación ambiental.
+- Paleta «Terminal cálida» (2026-11-06): carbón cálido y hueso, un coral que marca la acción y un turquesa reservado a lo que se escribe como código.
+- Fondo de gradiente con grano fino: carbón cálido con un brillo turquesa tenue en el oscuro; blanco, melocotón y papel en el claro. Animado en escritorio (WebGL), estático en móvil y con reduced-motion. Es la única animación ambiental.
+- Logotipo «Cursor»: `[Λ]NKORDEV_`, la A sin travesaño y un cursor de bloque en su lugar.
 - Retícula de 64 px como papel de fondo, siempre decorativa.
 - Display enorme y apretado en Space Grotesk; anotaciones en Monaspace Krypton, mayúsculas y espaciadas.
 - Esquinas rectas en todo; el círculo solo para indicadores de estado.
@@ -88,48 +101,55 @@ Lo que el sitio rechaza: la plantilla SaaS genérica (gradientes morados, tarjet
 
 ## Colors
 
-Dos ambientes completos, uno de noche y uno de día, construidos con dos tintas fijas (Hueso y Tinta) y un acento Naranja que funciona como señal, no como decoración general.
+Paleta «Terminal cálida», elegida el 2026-11-06 por su perfil (inventor creativo) y por la primera impresión que busca (confianza y seriedad). Dos ambientes completos, uno de noche y uno de día, con dos tintas fijas (Hueso y Carbón), un acento Coral que marca la acción y un Turquesa que solo aparece donde algo se escribe como código. La base sobria da la confianza; el carácter vive en dos detalles de color.
 
 ### Primary
-- **Naranja** (`naranja`): el acento de marca. En el oscuro es el relleno del CTA principal, el enlace de salto y los marcadores de estado; como texto, solo ahí y sobre `--bg` (4.65:1). En el claro vive en el fondo, como color del gradiente, y no se usa como relleno: se perdería sobre él.
+- **Coral** (`coral`, oscuro) y **Coral hondo** (`coral-hondo`, claro): el acento de marca. Es relleno: CTA principal, enlace de salto y el cursor del logotipo. Texto sobre él: Carbón en el oscuro (5,6:1) y Papel en el claro (5,3:1).
+
+### Secondary
+- **Turquesa** (`turquesa`, oscuro) y **Turquesa honda** (`turquesa-honda`, claro): el color de lo que se escribe como código. Solo las etiquetas de laboratorio (`[ 01 / PROYECTOS ]`, `EXP-001`, `ERR-404`) y el «_» del logotipo (rol `--code`). En el claro es más honda para quedar en 5,5:1 sobre el melocotón del fondo.
 
 ### Neutral
-- **Carbón** (`carbon`): `--bg` del tema oscuro (detrás del gradiente y en lo que se pinte con el rol).
+- **Carbón** (`carbon`): `--bg` del oscuro, texto principal del claro y texto sobre relleno Coral en el oscuro. Un negro cálido, nunca gris azulado.
 - **Carbón superficie** (`carbon-surface`): superficies elevadas por tono en el oscuro.
-- **Hueso** (`hueso`): texto principal en el oscuro; `--bg` del claro y texto sobre relleno de acento en él.
-- **Hueso superficie** (`hueso-surface`): superficies elevadas por tono en el claro.
-- **Tinta** (`tinta`): texto principal, secundario y acento en el claro; texto sobre relleno Naranja en el oscuro.
-- **Ceniza** (`ceniza`): texto secundario (`--muted`) solo en el oscuro. En el claro `--muted` es Tinta, porque también va sobre el naranja del fondo.
+- **Hueso** (`hueso`): texto principal en el oscuro.
+- **Papel** (`papel`): `--bg` del claro y texto sobre relleno Coral hondo.
+- **Papel superficie** (`papel-surface`): superficies elevadas por tono en el claro.
+- **Ceniza** (`ceniza`): texto secundario (`--muted`) en el oscuro.
+- **Tierra** (`tierra`): texto secundario en el claro, un gris cálido derivado del carbón.
 - **Línea** (derivada: `--fg` al 18 % sobre transparente): retícula y divisores. Es decorativa; nunca sirve como borde de un control.
 
 ### Fondo
-- **Noche** (`noche`), **Noche honda** (`noche-honda`) y **Noche marina** (`noche-marina`): el gradiente del oscuro. Azules casi negros y saturados; los grises neutros salían marrones al iluminarse.
-- **Blanco** (`blanco`), **Naranja** y **Hueso**: el gradiente del claro.
+- **Rescoldo** (`rescoldo`), **Hollín** (`hollin`) y **Musgo** (`musgo`): el gradiente del oscuro. Carbones cálidos casi negros; con la luz «3d» del fondo animado toman un tono de brasa, y el musgo deja un brillo turquesa tenue en un borde.
+- **Blanco** (`blanco`), **Melocotón** (`melocoton`) y **Papel**: el gradiente del claro.
 
-Cada tema tiene un fondo de gradiente (`src/lib/gradient.ts`, `--grad-1/2/3`) en una capa fija detrás de todo (`.gradient-bg`). En escritorio, ShaderGradient lo anima en WebGL con luz «3d», que respeta los colores (la luz de entorno los teñía: el oscuro salía marrón y el blanco amarillento). En móvil, con reduced-motion o sin WebGL, es un gradiente CSS estático con los mismos colores. Encima, en los dos casos, un grano fino de ruido SVG en mezcla `soft-light` (al 75 % en el oscuro, al 100 % en el claro), al estilo de shadergradient.co. La retícula va encima del fondo y el contenido encima de todo.
+Cada tema tiene un fondo de gradiente (`src/lib/gradient.ts`, `--grad-1/2/3`) en una capa fija detrás de todo (`.gradient-bg`). En escritorio, ShaderGradient lo anima en WebGL con luz «3d», que respeta los colores (la luz de entorno los teñía). En móvil, con reduced-motion o sin WebGL, es un gradiente CSS estático con los mismos colores. Encima, en los dos casos, un grano fino de ruido SVG en mezcla `soft-light` (al 75 % en el oscuro, al 100 % en el claro), al estilo de shadergradient.co. La retícula va encima del fondo y el contenido encima de todo.
 
-**The Ambient-Exception Rule.** El fondo es la única animación que no guía la lectura (constitución II 1.2.0). Nada más se mueve «porque sí», y el texto cumple AA sobre cualquier punto del fondo, grano incluido: oscuro ≤ 0,063 de luminancia, claro ≥ 0,236, medido en píxeles por el e2e en escritorio y en móvil.
+**The Ambient-Exception Rule.** El fondo es la única animación que no guía la lectura (constitución II 1.2.0). Nada más se mueve «porque sí», y todo el texto (`--fg`, `--muted`, `--code`) cumple AA sobre cualquier punto del fondo, grano incluido. El e2e lo mide en píxeles, en escritorio y en móvil, con umbrales que `tests/e2e/contrast.ts` calcula de los colores de texto: hoy, oscuro ≤ 0,054 de luminancia y claro ≥ 0,574.
 
-**The Night-Not-Agency Rule.** El azul noche es fondo, casi negro, y nunca sale de ahí: ni acento, ni relleno, ni texto. Un azul saturado de agencia en un botón o un enlace sigue prohibido.
+**The Ground-Stays-Ground Rule.** Los colores del gradiente son fondo y no salen de ahí: ni relleno, ni texto. El brillo turquesa del oscuro es atmósfera, no un acento. Un azul saturado de agencia en un botón o un enlace sigue prohibido.
 
 ### Roles por tema
 
-Los componentes nunca usan un color de tema directamente: usan los roles (`--bg`, `--surface`, `--fg`, `--muted`, `--accent`, `--on-accent`, `--line`), que `src/styles/global.css` resuelve por `[data-theme]` y Tailwind expone como `bg-bg`, `text-fg`, etc.
+Los componentes nunca usan un color de tema directamente: usan los roles (`--bg`, `--surface`, `--fg`, `--muted`, `--accent`, `--on-accent`, `--code`, `--line`), que `src/styles/global.css` resuelve por `[data-theme]` y Tailwind expone como `bg-bg`, `text-fg`, `text-code`, `fill-accent`, etc.
 
 | Rol | Oscuro | Claro |
 |---|---|---|
-| `--bg` | Carbón | Hueso |
-| `--surface` | Carbón superficie | Hueso superficie |
-| `--fg` | Hueso | Tinta |
-| `--muted` | Ceniza | Tinta |
-| `--accent` | Naranja | Tinta |
-| `--on-accent` | Tinta | Hueso |
+| `--bg` | Carbón | Papel |
+| `--surface` | Carbón superficie | Papel superficie |
+| `--fg` | Hueso | Carbón |
+| `--muted` | Ceniza | Tierra |
+| `--accent` | Coral | Coral hondo |
+| `--on-accent` | Carbón | Papel |
+| `--code` | Turquesa | Turquesa honda |
 
 ### Named Rules
 
-**The Señal Rule.** El acento es una señal: marca la acción principal, el estado activo o el punto de atención (Naranja en el oscuro, Tinta en el claro). Si en una pantalla hay más de un par de rellenos de acento compitiendo, uno sobra.
+**The Señal Rule.** El coral es una señal: marca la acción principal, el estado activo o el punto de atención. Si en una pantalla hay más de un par de rellenos de coral compitiendo, uno sobra.
 
-**The Accent-On-Ground Rule.** El acento como texto va solo sobre `--bg`: sobre `--surface` no llega a AA. `tests/unit/themes.test.ts` vigila los ratios.
+**The Fill-Not-Text Rule.** El coral es relleno, no texto: sobre el melocotón del fondo claro no llega a AA (4,2:1). `tests/unit/themes.test.ts` vigila los ratios de todos los roles.
+
+**The Code-Only Rule.** El turquesa marca solo lo que se escribe como código: etiquetas de laboratorio y el «_» del logotipo. Ni enlaces, ni botones, ni fondos, ni brillo. Es turquesa, no verde Matrix: el cliché de terminal sigue prohibido.
 
 **The Two-Theme Rule.** Toda pieza nueva se verifica en los dos temas antes de darse por terminada. Un componente que solo se ve bien en el oscuro está roto.
 
@@ -193,8 +213,15 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 - **Secundario / fantasma:** sin relleno, texto `--fg` en mono mayúscula, subrayado o borde de 1 px en `--fg` al interactuar.
 - **Hover / Focus:** el foco usa el contorno global (2 px `--fg`, separación 3 px). El hover nunca es la única señal de que algo es interactivo.
 
+### Logotipo «Cursor» (componente firma)
+- **Forma:** `[Λ]NKORDEV_` en versales construidas a mano sobre una retícula (`src/components/Logo.astro`), sin fuente: los corchetes de la marca, la A sin travesaño con un **cursor de bloque** en su lugar y un **«_»** al final, como una línea de terminal esperando la siguiente orden. Esquinas a 45° en los contornos de O, R y D, como el resto del sistema anguloso.
+- **Color por rol:** letras en `currentColor` (`--fg`), cursor en `--accent` y «_» en `--code`, así cambia solo con el tema.
+- **Tamaño:** 22 px de alto en el menú (`1.375rem`); el ancho sale del `viewBox`. No baja de ese alto.
+- **Accesibilidad:** el SVG es decorativo (`aria-hidden`); el nombre lo da el texto oculto del enlace («[A]nkordev — Inicio»). El nombre de la marca se sigue escribiendo «[A]nkordev» en títulos y textos.
+- **Favicon** (`public/favicon.svg`): el monograma `[Λ]` con su cursor sobre un cuadrado Carbón, esquinas rectas. Lleva los colores del oscuro escritos directamente: un favicon no lee las variables CSS de la página.
+
 ### Navigation
-- **Estilo:** marca en Space Grotesk 700 (`text-lg`, tracking apretado) a la izquierda; enlaces en mono mayúscula con su número en `--muted` (`01 Proyectos`, `02 Servicios`…).
+- **Estilo:** logotipo a la izquierda (enlace al inicio, con 38 px de área táctil); enlaces en mono mayúscula con su número en `--muted` (`01 Proyectos`, `02 Servicios`…).
 - **Estados:** hover con subrayado; foco con el contorno global. El cambio de idioma es una etiqueta mono (`EN` / `ES`) con nombre accesible completo.
 - **Móvil:** los enlaces bajan a una segunda fila a todo el ancho y se reparten con `flex-wrap`.
 
@@ -213,6 +240,12 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 - **Lista (por defecto, y la única sin JS):** filas a todo el ancho separadas por líneas de 1 px; número `001` en la columna de margen, título en Space Grotesk 700 `text-3xl` (`text-2xl` en móvil), metadatos mono debajo (tipo · origen · estado), año y flecha SVG a la derecha. Toda la fila es el enlace; hover y foco subrayan el título (2 px). No descarga portadas.
 - **Cuadrícula:** el mismo HTML con `data-view="grid"`: tarjetas sin sombra, portada 16:10 arriba con una línea de 1 px en `--line` (la separa del fondo cuando comparten color), número, título `text-xl` y metadatos.
 - **Imagen flotante:** en la lista, con puntero fino y movimiento, la portada del proyecto bajo el puntero lo sigue a su derecha (22rem, 16:10) con la única sombra del sistema. Decorativa (`aria-hidden`).
+
+### Lab Labels
+- Etiquetas de laboratorio (`src/components/LabLabel.astro`): `[ 01 / PROYECTOS ]`, `EXP-001`, `ERR-404`. Mono mayúscula en `--code`, en la columna de margen a la altura de su título. Decorativas (`aria-hidden`): su información ya está en el título cercano. Hacen un scramble breve al aparecer. Son el único texto en turquesa; los demás metadatos (números de fila, año, ficha) van en `--muted`.
+
+### Portadas provisionales
+- Mientras no hay capturas reales (T30), cada proyecto lleva una portada 1600×1000 con el lenguaje del cuaderno: retícula de 64 px, etiqueta `EXP-00X`, punto de estado y el número en Monaspace Krypton 800. Alternan Carbón con punto Coral (impares) y Coral con Carbón (pares). Si cambia la paleta, se regeneran con ella.
 
 ### View Controls
 - Dos botones mono en mayúscula dentro de un borde de 1 px en `--fg`, con icono SVG de 14 px; el activo va invertido (`--fg` de fondo, `--bg` de texto) y lleva `aria-pressed`. Ocultos sin JS. Van al final de la fila del título de la sección, o debajo de su etiqueta en móvil.
@@ -236,8 +269,8 @@ Un solo momento de autor por página: la entrada del titular (`[data-split]`), l
 ### Don't:
 - **Don't** construir con la estética de plantilla SaaS: gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features».
 - **Don't** añadir ruido de efectos: animación porque sí, glitch constante, cosas que se mueven sin guiar la lectura. El fondo de gradiente es la única excepción ambiental.
-- **Don't** caer en lo corporativo frío: fotos de stock de oficina, azul de agencia, tono de agencia grande. El azul noche se queda en el fondo.
-- **Don't** usar el cliché cyberpunk: verde Matrix, glow neón, terminal falsa.
-- **Don't** usar el acento como texto sobre `--surface`; solo sobre `--bg`.
+- **Don't** caer en lo corporativo frío: fotos de stock de oficina, azul de agencia, tono de agencia grande.
+- **Don't** usar el cliché cyberpunk: verde Matrix, glow neón, terminal falsa. El cursor y el «_» del logotipo son la única referencia a la terminal, y el turquesa no brilla.
+- **Don't** usar el coral como texto ni el turquesa fuera de las etiquetas de laboratorio y el logotipo.
 - **Don't** poner sombra a una superficie en reposo.
 - **Don't** usar el color Línea como borde de un control interactivo.

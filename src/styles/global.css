@@ -4,41 +4,46 @@
 @import '@fontsource/monaspace-krypton/400.css';
 
 /*
-  Temas (spec §6): oscuro (por defecto) y claro. Contraste (constitución III):
-  - --fg y --muted son texto: ≥ 4.5:1 sobre --bg y --surface.
-  - --accent es relleno; como texto solo sobre --bg (sobre --surface no llega a AA).
-  - Texto sobre un relleno de acento: --on-accent.
+  Temas (spec §6): paleta «Terminal cálida» (T11b), oscuro (por defecto) y claro.
+  Contraste (constitución III):
+  - --fg, --muted y --code son texto: ≥ 4.5:1 sobre --bg y --surface, y sobre cualquier
+    punto del fondo de gradiente (lo mide el e2e en píxeles, con umbrales sacados de aquí).
+  - --accent (coral) es relleno: acción principal, enlace de salto, cursor del logo.
+    Texto sobre él: --on-accent.
+  - --code (verde azulado) es el color de lo que es código: etiquetas de laboratorio
+    (`[ 01 / PROYECTOS ]`, `EXP-001`) y el «_» del logo. Nada más.
   - --line es decorativo (retícula, divisores); no sirve como borde de control.
-  - --grad-1/2/3: colores del fondo de gradiente, los mismos que src/lib/gradient.ts
-    (el texto cumple AA sobre cada uno; lo vigilan tests/unit/gradient.test.ts y el e2e).
+  - --grad-1/2/3: colores del fondo de gradiente, los mismos que src/lib/gradient.ts.
 */
 :root,
 [data-theme='oscuro'] {
-  --bg: #2b2d31;
-  --surface: #3a3d43;
-  --fg: #f3f1ec;
-  --muted: #b7b6b4;
-  --accent: #f2711c;
-  --on-accent: #1e1f22;
-  --grad-1: #202a45;
-  --grad-2: #141b31;
-  --grad-3: #1a3253;
+  --bg: #1c1a18;
+  --surface: #292624;
+  --fg: #f3eee6;
+  --muted: #b3aca2;
+  --accent: #ff5b37;
+  --on-accent: #1c1a18;
+  --code: #2fc6b3;
+  --grad-1: #23201d;
+  --grad-2: #151311;
+  --grad-3: #1e2b29;
   /* soft-light aclara la media de los oscuros: grano más suave para mantener AA */
   --grain-opacity: 0.75;
 }
 
 [data-theme='claro'] {
-  --bg: #f3f1ec;
-  --surface: #e7e2d9;
-  --fg: #1e1f22;
-  /* El texto secundario va también sobre el naranja del gradiente: tinta */
-  --muted: #1e1f22;
-  /* Un relleno naranja se perdería sobre el naranja del gradiente: el acento es tinta */
-  --accent: #1e1f22;
-  --on-accent: #f3f1ec;
+  --bg: #f5f0e8;
+  --surface: #eae2d6;
+  --fg: #1c1a18;
+  --muted: #5a534b;
+  /* Coral hondo: como relleno sobre el melocotón del fondo se distingue de sobra */
+  --accent: #b3381c;
+  --on-accent: #f5f0e8;
+  /* Más hondo que el del oscuro: sobre el melocotón del fondo queda en 5,5:1 */
+  --code: #095c55;
   --grad-1: #ffffff;
-  --grad-2: #f2711c;
-  --grad-3: #f3f1ec;
+  --grad-2: #ffcdbe;
+  --grad-3: #f5f0e8;
   --grain-opacity: 1;
 }
 
@@ -71,6 +76,7 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-on-accent: var(--on-accent);
+  --color-code: var(--code);
   --color-line: var(--line);
 }
 

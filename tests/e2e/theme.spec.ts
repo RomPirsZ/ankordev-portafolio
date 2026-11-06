@@ -12,8 +12,8 @@ test('el tema cambia y persiste al recargar', async ({ page }) => {
   await claro.click();
   await expect(html).toHaveAttribute('data-theme', 'claro');
   await expect(claro).toHaveAttribute('aria-pressed', 'true');
-  // El fondo lo pinta <html> (el <body> es transparente para dejar ver el gradiente)
-  await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(243, 241, 236)');
+  // El fondo lo pinta <html> (el <body> es transparente para dejar ver el gradiente): Papel #F5F0E8
+  await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(245, 240, 232)');
 
   await page.reload();
   await expect(html).toHaveAttribute('data-theme', 'claro');

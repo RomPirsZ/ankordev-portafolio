@@ -47,3 +47,29 @@ test('las fuentes self-hosted cargan', async ({ page }) => {
   await expect(page.locator('h1')).toHaveCSS('font-family', /Space Grotesk Variable/);
   await expect(page.locator('nav a').first()).toHaveCSS('font-family', /Monaspace Krypton/);
 });
+
+// Logotipo «Cursor» (T11b): dibujado en SVG decorativo; el nombre lo da el texto del enlace
+test('la marca del menú es el logotipo y se anuncia como «[A]nkordev — Inicio»', async ({ page }) => {
+  for (const [home, name] of [
+    ['/', '[A]nkordev — Inicio'],
+    ['/en/', '[A]nkordev — Home'],
+  ] as const) {
+    await page.goto(home);
+    const brand = page.getByRole('banner').getByRole('link', { name, exact: true });
+    await expect(brand).toHaveAttribute('href', home);
+    const logo = brand.locator('svg');
+    await expect(logo).toBeVisible();
+    await expect(logo).toHaveAttribute('aria-hidden', 'true');
+    // Legible en el menú: 22 px de alto como mínimo
+    expect((await logo.boundingBox())!.height).toBeGreaterThanOrEqual(22);
+  }
+});
+
+test('el favicon es el monograma del logotipo', async ({ page, request }) => {
+  await page.goto('/');
+  const href = await page.locator('link[rel="icon"]').getAttribute('href');
+  expect(href).toBe('/favicon.svg');
+  const response = await request.get(href!);
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toContain('image/svg+xml');
+});

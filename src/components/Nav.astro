@@ -1,4 +1,5 @@
 ---
+import Logo from './Logo.astro';
 import ThemeSwitcher from './ThemeSwitcher.astro';
 import { alternateLang, localizePath, sectionHref, useTranslations, type Lang, type Section } from '../i18n/utils';
 
@@ -26,8 +27,10 @@ const links = NAV_SECTIONS.filter((section) => BUILT_SECTIONS.includes(section))
 
 <header class="border-b border-line">
   <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-4 sm:px-6">
-    <a href={home} class="text-lg font-bold tracking-tight">
-      {t('site.brand')}<span class="sr-only"> — {t('nav.home')}</span>
+    <!-- py-2: el área táctil del logo llega a 38 px de alto -->
+    <a href={home} class="block py-2">
+      <Logo />
+      <span class="sr-only">{t('site.brand')} — {t('nav.home')}</span>
     </a>
 
     <nav aria-label={t('nav.label')} class="order-last w-full sm:order-none sm:w-auto">

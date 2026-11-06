@@ -56,12 +56,20 @@ Un portafolio de marca personal que transmita sensación de **laboratorio creati
 
 ### Temas de color
 
-| Tema | Fondo | Superficie | Texto | Acento | Gradiente del fondo |
-|---|---|---|---|---|---|
-| Oscuro (por defecto) | `#2B2D31` | `#3A3D43` | `#F3F1EC` | `#F2711C` | azul noche: `#202A45`, `#141B31`, `#1A3253` |
-| Claro | `#F3F1EC` | `#E7E2D9` | `#1E1F22` | `#1E1F22` | blanco y naranja: `#FFFFFF`, `#F2711C`, `#F3F1EC` |
+Paleta **«Terminal cálida»** (elegida el 2026-11-06 entre tres propuestas):
 
-Se cambia de tema con un interruptor claro/oscuro (sol y luna) arriba a la derecha. El tema elegido se recuerda en visitas posteriores. *(2026-11-01: se retiran los temas Petróleo y Militar; quedan dos. Ese mismo día, Carbón y Naranja pasan a ser Oscuro y Claro, con interruptor en lugar de muestras de color: el oscuro deja el marrón por un azul noche y el claro combina blanco y naranja.)*
+| Tema | Fondo | Superficie | Texto | Secundario | Acento | Código | Gradiente del fondo |
+|---|---|---|---|---|---|---|---|
+| Oscuro (por defecto) | `#1C1A18` | `#292624` | `#F3EEE6` | `#B3ACA2` | coral `#FF5B37` | turquesa `#2FC6B3` | carbón cálido: `#23201D`, `#151311`, `#1E2B29` |
+| Claro | `#F5F0E8` | `#EAE2D6` | `#1C1A18` | `#5A534B` | coral hondo `#B3381C` | turquesa honda `#095C55` | blanco y melocotón: `#FFFFFF`, `#FFCDBE`, `#F5F0E8` |
+
+El acento (coral) es relleno: acción principal y cursor del logotipo. El color de código (turquesa) solo va en las etiquetas de laboratorio y en el «_» del logotipo.
+
+Se cambia de tema con un interruptor claro/oscuro (sol y luna) arriba a la derecha. El tema elegido se recuerda en visitas posteriores. *(2026-11-01: se retiran los temas Petróleo y Militar; quedan dos. Ese mismo día, Carbón y Naranja pasan a ser Oscuro y Claro, con interruptor en lugar de muestras de color: el oscuro deja el marrón por un azul noche y el claro combina blanco y naranja. 2026-11-06: la paleta provisional se sustituye por la de marca, «Terminal cálida».)*
+
+### Logotipo
+
+Logotipo **«Cursor»** (elegido el 2026-11-06 entre seis bocetos de estilo esports): `[Λ]NKORDEV_` en versales angulosas dibujadas a mano, con la A sin travesaño y un cursor de bloque coral en su lugar, y un «_» turquesa al final. Va en el menú. El favicon es su monograma `[Λ]` con el cursor. El nombre de la marca se sigue escribiendo «[A]nkordev» en títulos y textos.
 
 ### Fondo
 
