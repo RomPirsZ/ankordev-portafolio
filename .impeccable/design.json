@@ -1,172 +1,247 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-01T18:26:25.358Z",
+  "generatedAt": "2026-11-06T19:43:57.047Z",
   "title": "Design System: [A]nkordev",
   "extensions": {
     "colorMeta": {
       "carbon": {
         "role": "neutral",
         "displayName": "Carbón",
-        "canonical": "oklch(29.7% 0.008 264.4)",
+        "canonical": "oklch(21.9% 0.005 67.6)",
         "tonalRamp": [
-          "oklch(15% 0.003 264.4)",
-          "oklch(26% 0.005 264.4)",
-          "oklch(38% 0.008 264.4)",
-          "oklch(50% 0.008 264.4)",
-          "oklch(62% 0.008 264.4)",
-          "oklch(74% 0.007 264.4)",
-          "oklch(85% 0.005 264.4)",
-          "oklch(95% 0.003 264.4)"
+          "oklch(15% 0.002 67.6)",
+          "oklch(26% 0.003 67.6)",
+          "oklch(38% 0.005 67.6)",
+          "oklch(50% 0.005 67.6)",
+          "oklch(62% 0.005 67.6)",
+          "oklch(74% 0.005 67.6)",
+          "oklch(85% 0.003 67.6)",
+          "oklch(95% 0.002 67.6)"
         ]
       },
       "carbon-surface": {
         "role": "neutral",
         "displayName": "Carbón superficie",
-        "canonical": "oklch(35.9% 0.011 264.4)",
+        "canonical": "oklch(27.1% 0.006 56.1)",
         "tonalRamp": [
-          "oklch(15% 0.004 264.4)",
-          "oklch(26% 0.007 264.4)",
-          "oklch(38% 0.011 264.4)",
-          "oklch(50% 0.011 264.4)",
-          "oklch(62% 0.011 264.4)",
-          "oklch(74% 0.01 264.4)",
-          "oklch(85% 0.007 264.4)",
-          "oklch(95% 0.004 264.4)"
-        ]
-      },
-      "ceniza": {
-        "role": "neutral",
-        "displayName": "Ceniza",
-        "canonical": "oklch(77.6% 0.003 84.6)",
-        "tonalRamp": [
-          "oklch(15% 0.001 84.6)",
-          "oklch(26% 0.002 84.6)",
-          "oklch(38% 0.003 84.6)",
-          "oklch(50% 0.003 84.6)",
-          "oklch(62% 0.003 84.6)",
-          "oklch(74% 0.003 84.6)",
-          "oklch(85% 0.002 84.6)",
-          "oklch(95% 0.001 84.6)"
-        ]
-      },
-      "naranja": {
-        "role": "primary",
-        "displayName": "Naranja",
-        "canonical": "oklch(69.2% 0.181 47.4)",
-        "tonalRamp": [
-          "oklch(15% 0.069 47.4)",
-          "oklch(26% 0.119 47.4)",
-          "oklch(38% 0.175 47.4)",
-          "oklch(50% 0.181 47.4)",
-          "oklch(62% 0.181 47.4)",
-          "oklch(74% 0.165 47.4)",
-          "oklch(85% 0.115 47.4)",
-          "oklch(95% 0.069 47.4)"
+          "oklch(15% 0.002 56.1)",
+          "oklch(26% 0.004 56.1)",
+          "oklch(38% 0.006 56.1)",
+          "oklch(50% 0.006 56.1)",
+          "oklch(62% 0.006 56.1)",
+          "oklch(74% 0.005 56.1)",
+          "oklch(85% 0.004 56.1)",
+          "oklch(95% 0.002 56.1)"
         ]
       },
       "hueso": {
         "role": "neutral",
         "displayName": "Hueso",
-        "canonical": "oklch(95.8% 0.007 88.6)",
+        "canonical": "oklch(95.1% 0.012 79.8)",
         "tonalRamp": [
-          "oklch(15% 0.003 88.6)",
-          "oklch(26% 0.005 88.6)",
-          "oklch(38% 0.007 88.6)",
-          "oklch(50% 0.007 88.6)",
-          "oklch(62% 0.007 88.6)",
-          "oklch(74% 0.006 88.6)",
-          "oklch(85% 0.004 88.6)",
-          "oklch(95% 0.003 88.6)"
+          "oklch(15% 0.005 79.8)",
+          "oklch(26% 0.008 79.8)",
+          "oklch(38% 0.012 79.8)",
+          "oklch(50% 0.012 79.8)",
+          "oklch(62% 0.012 79.8)",
+          "oklch(74% 0.011 79.8)",
+          "oklch(85% 0.008 79.8)",
+          "oklch(95% 0.005 79.8)"
         ]
       },
-      "hueso-surface": {
+      "ceniza": {
         "role": "neutral",
-        "displayName": "Hueso superficie",
-        "canonical": "oklch(91.4% 0.013 82.4)",
+        "displayName": "Ceniza",
+        "canonical": "oklch(74.7% 0.016 77)",
         "tonalRamp": [
-          "oklch(15% 0.005 82.4)",
-          "oklch(26% 0.009 82.4)",
-          "oklch(38% 0.013 82.4)",
-          "oklch(50% 0.013 82.4)",
-          "oklch(62% 0.013 82.4)",
-          "oklch(74% 0.012 82.4)",
-          "oklch(85% 0.008 82.4)",
-          "oklch(95% 0.005 82.4)"
+          "oklch(15% 0.006 77)",
+          "oklch(26% 0.011 77)",
+          "oklch(38% 0.016 77)",
+          "oklch(50% 0.016 77)",
+          "oklch(62% 0.016 77)",
+          "oklch(74% 0.015 77)",
+          "oklch(85% 0.01 77)",
+          "oklch(95% 0.006 77)"
         ]
       },
-      "tinta": {
+      "coral": {
+        "role": "primary",
+        "displayName": "Coral",
+        "canonical": "oklch(68.5% 0.206 33.9)",
+        "tonalRamp": [
+          "oklch(15% 0.078 33.9)",
+          "oklch(26% 0.136 33.9)",
+          "oklch(38% 0.2 33.9)",
+          "oklch(50% 0.206 33.9)",
+          "oklch(62% 0.206 33.9)",
+          "oklch(74% 0.187 33.9)",
+          "oklch(85% 0.132 33.9)",
+          "oklch(95% 0.078 33.9)"
+        ]
+      },
+      "turquesa": {
+        "role": "secondary",
+        "displayName": "Turquesa",
+        "canonical": "oklch(74.7% 0.124 182.2)",
+        "tonalRamp": [
+          "oklch(15% 0.047 182.2)",
+          "oklch(26% 0.082 182.2)",
+          "oklch(38% 0.12 182.2)",
+          "oklch(50% 0.124 182.2)",
+          "oklch(62% 0.124 182.2)",
+          "oklch(74% 0.113 182.2)",
+          "oklch(85% 0.079 182.2)",
+          "oklch(95% 0.047 182.2)"
+        ]
+      },
+      "papel": {
         "role": "neutral",
-        "displayName": "Tinta",
-        "canonical": "oklch(23.9% 0.006 271.2)",
+        "displayName": "Papel",
+        "canonical": "oklch(95.7% 0.012 79.8)",
         "tonalRamp": [
-          "oklch(15% 0.002 271.2)",
-          "oklch(26% 0.004 271.2)",
-          "oklch(38% 0.006 271.2)",
-          "oklch(50% 0.006 271.2)",
-          "oklch(62% 0.006 271.2)",
-          "oklch(74% 0.005 271.2)",
-          "oklch(85% 0.004 271.2)",
-          "oklch(95% 0.002 271.2)"
+          "oklch(15% 0.005 79.8)",
+          "oklch(26% 0.008 79.8)",
+          "oklch(38% 0.012 79.8)",
+          "oklch(50% 0.012 79.8)",
+          "oklch(62% 0.012 79.8)",
+          "oklch(74% 0.011 79.8)",
+          "oklch(85% 0.008 79.8)",
+          "oklch(95% 0.005 79.8)"
         ]
       },
-      "noche": {
-        "role": "tertiary",
-        "displayName": "Noche",
-        "canonical": "oklch(29.0% 0.052 267.7)",
+      "papel-surface": {
+        "role": "neutral",
+        "displayName": "Papel superficie",
+        "canonical": "oklch(91.6% 0.018 78.2)",
         "tonalRamp": [
-          "oklch(15% 0.02 267.7)",
-          "oklch(26% 0.034 267.7)",
-          "oklch(38% 0.05 267.7)",
-          "oklch(50% 0.052 267.7)",
-          "oklch(62% 0.052 267.7)",
-          "oklch(74% 0.047 267.7)",
-          "oklch(85% 0.033 267.7)",
-          "oklch(95% 0.02 267.7)"
+          "oklch(15% 0.007 78.2)",
+          "oklch(26% 0.012 78.2)",
+          "oklch(38% 0.018 78.2)",
+          "oklch(50% 0.018 78.2)",
+          "oklch(62% 0.018 78.2)",
+          "oklch(74% 0.017 78.2)",
+          "oklch(85% 0.012 78.2)",
+          "oklch(95% 0.007 78.2)"
         ]
       },
-      "noche-honda": {
-        "role": "tertiary",
-        "displayName": "Noche honda",
-        "canonical": "oklch(22.8% 0.044 269.3)",
+      "tierra": {
+        "role": "neutral",
+        "displayName": "Tierra",
+        "canonical": "oklch(44.6% 0.016 71.1)",
         "tonalRamp": [
-          "oklch(15% 0.017 269.3)",
-          "oklch(26% 0.029 269.3)",
-          "oklch(38% 0.043 269.3)",
-          "oklch(50% 0.044 269.3)",
-          "oklch(62% 0.044 269.3)",
-          "oklch(74% 0.04 269.3)",
-          "oklch(85% 0.028 269.3)",
-          "oklch(95% 0.017 269.3)"
+          "oklch(15% 0.006 71.1)",
+          "oklch(26% 0.01 71.1)",
+          "oklch(38% 0.015 71.1)",
+          "oklch(50% 0.016 71.1)",
+          "oklch(62% 0.016 71.1)",
+          "oklch(74% 0.014 71.1)",
+          "oklch(85% 0.01 71.1)",
+          "oklch(95% 0.006 71.1)"
         ]
       },
-      "noche-marina": {
-        "role": "tertiary",
-        "displayName": "Noche marina",
-        "canonical": "oklch(31.6% 0.067 256.8)",
+      "coral-hondo": {
+        "role": "primary",
+        "displayName": "Coral hondo",
+        "canonical": "oklch(51.8% 0.164 34.1)",
         "tonalRamp": [
-          "oklch(15% 0.025 256.8)",
-          "oklch(26% 0.044 256.8)",
-          "oklch(38% 0.064 256.8)",
-          "oklch(50% 0.067 256.8)",
-          "oklch(62% 0.067 256.8)",
-          "oklch(74% 0.061 256.8)",
-          "oklch(85% 0.042 256.8)",
-          "oklch(95% 0.025 256.8)"
+          "oklch(15% 0.062 34.1)",
+          "oklch(26% 0.108 34.1)",
+          "oklch(38% 0.159 34.1)",
+          "oklch(50% 0.164 34.1)",
+          "oklch(62% 0.164 34.1)",
+          "oklch(74% 0.149 34.1)",
+          "oklch(85% 0.105 34.1)",
+          "oklch(95% 0.062 34.1)"
+        ]
+      },
+      "turquesa-honda": {
+        "role": "secondary",
+        "displayName": "Turquesa honda",
+        "canonical": "oklch(42.8% 0.072 185.7)",
+        "tonalRamp": [
+          "oklch(15% 0.028 185.7)",
+          "oklch(26% 0.048 185.7)",
+          "oklch(38% 0.07 185.7)",
+          "oklch(50% 0.072 185.7)",
+          "oklch(62% 0.072 185.7)",
+          "oklch(74% 0.066 185.7)",
+          "oklch(85% 0.046 185.7)",
+          "oklch(95% 0.028 185.7)"
+        ]
+      },
+      "rescoldo": {
+        "role": "tertiary",
+        "displayName": "Rescoldo",
+        "canonical": "oklch(24.6% 0.007 67.5)",
+        "tonalRamp": [
+          "oklch(15% 0.003 67.5)",
+          "oklch(26% 0.005 67.5)",
+          "oklch(38% 0.007 67.5)",
+          "oklch(50% 0.007 67.5)",
+          "oklch(62% 0.007 67.5)",
+          "oklch(74% 0.007 67.5)",
+          "oklch(85% 0.005 67.5)",
+          "oklch(95% 0.003 67.5)"
+        ]
+      },
+      "hollin": {
+        "role": "tertiary",
+        "displayName": "Hollín",
+        "canonical": "oklch(18.8% 0.005 67.5)",
+        "tonalRamp": [
+          "oklch(15% 0.002 67.5)",
+          "oklch(26% 0.003 67.5)",
+          "oklch(38% 0.005 67.5)",
+          "oklch(50% 0.005 67.5)",
+          "oklch(62% 0.005 67.5)",
+          "oklch(74% 0.005 67.5)",
+          "oklch(85% 0.003 67.5)",
+          "oklch(95% 0.002 67.5)"
+        ]
+      },
+      "musgo": {
+        "role": "tertiary",
+        "displayName": "Musgo",
+        "canonical": "oklch(27.6% 0.018 184.5)",
+        "tonalRamp": [
+          "oklch(15% 0.007 184.5)",
+          "oklch(26% 0.012 184.5)",
+          "oklch(38% 0.018 184.5)",
+          "oklch(50% 0.018 184.5)",
+          "oklch(62% 0.018 184.5)",
+          "oklch(74% 0.016 184.5)",
+          "oklch(85% 0.012 184.5)",
+          "oklch(95% 0.007 184.5)"
+        ]
+      },
+      "melocoton": {
+        "role": "tertiary",
+        "displayName": "Melocotón",
+        "canonical": "oklch(88.8% 0.061 37.3)",
+        "tonalRamp": [
+          "oklch(15% 0.023 37.3)",
+          "oklch(26% 0.04 37.3)",
+          "oklch(38% 0.059 37.3)",
+          "oklch(50% 0.061 37.3)",
+          "oklch(62% 0.061 37.3)",
+          "oklch(74% 0.055 37.3)",
+          "oklch(85% 0.039 37.3)",
+          "oklch(95% 0.023 37.3)"
         ]
       },
       "blanco": {
         "role": "neutral",
         "displayName": "Blanco",
-        "canonical": "oklch(100.0% 0 89.9)",
+        "canonical": "oklch(100% 0 0)",
         "tonalRamp": [
-          "oklch(15% 0 89.9)",
-          "oklch(26% 0 89.9)",
-          "oklch(38% 0 89.9)",
-          "oklch(50% 0 89.9)",
-          "oklch(62% 0 89.9)",
-          "oklch(74% 0 89.9)",
-          "oklch(85% 0 89.9)",
-          "oklch(95% 0 89.9)"
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(62% 0 0)",
+          "oklch(74% 0 0)",
+          "oklch(85% 0 0)",
+          "oklch(95% 0 0)"
         ]
       }
     },
@@ -199,7 +274,33 @@
         "purpose": "Única sombra del sistema: lo que el puntero levanta del papel (imagen flotante de Proyectos)."
       }
     ],
-    "motion": [],
+    "motion": [
+      {
+        "name": "entrada-titular",
+        "value": "0.6s expo.out · blur(6px) → none · escalonado 0.018s por letra",
+        "purpose": "El único momento de autor: letras del hero desde abajo con máscara ([data-split])."
+      },
+      {
+        "name": "revelado-titulo",
+        "value": "0.6s expo.out · blur(4px) → none · escalonado 0.08s por línea",
+        "purpose": "Títulos de sección al entrar en pantalla ([data-reveal])."
+      },
+      {
+        "name": "scramble-etiqueta",
+        "value": "0.8s · revealDelay 0.25",
+        "purpose": "Etiquetas de laboratorio al aparecer ([data-scramble])."
+      },
+      {
+        "name": "magnetico",
+        "value": "0.5s power3.out",
+        "purpose": "CTA principal que sigue al puntero (solo puntero fino)."
+      },
+      {
+        "name": "cursor-lab",
+        "value": "0.35s power3.out",
+        "purpose": "Anillo que acompaña al cursor (solo puntero fino)."
+      }
+    ],
     "breakpoints": [
       {
         "name": "sm",
@@ -212,6 +313,10 @@
       {
         "name": "fluid-max",
         "value": "1440px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
       }
     ],
     "themes": {
@@ -222,6 +327,7 @@
         "--muted",
         "--accent",
         "--on-accent",
+        "--code",
         "--line"
       ],
       "source": "src/styles/global.css",
@@ -229,7 +335,8 @@
         "oscuro",
         "claro"
       ],
-      "default": "oscuro"
+      "default": "oscuro",
+      "palette": "Terminal cálida (2026-11-06)"
     },
     "background": {
       "static": "radial-gradient ×2 + linear-gradient con --grad-1/2/3 en la capa fija .gradient-bg",
@@ -241,20 +348,28 @@
       "grain": "ruido SVG (feTurbulence) en ::after, mix-blend-mode soft-light; --grain-opacity 0.75 en oscuro, 1 en claro",
       "colors": {
         "oscuro": [
-          "#202A45",
-          "#141B31",
-          "#1A3253"
+          "#23201D",
+          "#151311",
+          "#1E2B29"
         ],
         "claro": [
           "#FFFFFF",
-          "#F2711C",
-          "#F3F1EC"
+          "#FFCDBE",
+          "#F5F0E8"
         ]
       },
       "source": "src/lib/gradient.ts"
     }
   },
   "components": [
+    {
+      "name": "Logotipo «Cursor»",
+      "kind": "custom",
+      "refersTo": "brand-logo",
+      "description": "[Λ]NKORDEV_ en SVG: letras en --fg, cursor en --accent y «_» en --code. Decorativo; el enlace lleva el nombre accesible.",
+      "html": "<a class=\"ds-brand\" href=\"/\"><svg class=\"ds-logo\" viewBox=\"0 0 88.6 12\" aria-hidden=\"true\" focusable=\"false\"><path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M1,0L4,0L4,2.4L2.6,2.4L2.6,9.6L4,9.6L4,12L1,12L0,11L0,1Z M7.3,0L11.3,0L13.8,12L11,12L9.3,3.4L7.6,12L4.8,12Z M14.6,0L17.6,0L18.6,1L18.6,11L17.6,12L14.6,12L14.6,9.6L16,9.6L16,2.4L14.6,2.4Z M19.4,0L22.2,0L24.6,6.5L24.6,0L27.4,0L27.4,12L24.6,12L22.2,5.5L22.2,12L19.4,12Z M28.2,0L31,0L31,4.6L33.2,0L36.4,0L33.5,6L36.4,12L33.2,12L31,7.4L31,12L28.2,12Z M39.2,0L43.7,0L45.7,2L45.7,10L43.7,12L39.2,12L37.2,10L37.2,2ZM40.5,2.8L42.4,2.8L42.9,3.3L42.9,8.7L42.4,9.2L40.5,9.2L40,8.7L40,3.3Z M46.5,0L52.7,0L54.7,2L54.7,5L53.3,6.4L54.9,12L52,12L50.8,7.4L49.3,7.4L49.3,12L46.5,12ZM49.3,2.6L51.5,2.6L51.9,3L51.9,4.4L51.5,4.8L49.3,4.8Z M55.7,0L61.7,0L64.2,2.5L64.2,9.5L61.7,12L55.7,12ZM58.5,2.8L60.7,2.8L61.4,3.5L61.4,8.5L60.7,9.2L58.5,9.2Z M65,0L72,0L72,2.6L67.8,2.6L67.8,4.8L71.2,4.8L71.2,7.2L67.8,7.2L67.8,9.4L72,9.4L72,12L65,12Z M72.8,0L75.7,0L77.3,8L78.9,0L81.8,0L79,12L75.6,12Z\" ></path><rect class=\"ds-logo-cursor\" x=\"8.1\" y=\"6.6\" width=\"2.4\" height=\"3\"></rect><path class=\"ds-logo-prompt\" d=\"M82.6,9.6L88.6,9.6L88.6,12L82.6,12Z\"></path></svg><span class=\"ds-sr-only\">[A]nkordev — Inicio</span></a>",
+      "css": ".ds-logo { display: block; height: 1.375rem; width: auto; color: var(--fg); } .ds-logo-cursor { fill: var(--accent); } .ds-logo-prompt { fill: var(--code); } .ds-brand { display: inline-block; padding: 0.5rem 0; } .ds-brand:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; } .ds-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }"
+    },
     {
       "name": "CTA principal",
       "kind": "button",
@@ -275,9 +390,9 @@
       "name": "Navegación",
       "kind": "nav",
       "refersTo": "nav-link",
-      "description": "Implementado (src/components/Nav.astro): marca en grotesca, enlaces numerados en mono mayúscula.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Principal\"><a class=\"ds-nav-brand\" href=\"/\">[A]nkordev</a><ul><li><a href=\"#proyectos\"><span aria-hidden=\"true\">01</span> Proyectos</a></li><li><a href=\"#servicios\"><span aria-hidden=\"true\">02</span> Servicios</a></li><li><a href=\"#sobre-mi\"><span aria-hidden=\"true\">03</span> Sobre mí</a></li><li><a href=\"#contacto\"><span aria-hidden=\"true\">04</span> Contacto</a></li></ul></nav>",
-      "css": ".ds-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--line); background: var(--bg); color: var(--fg); } .ds-nav-brand { font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.025em; color: inherit; text-decoration: none; } .ds-nav ul { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin: 0; padding: 0; list-style: none; } .ds-nav ul a { display: inline-block; padding: 0.25rem 0; color: inherit; text-decoration: none; font-family: 'Monaspace Krypton', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; } .ds-nav ul a span { color: var(--muted); } .ds-nav a:hover { text-decoration: underline; } .ds-nav a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }"
+      "description": "Logotipo a la izquierda y enlaces mono numerados; línea de 1 px debajo.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Principal\"><a class=\"ds-nav-brand\" href=\"/\"><svg class=\"ds-logo\" viewBox=\"0 0 88.6 12\" aria-hidden=\"true\" focusable=\"false\"><path fill=\"currentColor\" fill-rule=\"evenodd\" d=\"M1,0L4,0L4,2.4L2.6,2.4L2.6,9.6L4,9.6L4,12L1,12L0,11L0,1Z M7.3,0L11.3,0L13.8,12L11,12L9.3,3.4L7.6,12L4.8,12Z M14.6,0L17.6,0L18.6,1L18.6,11L17.6,12L14.6,12L14.6,9.6L16,9.6L16,2.4L14.6,2.4Z M19.4,0L22.2,0L24.6,6.5L24.6,0L27.4,0L27.4,12L24.6,12L22.2,5.5L22.2,12L19.4,12Z M28.2,0L31,0L31,4.6L33.2,0L36.4,0L33.5,6L36.4,12L33.2,12L31,7.4L31,12L28.2,12Z M39.2,0L43.7,0L45.7,2L45.7,10L43.7,12L39.2,12L37.2,10L37.2,2ZM40.5,2.8L42.4,2.8L42.9,3.3L42.9,8.7L42.4,9.2L40.5,9.2L40,8.7L40,3.3Z M46.5,0L52.7,0L54.7,2L54.7,5L53.3,6.4L54.9,12L52,12L50.8,7.4L49.3,7.4L49.3,12L46.5,12ZM49.3,2.6L51.5,2.6L51.9,3L51.9,4.4L51.5,4.8L49.3,4.8Z M55.7,0L61.7,0L64.2,2.5L64.2,9.5L61.7,12L55.7,12ZM58.5,2.8L60.7,2.8L61.4,3.5L61.4,8.5L60.7,9.2L58.5,9.2Z M65,0L72,0L72,2.6L67.8,2.6L67.8,4.8L71.2,4.8L71.2,7.2L67.8,7.2L67.8,9.4L72,9.4L72,12L65,12Z M72.8,0L75.7,0L77.3,8L78.9,0L81.8,0L79,12L75.6,12Z\" ></path><rect class=\"ds-logo-cursor\" x=\"8.1\" y=\"6.6\" width=\"2.4\" height=\"3\"></rect><path class=\"ds-logo-prompt\" d=\"M82.6,9.6L88.6,9.6L88.6,12L82.6,12Z\"></path></svg><span class=\"ds-sr-only\">[A]nkordev — Inicio</span></a><ul><li><a href=\"#proyectos\"><span aria-hidden=\"true\">01</span> Proyectos</a></li><li><a href=\"#servicios\"><span aria-hidden=\"true\">02</span> Servicios</a></li><li><a href=\"#sobre-mi\"><span aria-hidden=\"true\">03</span> Sobre mí</a></li><li><a href=\"#contacto\"><span aria-hidden=\"true\">04</span> Contacto</a></li></ul></nav>",
+      "css": ".ds-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--line); background: var(--bg); color: var(--fg); } .ds-nav-brand { display: inline-block; padding: 0.5rem 0; color: inherit; } .ds-logo { display: block; height: 1.375rem; width: auto; color: var(--fg); } .ds-logo-cursor { fill: var(--accent); } .ds-logo-prompt { fill: var(--code); } .ds-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } .ds-nav ul { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin: 0; padding: 0; list-style: none; } .ds-nav ul a { display: inline-block; padding: 0.25rem 0; color: inherit; text-decoration: none; font-family: 'Monaspace Krypton', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; } .ds-nav ul a span { color: var(--muted); } .ds-nav a:hover { text-decoration: underline; } .ds-nav a:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }"
     },
     {
       "name": "Interruptor de tema",
@@ -288,12 +403,12 @@
       "css": ".ds-theme-toggle { display: inline-flex; border: 1px solid var(--fg); } .ds-theme-toggle button { display: inline-grid; place-items: center; width: 2rem; height: 2rem; padding: 0; border: 0; background: transparent; color: var(--fg); cursor: pointer; } .ds-theme-toggle button + button { border-left: 1px solid var(--fg); } .ds-theme-toggle button[aria-pressed=\"true\"] { background: var(--fg); color: var(--bg); } .ds-theme-toggle svg { width: 1rem; height: 1rem; } .ds-theme-toggle button:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; } .ds-theme-toggle .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }"
     },
     {
-      "name": "Etiqueta de experimento",
+      "name": "Etiqueta de laboratorio",
       "kind": "chip",
-      "refersTo": "label",
-      "description": "Propuesta (spec §6, aún no implementado): anotación mono tipo [ 01 / SERVICIOS ] o EXP-001 con indicador de estado circular.",
-      "html": "<span class=\"ds-tag\"><span class=\"ds-tag-dot\" aria-hidden=\"true\"></span>[ 01 / Servicios ]</span>",
-      "css": ".ds-tag { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--fg); font-family: 'Monaspace Krypton', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; } .ds-tag-dot { width: 8px; height: 8px; border-radius: 9999px; background: var(--accent); }"
+      "refersTo": "lab-label",
+      "description": "Anotación al margen ([ 01 / PROYECTOS ], EXP-001) en --code. Decorativa (aria-hidden); el único texto en turquesa.",
+      "html": "<span class=\"ds-lab-label\" aria-hidden=\"true\">[ 01 / Proyectos ]</span>",
+      "css": ".ds-lab-label { display: block; color: var(--code); font-family: 'Monaspace Krypton', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; }"
     },
     {
       "name": "Campo de formulario",
@@ -325,7 +440,9 @@
     "overview": "El sitio es la libreta de un experimento en curso. La retícula fina de fondo es el papel cuadriculado; la numeración (`01`, `001`) y las etiquetas mono en mayúsculas (`EXP-001`, `[ 01 / SERVICIOS ]`) son las anotaciones al margen; cada proyecto es un registro con su número. Encima de ese papel, el contenido se escribe en grande: titulares en Space Grotesk que ocupan la pantalla con seguridad. El rigor está en el sistema, no en el adorno: cada marca tiene un sitio, un número y una razón.\n\nLa densidad es baja y ordenada: mucho fondo, líneas de 1 px, tipografía grande y pocas piezas sólidas. El color de cada tema llena el fondo entero; no se reparte en manchas. El movimiento, comprometido en la spec (letras escalonadas en el hero, revelado de títulos, scramble breve en etiquetas, botones magnéticos, línea de progreso del proceso), solo existe para guiar la lectura o confirmar una acción, y desaparece por completo con `prefers-reduced-motion`.\n\nLo que el sitio rechaza: la plantilla SaaS genérica (gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features»), el ruido de efectos (animación porque sí, glitch constante), lo corporativo frío (fotos de stock de oficina, azul de agencia) y el cliché cyberpunk (verde Matrix, glow neón, terminal falsa).",
     "keyCharacteristics": [
       "Dos temas, Oscuro y Claro, que cambian el fondo completo; el visitante elige con un interruptor y el sitio lo recuerda.",
-      "Fondo de gradiente con grano fino: azul noche en el oscuro, blanco y naranja en el claro. Animado en escritorio (WebGL), estático en móvil y con reduced-motion. Es la única animación ambiental.",
+      "Paleta «Terminal cálida» (2026-11-06): carbón cálido y hueso, un coral que marca la acción y un turquesa reservado a lo que se escribe como código.",
+      "Fondo de gradiente con grano fino: carbón cálido con un brillo turquesa tenue en el oscuro; blanco, melocotón y papel en el claro. Animado en escritorio (WebGL), estático en móvil y con reduced-motion. Es la única animación ambiental.",
+      "Logotipo «Cursor»: `[Λ]NKORDEV_`, la A sin travesaño y un cursor de bloque en su lugar.",
       "Retícula de 64 px como papel de fondo, siempre decorativa.",
       "Display enorme y apretado en Space Grotesk; anotaciones en Monaspace Krypton, mayúsculas y espaciadas.",
       "Esquinas rectas en todo; el círculo solo para indicadores de estado.",
@@ -335,22 +452,27 @@
     "rules": [
       {
         "name": "The Ambient-Exception Rule",
-        "body": "El fondo es la única animación que no guía la lectura (constitución II 1.2.0). Nada más se mueve «porque sí», y el texto cumple AA sobre cualquier punto del fondo, grano incluido: oscuro ≤ 0,063 de luminancia, claro ≥ 0,236, medido en píxeles por el e2e en escritorio y en móvil.",
+        "body": "El fondo es la única animación que no guía la lectura (constitución II 1.2.0). Nada más se mueve «porque sí», y todo el texto (`--fg`, `--muted`, `--code`) cumple AA sobre cualquier punto del fondo, grano incluido. El e2e lo mide en píxeles, en escritorio y en móvil, con umbrales que `tests/e2e/contrast.ts` calcula de los colores de texto: hoy, oscuro ≤ 0,054 de luminancia y claro ≥ 0,574.",
         "section": "colors"
       },
       {
-        "name": "The Night-Not-Agency Rule",
-        "body": "El azul noche es fondo, casi negro, y nunca sale de ahí: ni acento, ni relleno, ni texto. Un azul saturado de agencia en un botón o un enlace sigue prohibido.",
+        "name": "The Ground-Stays-Ground Rule",
+        "body": "Los colores del gradiente son fondo y no salen de ahí: ni relleno, ni texto. El brillo turquesa del oscuro es atmósfera, no un acento. Un azul saturado de agencia en un botón o un enlace sigue prohibido.",
         "section": "colors"
       },
       {
         "name": "The Señal Rule",
-        "body": "El acento es una señal: marca la acción principal, el estado activo o el punto de atención (Naranja en el oscuro, Tinta en el claro). Si en una pantalla hay más de un par de rellenos de acento compitiendo, uno sobra.",
+        "body": "El coral es una señal: marca la acción principal, el estado activo o el punto de atención. Si en una pantalla hay más de un par de rellenos de coral compitiendo, uno sobra.",
         "section": "colors"
       },
       {
-        "name": "The Accent-On-Ground Rule",
-        "body": "El acento como texto va solo sobre `--bg`: sobre `--surface` no llega a AA. `tests/unit/themes.test.ts` vigila los ratios.",
+        "name": "The Fill-Not-Text Rule",
+        "body": "El coral es relleno, no texto: sobre el melocotón del fondo claro no llega a AA (4,2:1). `tests/unit/themes.test.ts` vigila los ratios de todos los roles.",
+        "section": "colors"
+      },
+      {
+        "name": "The Code-Only Rule",
+        "body": "El turquesa marca solo lo que se escribe como código: etiquetas de laboratorio y el «_» del logotipo. Ni enlaces, ni botones, ni fondos, ni brillo. Es turquesa, no verde Matrix: el cliché de terminal sigue prohibido.",
         "section": "colors"
       },
       {
@@ -400,9 +522,9 @@
     "donts": [
       "**Don't** construir con la estética de plantilla SaaS: gradientes morados, tarjetas con sombra suave, iconos de stock, «hero + 3 features».",
       "**Don't** añadir ruido de efectos: animación porque sí, glitch constante, cosas que se mueven sin guiar la lectura. El fondo de gradiente es la única excepción ambiental.",
-      "**Don't** caer en lo corporativo frío: fotos de stock de oficina, azul de agencia, tono de agencia grande. El azul noche se queda en el fondo.",
-      "**Don't** usar el cliché cyberpunk: verde Matrix, glow neón, terminal falsa.",
-      "**Don't** usar el acento como texto sobre `--surface`; solo sobre `--bg`.",
+      "**Don't** caer en lo corporativo frío: fotos de stock de oficina, azul de agencia, tono de agencia grande.",
+      "**Don't** usar el cliché cyberpunk: verde Matrix, glow neón, terminal falsa. El cursor y el «_» del logotipo son la única referencia a la terminal, y el turquesa no brilla.",
+      "**Don't** usar el coral como texto ni el turquesa fuera de las etiquetas de laboratorio y el logotipo.",
       "**Don't** poner sombra a una superficie en reposo.",
       "**Don't** usar el color Línea como borde de un control interactivo."
     ]
