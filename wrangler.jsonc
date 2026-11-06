@@ -1,0 +1,12 @@
+// Cloudflare Workers (plan §1, T09c). El adaptador de Astro completa el resto: el
+// directorio del build estático y, cuando haya rutas de servidor, `main` y `ASSETS`.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ankordev-portafolio",
+  // Fecha fija: el comportamiento del runtime no cambia sin decidirlo
+  "compatibility_date": "2026-10-23",
+  "assets": {
+    // Una ruta que no existe recibe 404.html con estado 404 (por defecto, un 404 vacío)
+    "not_found_handling": "404-page"
+  }
+}

@@ -3,6 +3,7 @@
 > Una tarea a la vez. Marca `[x]` al terminar y haz commit. `[P]` = puede hacerse en paralelo con la anterior.
 > Si hay retrasos: se recortan la versión EN (F6) y el proyecto 003 (F5). Tests y seguridad no se recortan.
 > **Orden acordado 2026-11-02:** hasta pasar a Vercel Pro no se despliega nada comercial (servicios, precios, CTA ni formulario). Se adelantan las tareas que no lo son: T14 → T21–T23 → Fase 5. Esperan a Pro: el resto de T12 y T24–T26.
+> **Cambio 2026-11-06:** el hosting pasa a Cloudflare Workers Free (T09c), que admite uso comercial, y se descarta Vercel Pro. Lo que esperaba a Pro queda libre cuando producción esté en Cloudflare **y** el proyecto de Vercel desconectado: mientras siga conectado, cada push a `main` también despliega en Vercel Hobby.
 
 ## Fase 1 — Base (objetivo: 2 nov)
 
@@ -16,6 +17,7 @@
 - [x] T08 [P] `ci.yml` y `dependabot.yml`
 - [x] T09 Conectar repo a Vercel y verificar despliegue (https://ankordev-portafolio.vercel.app)
 - [x] T09b Hardening (plan §8): cabeceras ampliadas, `security.txt` + `SECURITY.md`, `.npmrc` de cadena de suministro, Actions por SHA y ajustes de seguridad de GitHub
+- [ ] T09c Migrar a Cloudflare Workers Free (plan §1, §8): adaptador, `wrangler.jsonc`, `public/_headers`, tests; desplegar con Workers Builds, actualizar URL (`security.txt`, `SECURITY.md`, Turnstile) y desconectar Vercel — *código hecho y probado en local; falta desplegar*
 
 **Hecho cuando:** sitio en línea, CI en verde, T06 pasa.
 
@@ -23,7 +25,7 @@
 
 - [x] T10 Sistema i18n (`es.json`, `en.json`, `utils.ts`) + test unitario
 - [x] T11 Content Collection `projects` con los 4 proyectos (placeholders)
-- [ ] T12 Secciones del inicio: Hero, Proyectos (lista y cuadrícula sin animación), Servicios, Proceso, Sobre mí, Contacto (solo maquetado) — *en curso: hero (sin CTA ni disponibilidad) y Proyectos hechos; Servicios, Proceso, Sobre mí, Contacto y el CTA esperan a Vercel Pro; al construirlos, el menú recupera sus enlaces (`BUILT_SECTIONS` en `Nav.astro`)*
+- [ ] T12 Secciones del inicio: Hero, Proyectos (lista y cuadrícula sin animación), Servicios, Proceso, Sobre mí, Contacto (solo maquetado) — *en curso: hero (sin CTA ni disponibilidad) y Proyectos hechos; Servicios, Proceso, Sobre mí, Contacto y el CTA esperan a T09c (producción en Cloudflare); al construirlos, el menú recupera sus enlaces (`BUILT_SECTIONS` en `Nav.astro`)*
 - [x] T13 Página `proyectos/[slug]` y `404`
 - [x] T14 Tests e2e 1, 4, 8, 9 + axe en los 2 temas — *1 y 4 ya estaban en `smoke.spec.ts` y `projects.spec.ts`; nuevos `no-js.spec.ts` (8), `keyboard.spec.ts` (9) y `a11y.spec.ts` (axe)*
 

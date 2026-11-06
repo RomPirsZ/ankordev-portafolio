@@ -1,7 +1,7 @@
 // Fondo de gradiente (plan §6.1, constitución II 1.2.0).
-import { readFileSync } from 'node:fs';
 import { test, expect, type Page } from '@playwright/test';
 import sharp from 'sharp';
+import { SECURITY_HEADERS } from './headers';
 
 const linear = (v: number) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
 
@@ -11,8 +11,11 @@ const linear = (v: number) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) 
  * que el texto tiene detrás a la escala de su trazo (≥ 2 px) es la media local.
  */
 async function backgroundLuminance(page: Page, frames = 4) {
-  await page.addStyleTag({
-    content: 'body > :not(.gradient-bg) { visibility: hidden !important } body { background-image: none !important }',
+  // Hoja construida por CSSOM: la CSP real (sin estilos inline) bloquearía un <style>
+  await page.evaluate(() => {
+    const sheet = new CSSStyleSheet();
+    sheet.replaceSync('body > :not(.gradient-bg) { visibility: hidden !important } body { background-image: none !important }');
+    document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
   });
   let min = 1;
   let max = 0;
@@ -51,23 +54,18 @@ test.describe('escritorio con movimiento', () => {
     expect(errors).toEqual([]);
   });
 
-  test('con las cabeceras de vercel.json no hay errores (isla y WebGL)', async ({ page }) => {
-    const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as { headers: { headers: { key: string; value: string }[] }[] };
-    const injected = Object.fromEntries(vercel.headers[0]!.headers.map((h) => [h.key.toLowerCase(), h.value]));
+  test('con las cabeceras de _headers no hay errores (isla y WebGL)', async ({ page }) => {
     const violations: string[] = [];
     page.on('console', (msg) => {
       if (msg.type() === 'error') violations.push(msg.text());
     });
     page.on('pageerror', (error) => violations.push(error.message));
-    // Todas las cabeceras (CSP, COOP, CORP, Permissions-Policy…), no solo la CSP
-    await page.route('**/*', async (route) => {
-      const response = await route.fetch();
-      await route.fulfill({ response, headers: { ...response.headers(), ...injected } });
-    });
-    await page.goto('/');
+    // El preview aplica todas las cabeceras (CSP, COOP, CORP, Permissions-Policy…)
+    const response = await page.goto('/');
+    const received = response!.headers();
+    for (const [key, value] of Object.entries(SECURITY_HEADERS)) expect(received[key.toLowerCase()], key).toBe(value);
     await expect(page.locator('.gradient-bg canvas')).toBeAttached({ timeout: 20_000 });
     await page.waitForTimeout(3000);
-    await page.unrouteAll({ behavior: 'ignoreErrors' });
     expect(violations).toEqual([]);
   });
 

@@ -34,7 +34,7 @@ Lo creativo y lo técnico pesan lo mismo: el sitio es un **laboratorio creativo*
 ## Capabilities and Constraints
 
 - Fuente de verdad del alcance: `docs/constitution.md` (prioritaria), `docs/specs/001-portafolio/spec.md`, `plan.md` y `tasks.md`.
-- Stack fijado: Astro 7 + Tailwind 4, salida estática salvo `/api/contact` en Vercel. Ninguna dependencia nueva sin preguntar.
+- Stack fijado: Astro 7 + Tailwind 4, salida estática salvo `/api/contact`, en Cloudflare Workers. Ninguna dependencia nueva sin preguntar.
 - Bilingüe: español por defecto, inglés completo y enlazado (`/` y `/en/`). Todo texto de interfaz va en `src/i18n/`.
 - Contenido legible y usable sin JavaScript; el movimiento es una capa progresiva que solo anima `transform`/`opacity` y respeta `prefers-reduced-motion`.
 - Paquetes de servicios definidos (Landing, Sitio para negocio, Tienda / App web) con alcance, plazos y precios «desde» en la spec §5 (USD; tarifa local en ES, internacional en EN). Decididos el 2026-11-01; no se cambian ni se añaden servicios u ofertas sin confirmación.

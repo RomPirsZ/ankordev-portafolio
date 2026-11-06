@@ -11,14 +11,15 @@ updates:
       default-days: 7
     groups:
       astro:
-        patterns: ['astro', '@astrojs/*']
+        # wrangler va con el adaptador: su plugin de Vite fija una versión exacta
+        patterns: ['astro', '@astrojs/*', 'wrangler']
       testing:
         patterns: ['vitest', '@playwright/test', '@axe-core/*']
     ignore:
       # Un salto mayor de Astro o del adaptador requiere decisión explícita
       - dependency-name: 'astro'
         update-types: ['version-update:semver-major']
-      - dependency-name: '@astrojs/vercel'
+      - dependency-name: '@astrojs/cloudflare'
         update-types: ['version-update:semver-major']
       # @astrojs/check 0.9.x solo admite TypeScript ^5 || ^6; quitar al soportar 7
       - dependency-name: 'typescript'

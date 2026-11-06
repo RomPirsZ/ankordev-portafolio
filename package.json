@@ -14,8 +14,8 @@
     "test": "npm run test:unit && npm run test:e2e"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "14.4.3",
     "@astrojs/react": "7.1.2",
-    "@astrojs/vercel": "11.0.17",
     "@fontsource-variable/space-grotesk": "5.3.0",
     "@fontsource/monaspace-krypton": "5.3.0",
     "@react-three/fiber": "9.8.2",
@@ -38,18 +38,8 @@
     "@types/react-dom": "19.3.0",
     "@types/three": "0.186.0",
     "typescript": "6.0.3",
-    "vitest": "5.0.5"
-  },
-  "overrides": {
-    "@vercel/routing-utils": {
-      "path-to-regexp": "6.3.0"
-    },
-    "@vercel/cli-config": {
-      "zod": "4.6.7"
-    },
-    "@vercel/nft": {
-      "glob": "14.0.3"
-    }
+    "vitest": "5.0.5",
+    "wrangler": "4.154.0"
   },
   "engines": {
     "node": "26.x"

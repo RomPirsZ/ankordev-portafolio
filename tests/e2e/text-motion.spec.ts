@@ -6,8 +6,11 @@ test('el titular entra letra a letra sin perder su nombre accesible', async ({ p
   await page.goto('/');
   const hero = page.getByRole('heading', { level: 1, name: HERO });
   await expect(hero).toBeVisible();
-  // SplitText partió el texto en piezas ocultas a lectores de pantalla
-  expect(await page.locator('h1 [aria-hidden="true"]').count()).toBeGreaterThan(HERO.replace(/\s/g, '').length - 1);
+  // SplitText partió el texto en piezas ocultas a lectores de pantalla. El titular es
+  // visible antes del JS (contenido primero): se espera a que lo parta, no se cuenta una vez
+  await expect
+    .poll(() => page.locator('h1 [aria-hidden="true"]').count())
+    .toBeGreaterThan(HERO.replace(/\s/g, '').length - 1);
   // Al terminar, todas las letras quedan visibles y sin blur
   await expect
     .poll(() =>

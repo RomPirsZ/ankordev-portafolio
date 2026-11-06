@@ -1,5 +1,5 @@
-import { readFileSync } from 'node:fs';
 import { test, expect, type Page } from '@playwright/test';
+import { CSP } from './headers';
 
 /** Marca la ventana: si sigue ahí después de navegar, no hubo recarga completa. */
 const markWindow = (page: Page) => page.evaluate(() => ((window as unknown as { __sameWindow: boolean }).__sameWindow = true));
@@ -74,23 +74,13 @@ test('con puntero fino, tras navegar hay un solo cursor de laboratorio', async (
 });
 
 test('navegar con la CSP aplicada no produce violaciones', async ({ page }) => {
-  const vercel = JSON.parse(readFileSync('vercel.json', 'utf8')) as { headers: { headers: { key: string; value: string }[] }[] };
-  const csp = vercel.headers[0]!.headers.find((h) => h.key === 'Content-Security-Policy')!.value;
   const violations: string[] = [];
   page.on('console', (msg) => {
     if (msg.type() === 'error' && /Content Security Policy/i.test(msg.text())) violations.push(msg.text());
   });
-  await page.route('**/*', async (route) => {
-    try {
-      const response = await route.fetch();
-      await route.fulfill({ response, headers: { ...response.headers(), 'content-security-policy': csp } });
-    } catch {
-      // Petición cancelada al navegar o aún en curso al acabar el test (p. ej. una precarga):
-      // ya no hay a quién responder. Sin esto, Playwright lo cuenta como error fuera de los tests.
-    }
-  });
-
-  await page.goto('/');
+  // El preview aplica la CSP de _headers: sin ella, el test pasaría sin probar nada
+  const response = await page.goto('/');
+  expect(response!.headers()['content-security-policy']).toBe(CSP);
   await page.locator('.project-link').first().click();
   await expect(page).toHaveURL(/\/proyectos\//);
   await page.goBack();

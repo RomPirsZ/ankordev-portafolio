@@ -34,7 +34,7 @@ const t = useTranslations(lang);
     <!--
       Antes del primer pintado: aplica el tema guardado y, si hay movimiento,
       marca la página para que las entradas animadas nazcan ocultas (global.css).
-      Si cambia este script, cambia su hash en la CSP de vercel.json.
+      Si cambia este script, cambia su hash en la CSP de public/_headers.
     -->
     <script is:inline define:vars={{ themes: THEMES, key: THEME_STORAGE_KEY }}>
       try {

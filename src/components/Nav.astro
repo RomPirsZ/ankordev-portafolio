@@ -14,7 +14,7 @@ const home = localizePath('home', lang);
 const otherLang = alternateLang(lang);
 
 // Orden del menú (spec §5). Solo se enlazan las secciones que ya existen en el inicio:
-// Servicios, Sobre mí y Contacto vuelven con T12, al pasar a Vercel Pro.
+// Servicios, Sobre mí y Contacto vuelven con T12.
 const NAV_SECTIONS = ['projects', 'services', 'about', 'contact'] as const;
 const BUILT_SECTIONS: readonly Section[] = ['projects'];
 
