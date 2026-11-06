@@ -50,7 +50,7 @@ Un portafolio de marca personal que transmita sensación de **laboratorio creati
 5. **Proceso:** Descubrir → Especificar → Construir → Lanzar.
 6. **Sobre mí:** foto o ilustración, texto corto, stack, redes.
 7. **Contacto:** formulario (nombre, email, tipo de proyecto, presupuesto aproximado, mensaje), WhatsApp y email, con aviso breve de privacidad. Cada envío válido me llega por email y, al responderlo, le escribo directamente a quien lo envió.
-8. **Footer:** reloj en vivo con hora de Venezuela, redes, «Hecho en Venezuela», año.
+8. **Footer:** reloj en vivo con hora de Venezuela, redes, año.
 
 ## 6. Identidad visual
 

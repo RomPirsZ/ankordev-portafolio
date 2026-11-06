@@ -44,7 +44,7 @@ Lo creativo y lo técnico pesan lo mismo: el sitio es un **laboratorio creativo*
 
 - **Nombre:** «[A]nkordev», con corchetes. Así se escribe en el logotipo, el título y los textos. Sustituye al marcador `{{MARCA}}` / la propuesta «Ankor» de la spec.
 - **Voz:** neutra, sin tratar al visitante de tú ni de usted. La primera persona del autor sí se usa («Diseño y desarrollo…», «Sobre mí»). Directa y sin jerga corporativa.
-- Sello de origen «Hecho en Venezuela» y reloj con la hora de Caracas en el footer.
+- Reloj con la hora de Caracas en el footer (el sello «Hecho en Venezuela» se quitó el 2026-11-06).
 - Los 2 temas (Oscuro y Claro, con interruptor), la tipografía (Space Grotesk / Monaspace Krypton) y los elementos de laboratorio están fijados en la spec §6 y ya implementados; los registra DESIGN.md, no este archivo.
 
 ## Evidence on Hand

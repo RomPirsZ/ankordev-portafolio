@@ -1,6 +1,6 @@
 ---
 name: "[A]nkordev"
-description: Portafolio de laboratorio creativo — diseño y desarrollo web hecho en Venezuela.
+description: Portafolio de laboratorio creativo — diseño y desarrollo web.
 colors:
   carbon: "#2B2D31"
   carbon-surface: "#3A3D43"
