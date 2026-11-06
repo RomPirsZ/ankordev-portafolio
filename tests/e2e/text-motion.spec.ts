@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const HERO = 'Diseño y desarrollo webs que se sienten vivas';
+const HERO = 'Diseño con carácter. Desarrollo a la medida.';
 
 test('el titular entra letra a letra sin perder su nombre accesible', async ({ page }) => {
   await page.goto('/');
@@ -51,7 +51,8 @@ test.describe('con reduced-motion', () => {
     const hero = page.locator('h1');
     await expect(hero).toHaveText(HERO);
     expect(await hero.evaluate((element) => getComputedStyle(element).opacity)).toBe('1');
-    expect(await hero.locator('*').count()).toBe(0);
+    // Sin dividir: dentro solo están las dos frases, sin piezas de SplitText
+    expect(await hero.locator('*:not(.hero-sentence)').count()).toBe(0);
     await expect(page.locator('html')).not.toHaveClass(/\bmotion\b/);
   });
 });

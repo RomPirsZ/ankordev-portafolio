@@ -10,7 +10,8 @@ const nothingMoves = async (page: Page) => {
   expect(await runningAnimations(page)).toBe(0);
   await expect(page.locator('html')).not.toHaveClass(/\b(motion|motion-ready|lenis)\b/);
   await expect(page.locator('.lab-cursor, .project-float')).toHaveCount(0);
-  expect(await page.locator('h1 *').count()).toBe(0);
+  // El titular no se divide: dentro solo pueden estar sus frases (.hero-sentence)
+  expect(await page.locator('h1 *:not(.hero-sentence)').count()).toBe(0);
 };
 
 test('en todo el recorrido nada se anima y GSAP ni se descarga', async ({ page, isMobile }) => {

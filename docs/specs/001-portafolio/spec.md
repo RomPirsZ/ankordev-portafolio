@@ -41,7 +41,7 @@ Un portafolio de marca personal que transmita sensación de **laboratorio creati
 ## 5. Secciones del inicio (en orden)
 
 1. **Navegación:** logo, enlaces (Proyectos, Servicios, Sobre mí, Contacto), interruptor claro/oscuro, cambio ES/EN.
-2. **Hero:** titular animado letra por letra (ej. «Diseño y desarrollo webs que se sienten vivas»), subtítulo, botón «Hablemos» y etiqueta de disponibilidad.
+2. **Hero:** titular animado letra por letra («Diseño con carácter. Desarrollo a la medida.», elegido el 2026-11-03), subtítulo, botón «Hablemos» y etiqueta de disponibilidad.
 3. **Proyectos:** alternar entre vista **Lista** (filas grandes con imagen que sigue al cursor) y **Cuadrícula** (tarjetas).
 4. **Servicios y paquetes** (precios en USD; la versión en inglés muestra la tarifa internacional):
    - **Landing** — 1 página, 5–7 días, desde **$300** (ES) · **$500** (EN)

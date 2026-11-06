@@ -22,6 +22,10 @@ function splitTitles(root: ParentNode) {
       type: 'words,chars',
       mask: 'chars',
       aria: 'auto',
+      // Sin esto, SplitText cambia los espacios de no separación por espacios normales y
+      // el titular se corta donde no debe («Desarrollo a / la medida»). Astro ya entrega
+      // los titulares en una línea, sin saltos ni sangrías que reducir.
+      reduceWhiteSpace: false,
       onSplit: (self) =>
         gsap.from(self.chars, {
           yPercent: 110,
