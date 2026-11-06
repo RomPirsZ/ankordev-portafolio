@@ -5,18 +5,18 @@ colors:
   carbon: "#1C1A18"
   carbon-surface: "#292624"
   hueso: "#F3EEE6"
-  ceniza: "#B3ACA2"
+  ceniza: "#BEB8AF"
   coral: "#FF5B37"
-  turquesa: "#2FC6B3"
+  turquesa: "#3FD0BE"
   papel: "#F5F0E8"
   papel-surface: "#EAE2D6"
-  tierra: "#5A534B"
+  tierra: "#4F4943"
   coral-hondo: "#B3381C"
-  turquesa-honda: "#095C55"
-  rescoldo: "#23201D"
-  hollin: "#151311"
-  musgo: "#1E2B29"
-  melocoton: "#FFCDBE"
+  turquesa-honda: "#07524C"
+  grafito: "#141616"
+  musgo: "#123A36"
+  humo: "#1A1C1C"
+  coral-claro: "#FFAD93"
   blanco: "#FFFFFF"
 typography:
   display:
@@ -91,7 +91,7 @@ Lo que el sitio rechaza: la plantilla SaaS genérica (gradientes morados, tarjet
 **Key Characteristics:**
 - Dos temas, Oscuro y Claro, que cambian el fondo completo; el visitante elige con un interruptor y el sitio lo recuerda.
 - Paleta «Terminal cálida» (2026-11-06): carbón cálido y hueso, un coral que marca la acción y un turquesa reservado a lo que se escribe como código.
-- Fondo de gradiente con grano fino: carbón cálido con un brillo turquesa tenue en el oscuro; blanco, melocotón y papel en el claro. Animado en escritorio (WebGL), estático en móvil y con reduced-motion. Es la única animación ambiental.
+- Fondo de gradiente con grano fino: solo carbón y un brillo turquesa en el oscuro; blanco, coral claro y papel en el claro. Animado en escritorio (WebGL), estático en móvil y con reduced-motion. Es la única animación ambiental.
 - Logotipo «Cursor»: `[Λ]NKORDEV_`, la A sin travesaño y un cursor de bloque en su lugar.
 - Retícula de 64 px como papel de fondo, siempre decorativa.
 - Display enorme y apretado en Space Grotesk; anotaciones en Monaspace Krypton, mayúsculas y espaciadas.
@@ -107,7 +107,7 @@ Paleta «Terminal cálida», elegida el 2026-11-06 por su perfil (inventor creat
 - **Coral** (`coral`, oscuro) y **Coral hondo** (`coral-hondo`, claro): el acento de marca. Es relleno: CTA principal, enlace de salto y el cursor del logotipo. Texto sobre él: Carbón en el oscuro (5,6:1) y Papel en el claro (5,3:1).
 
 ### Secondary
-- **Turquesa** (`turquesa`, oscuro) y **Turquesa honda** (`turquesa-honda`, claro): el color de lo que se escribe como código. Solo las etiquetas de laboratorio (`[ 01 / PROYECTOS ]`, `EXP-001`, `ERR-404`) y el «_» del logotipo (rol `--code`). En el claro es más honda para quedar en 5,5:1 sobre el melocotón del fondo.
+- **Turquesa** (`turquesa`, oscuro) y **Turquesa honda** (`turquesa-honda`, claro): el color de lo que se escribe como código. Solo las etiquetas de laboratorio (`[ 01 / PROYECTOS ]`, `EXP-001`, `ERR-404`) y el «_» del logotipo (rol `--code`). En el claro es más honda para quedar en 5:1 sobre el coral claro del fondo.
 
 ### Neutral
 - **Carbón** (`carbon`): `--bg` del oscuro, texto principal del claro y texto sobre relleno Coral en el oscuro. Un negro cálido, nunca gris azulado.
@@ -120,12 +120,12 @@ Paleta «Terminal cálida», elegida el 2026-11-06 por su perfil (inventor creat
 - **Línea** (derivada: `--fg` al 18 % sobre transparente): retícula y divisores. Es decorativa; nunca sirve como borde de un control.
 
 ### Fondo
-- **Rescoldo** (`rescoldo`), **Hollín** (`hollin`) y **Musgo** (`musgo`): el gradiente del oscuro. Carbones cálidos casi negros; con la luz «3d» del fondo animado toman un tono de brasa, y el musgo deja un brillo turquesa tenue en un borde.
-- **Blanco** (`blanco`), **Melocotón** (`melocoton`) y **Papel**: el gradiente del claro.
+- **Grafito** (`grafito`), **Musgo** (`musgo`) y **Humo** (`humo`): el gradiente del oscuro. Solo carbón y turquesa: nada cálido, porque con la luz «3d» del fondo animado los carbones cálidos se volvían brasa. El turquesa (Musgo) va en `color2` y el carbón neutro (Humo) en el centro (`color3`): el shader extrapola lejos del centro y, con el turquesa en el centro, aparecía su opuesto, un granate en las esquinas.
+- **Blanco** (`blanco`), **Coral claro** (`coral-claro`) y **Papel**: el gradiente del claro. El coral se ve sin apagar el texto.
 
 Cada tema tiene un fondo de gradiente (`src/lib/gradient.ts`, `--grad-1/2/3`) en una capa fija detrás de todo (`.gradient-bg`). En escritorio, ShaderGradient lo anima en WebGL con luz «3d», que respeta los colores (la luz de entorno los teñía). En móvil, con reduced-motion o sin WebGL, es un gradiente CSS estático con los mismos colores. Encima, en los dos casos, un grano fino de ruido SVG en mezcla `soft-light` (al 75 % en el oscuro, al 100 % en el claro), al estilo de shadergradient.co. La retícula va encima del fondo y el contenido encima de todo.
 
-**The Ambient-Exception Rule.** El fondo es la única animación que no guía la lectura (constitución II 1.2.0). Nada más se mueve «porque sí», y todo el texto (`--fg`, `--muted`, `--code`) cumple AA sobre cualquier punto del fondo, grano incluido. El e2e lo mide en píxeles, en escritorio y en móvil, con umbrales que `tests/e2e/contrast.ts` calcula de los colores de texto: hoy, oscuro ≤ 0,054 de luminancia y claro ≥ 0,574.
+**The Ambient-Exception Rule.** El fondo es la única animación que no guía la lectura (constitución II 1.2.0). Nada más se mueve «porque sí», y todo el texto (`--fg`, `--muted`, `--code`) cumple AA sobre cualquier punto del fondo, grano incluido. El e2e lo mide en píxeles, en escritorio y en móvil, con umbrales que `tests/e2e/contrast.ts` calcula de los colores de texto: hoy, oscuro ≤ 0,068 de luminancia y claro ≥ 0,482.
 
 **The Ground-Stays-Ground Rule.** Los colores del gradiente son fondo y no salen de ahí: ni relleno, ni texto. El brillo turquesa del oscuro es atmósfera, no un acento. Un azul saturado de agencia en un botón o un enlace sigue prohibido.
 
@@ -147,7 +147,7 @@ Los componentes nunca usan un color de tema directamente: usan los roles (`--bg`
 
 **The Señal Rule.** El coral es una señal: marca la acción principal, el estado activo o el punto de atención. Si en una pantalla hay más de un par de rellenos de coral compitiendo, uno sobra.
 
-**The Fill-Not-Text Rule.** El coral es relleno, no texto: sobre el melocotón del fondo claro no llega a AA (4,2:1). `tests/unit/themes.test.ts` vigila los ratios de todos los roles.
+**The Fill-Not-Text Rule.** El coral es relleno, no texto: sobre el coral claro del fondo no llega a AA (3,3:1). `tests/unit/themes.test.ts` vigila los ratios de todos los roles.
 
 **The Code-Only Rule.** El turquesa marca solo lo que se escribe como código: etiquetas de laboratorio y el «_» del logotipo. Ni enlaces, ni botones, ni fondos, ni brillo. Es turquesa, no verde Matrix: el cliché de terminal sigue prohibido.
 

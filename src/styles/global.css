@@ -20,13 +20,13 @@
   --bg: #1c1a18;
   --surface: #292624;
   --fg: #f3eee6;
-  --muted: #b3aca2;
+  --muted: #beb8af;
   --accent: #ff5b37;
   --on-accent: #1c1a18;
-  --code: #2fc6b3;
-  --grad-1: #23201d;
-  --grad-2: #151311;
-  --grad-3: #1e2b29;
+  --code: #3fd0be;
+  --grad-1: #141616;
+  --grad-2: #123a36;
+  --grad-3: #1a1c1c;
   /* soft-light aclara la media de los oscuros: grano más suave para mantener AA */
   --grain-opacity: 0.75;
 }
@@ -35,14 +35,14 @@
   --bg: #f5f0e8;
   --surface: #eae2d6;
   --fg: #1c1a18;
-  --muted: #5a534b;
-  /* Coral hondo: como relleno sobre el melocotón del fondo se distingue de sobra */
+  --muted: #4f4943;
+  /* Coral hondo: relleno, nunca texto (sobre el coral del fondo no llega a AA) */
   --accent: #b3381c;
   --on-accent: #f5f0e8;
-  /* Más hondo que el del oscuro: sobre el melocotón del fondo queda en 5,5:1 */
-  --code: #095c55;
+  /* Más hondo que el del oscuro: sobre el coral del fondo queda en 5:1 */
+  --code: #07524c;
   --grad-1: #ffffff;
-  --grad-2: #ffcdbe;
+  --grad-2: #ffad93;
   --grad-3: #f5f0e8;
   --grain-opacity: 1;
 }

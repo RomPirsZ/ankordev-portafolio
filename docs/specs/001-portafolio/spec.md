@@ -60,10 +60,10 @@ Paleta **«Terminal cálida»** (elegida el 2026-11-06 entre tres propuestas):
 
 | Tema | Fondo | Superficie | Texto | Secundario | Acento | Código | Gradiente del fondo |
 |---|---|---|---|---|---|---|---|
-| Oscuro (por defecto) | `#1C1A18` | `#292624` | `#F3EEE6` | `#B3ACA2` | coral `#FF5B37` | turquesa `#2FC6B3` | carbón cálido: `#23201D`, `#151311`, `#1E2B29` |
-| Claro | `#F5F0E8` | `#EAE2D6` | `#1C1A18` | `#5A534B` | coral hondo `#B3381C` | turquesa honda `#095C55` | blanco y melocotón: `#FFFFFF`, `#FFCDBE`, `#F5F0E8` |
+| Oscuro (por defecto) | `#1C1A18` | `#292624` | `#F3EEE6` | `#BEB8AF` | coral `#FF5B37` | turquesa `#3FD0BE` | carbón y turquesa: `#141616`, `#123A36`, `#1A1C1C` |
+| Claro | `#F5F0E8` | `#EAE2D6` | `#1C1A18` | `#4F4943` | coral hondo `#B3381C` | turquesa honda `#07524C` | blanco y coral: `#FFFFFF`, `#FFAD93`, `#F5F0E8` |
 
-El acento (coral) es relleno: acción principal y cursor del logotipo. El color de código (turquesa) solo va en las etiquetas de laboratorio y en el «_» del logotipo.
+El acento (coral) es relleno: acción principal y cursor del logotipo. El fondo del oscuro es solo carbón y turquesa; el del claro deja ver el coral. *(Ajustado el mismo 2026-11-06 a petición del cliente: el oscuro mostraba un naranja oscuro y el coral del claro casi no se percibía.)* El color de código (turquesa) solo va en las etiquetas de laboratorio y en el «_» del logotipo.
 
 Se cambia de tema con un interruptor claro/oscuro (sol y luna) arriba a la derecha. El tema elegido se recuerda en visitas posteriores. *(2026-11-01: se retiran los temas Petróleo y Militar; quedan dos. Ese mismo día, Carbón y Naranja pasan a ser Oscuro y Claro, con interruptor en lugar de muestras de color: el oscuro deja el marrón por un azul noche y el claro combina blanco y naranja. 2026-11-06: la paleta provisional se sustituye por la de marca, «Terminal cálida».)*
 
