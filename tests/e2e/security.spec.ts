@@ -100,7 +100,7 @@ test('security.txt indica cómo reportar vulnerabilidades y sigue vigente (RFC 9
   const text = await response.text();
   const field = (name: string) => text.match(new RegExp(`^${name}: (.+)$`, 'm'))?.[1];
   expect(field('Contact')).toMatch(/^https:\/\//);
-  expect(field('Canonical')).toBe('https://ankordev-portafolio.vercel.app/.well-known/security.txt');
+  expect(field('Canonical')).toBe('https://ankordev-portafolio.ankordev.workers.dev/.well-known/security.txt');
   // Caducado deja de ser válido: renovar Expires (≤ 1 año) si este test falla
   expect(new Date(field('Expires')!).getTime()).toBeGreaterThan(Date.now());
 });

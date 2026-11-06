@@ -2,5 +2,5 @@
 Contact: https://github.com/RomPirsZ/ankordev-portafolio/security/advisories/new
 Expires: 2027-10-31T23:59:59.000Z
 Preferred-Languages: es, en
-Canonical: https://ankordev-portafolio.vercel.app/.well-known/security.txt
+Canonical: https://ankordev-portafolio.ankordev.workers.dev/.well-known/security.txt
 Policy: https://github.com/RomPirsZ/ankordev-portafolio/security/policy

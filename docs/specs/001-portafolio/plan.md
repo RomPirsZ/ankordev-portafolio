@@ -24,14 +24,14 @@
 **Cambio 2026-11-01:** TypeScript 5.9.3 → **6.0.3** (la más reciente que admite `@astrojs/check` 0.9.12, cuyo peer es `^5 || ^6`; TypeScript 7 queda bloqueado en Dependabot hasta que lo admita). Node **26** (LTS más reciente y la predeterminada en Vercel) en CI, `engines` de `package.json` y `@types/node` 26, para que local, CI y Vercel usen la misma versión.
 
 **Cambio 2026-11-06 (T09c): de Vercel a Cloudflare Workers.** Vercel Hobby no admite uso comercial, y anunciar servicios lo es. Workers Free sí lo admite: el acuerdo de Cloudflare (12-sep-2025) y las condiciones de Developer Platform (28-sep-2026) no lo limitan, revisados el 2026-11-06. Límites del plan gratuito: 100 000 peticiones al día a código de servidor, 10 ms de CPU por petición (la espera de red no cuenta) y archivos estáticos gratis e ilimitados.
-- **Adaptador:** `@astrojs/cloudflare` 14.4.3 + `wrangler` 4.154.0 (dev), la versión exacta que fija `@cloudflare/vite-plugin`, así hay un solo wrangler en el árbol. Salen `@astrojs/vercel` y sus 3 `overrides`, y `npm audit` sigue en 0. Los scripts de instalación de `workerd` y `esbuild` no hacen falta con `ignore-scripts`: el binario llega como dependencia opcional por plataforma.
+- **Adaptador:** `@astrojs/cloudflare` 14.4.3 + `wrangler` 4.154.0 (dev), la versión exacta que fija `@cloudflare/vite-plugin`, así hay un solo wrangler en el árbol. Dependabot no propone wrangler: se alinea a mano al actualizar el adaptador, y `tests/unit/dependencies.test.ts` falla si las versiones se separan. Salen `@astrojs/vercel` y sus 3 `overrides`, y `npm audit` sigue en 0. Los scripts de instalación de `workerd` y `esbuild` no hacen falta con `ignore-scripts`: el binario llega como dependencia opcional por plataforma.
 - **`astro.config.mjs`:** `imageService: 'compile'` (sharp en el build, como antes, sin el servicio de pago Cloudflare Images; las 21 imágenes salen idénticas) y `session: false` (sin KV de sesiones, que el sitio no usa). Las páginas se prerenderizan en workerd.
 - **`wrangler.jsonc`:** nombre, `compatibility_date` fija y `assets.not_found_handling: "404-page"`. Sin ella, una ruta inexistente daría un 404 vacío. Mientras no haya rutas de servidor, el despliegue es solo estático, sin Worker.
 - **Cabeceras:** pasan de `vercel.json` a `public/_headers` (§8).
 - **Node 26** en `.node-version`: lo leen Workers Builds (su versión por defecto es la 24) y la CI.
 - **Vitest** usa su propia config (`vitest/config`): `getViteConfig` de Astro cargaba el adaptador, que intentaba levantar el Worker dentro de Vitest.
 - **`astro preview`** corre ahora en workerd y aplica `_headers` igual que producción. Los e2e ya no inyectan las cabeceras: comprueban las que el servidor envía de verdad, y todo el e2e corre bajo la CSP real.
-- **Despliegue:** Workers Builds conectado al repositorio, con build `npm run build` y deploy `npx wrangler deploy`. Las ramas que no son `main` suben versiones con URL de preview.
+- **Despliegue:** Workers Builds conectado al repositorio, con build `npm run build` y deploy `npx wrangler deploy`. Las ramas que no son `main` suben versiones con URL de preview. Producción: **https://ankordev-portafolio.ankordev.workers.dev** (subdominio de cuenta `ankordev`). `workers_dev` y `preview_urls` quedan fijados en `wrangler.jsonc`. Verificado el 2026-11-06: cabeceras de `_headers` en páginas, assets y 404, y caché inmutable en `/_astro/*`.
 
 **Excepción justificada (VII):** el fondo usa la librería oficial **ShaderGradient** (React + three.js + React Three Fiber, ~300 KB gzip) para reproducir el aspecto y los presets de shadergradient.co, decisión del cliente. Queda aislada en una sola isla de React que solo se descarga en escritorio con puntero fino y sin reduced-motion; el resto del sitio sigue sin framework de UI.
 
@@ -158,7 +158,7 @@ Respuestas del endpoint: `200` éxito (o honeypot lleno, sin guardar) · `400` v
 Variables (secretos del Worker con `npx wrangler secret put` o desde el panel; nunca `PUBLIC_` salvo la site key, que va como variable de build de Workers Builds porque se usa al compilar): `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`, `RESEND_API_KEY` y `CONTACT_NOTIFY_TO`.
 
 **Claves de Turnstile por entorno.**
-- **Producción (Cloudflare):** las claves reales del widget `ankordev-portafolio contacto` (modo *Managed*). Su hostname es el de producción en `workers.dev`. `ankordev-portafolio.vercel.app` se quita al apagar Vercel.
+- **Producción (Cloudflare):** las claves reales del widget `ankordev-portafolio contacto` (modo *Managed*). Su hostname es `ankordev-portafolio.ankordev.workers.dev`; `ankordev-portafolio.vercel.app` se quita al apagar Vercel.
 - **Local y CI:** las claves oficiales de prueba de Cloudflare, que siempre pasan: *site key* `1x00000000000000000000AA` y *secret* `1x0000000000000000000000000000000AA`. Así ninguna clave real está en el disco ni en GitHub, y los e2e no necesitan secretos.
 
 ## 8. Cabeceras (`public/_headers`)

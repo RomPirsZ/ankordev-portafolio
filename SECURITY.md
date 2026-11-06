@@ -1,6 +1,6 @@
 # Política de seguridad
 
-Si encuentras una vulnerabilidad en https://ankordev-portafolio.vercel.app o en este repositorio, repórtala de forma privada desde [Report a vulnerability](https://github.com/RomPirsZ/ankordev-portafolio/security/advisories/new). Por favor, no abras un issue público.
+Si encuentras una vulnerabilidad en https://ankordev-portafolio.ankordev.workers.dev o en este repositorio, repórtala de forma privada desde [Report a vulnerability](https://github.com/RomPirsZ/ankordev-portafolio/security/advisories/new). Por favor, no abras un issue público.
 
 Incluye la URL o el archivo afectado, los pasos para reproducirla y el impacto que tiene.
 

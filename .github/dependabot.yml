@@ -11,8 +11,7 @@ updates:
       default-days: 7
     groups:
       astro:
-        # wrangler va con el adaptador: su plugin de Vite fija una versión exacta
-        patterns: ['astro', '@astrojs/*', 'wrangler']
+        patterns: ['astro', '@astrojs/*']
       testing:
         patterns: ['vitest', '@playwright/test', '@axe-core/*']
     ignore:
@@ -21,6 +20,10 @@ updates:
         update-types: ['version-update:semver-major']
       - dependency-name: '@astrojs/cloudflare'
         update-types: ['version-update:semver-major']
+      # wrangler va en la versión exacta que fija @cloudflare/vite-plugin (dentro del
+      # adaptador): se alinea a mano al actualizar @astrojs/cloudflare. Lo vigila
+      # tests/unit/dependencies.test.ts
+      - dependency-name: 'wrangler'
       # @astrojs/check 0.9.x solo admite TypeScript ^5 || ^6; quitar al soportar 7
       - dependency-name: 'typescript'
         versions: ['>=7']

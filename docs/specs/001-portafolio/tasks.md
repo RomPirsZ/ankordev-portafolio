@@ -17,7 +17,7 @@
 - [x] T08 [P] `ci.yml` y `dependabot.yml`
 - [x] T09 Conectar repo a Vercel y verificar despliegue (https://ankordev-portafolio.vercel.app)
 - [x] T09b Hardening (plan §8): cabeceras ampliadas, `security.txt` + `SECURITY.md`, `.npmrc` de cadena de suministro, Actions por SHA y ajustes de seguridad de GitHub
-- [ ] T09c Migrar a Cloudflare Workers Free (plan §1, §8): adaptador, `wrangler.jsonc`, `public/_headers`, tests; desplegar con Workers Builds, actualizar URL (`security.txt`, `SECURITY.md`, Turnstile) y desconectar Vercel — *código hecho y probado en local; falta desplegar*
+- [x] T09c Migrar a Cloudflare Workers Free (plan §1, §8): adaptador, `wrangler.jsonc`, `public/_headers`, tests; desplegar con Workers Builds, actualizar URL (`security.txt`, `SECURITY.md`, Turnstile) y desconectar Vercel — *en línea en https://ankordev-portafolio.ankordev.workers.dev; Git de Vercel desconectado (2026-11-06). En el panel quedan: añadir ese hostname al widget de Turnstile y borrar el proyecto de Vercel*
 
 **Hecho cuando:** sitio en línea, CI en verde, T06 pasa.
 

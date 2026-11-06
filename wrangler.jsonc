@@ -5,6 +5,10 @@
   "name": "ankordev-portafolio",
   // Fecha fija: el comportamiento del runtime no cambia sin decidirlo
   "compatibility_date": "2026-10-23",
+  // Producción en https://ankordev-portafolio.ankordev.workers.dev y una URL de vista
+  // previa por versión de cada rama. Fijadas aquí para que un despliegue no las apague.
+  "workers_dev": true,
+  "preview_urls": true,
   "assets": {
     // Una ruta que no existe recibe 404.html con estado 404 (por defecto, un 404 vacío)
     "not_found_handling": "404-page"
