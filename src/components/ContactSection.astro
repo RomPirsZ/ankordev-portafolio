@@ -1,0 +1,110 @@
+---
+// Contacto (spec §5.7), maquetado de T12: WhatsApp y email. El formulario, con su
+// aviso de privacidad, llega con T25. Los canales salen de src/lib/site.ts; uno
+// vacío no se muestra.
+import Section from './Section.astro';
+import ArrowIcon from './ArrowIcon.astro';
+import { sectionId, sectionNumber, useTranslations, type Lang } from '../i18n/utils';
+import { contactChannels } from '../lib/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const channels = contactChannels();
+---
+
+<Section id={sectionId('contact', lang)} number={sectionNumber('contact')} title={t('contact.title')}>
+  <p class="contact-text">{t('contact.text')}</p>
+  {
+    channels.length > 0 && (
+      <ul class="channels" role="list">
+        {channels.map((channel) => (
+          <li>
+            <a class="channel" href={channel.href} data-channel={channel.kind}>
+              <span class="annotation">{t(`contact.${channel.kind}`)}</span>
+              <span class="channel-value">{channel.label}</span>
+              <span class="channel-arrow">
+                <ArrowIcon direction="up-right" />
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Section>
+
+<style>
+  .contact-text {
+    max-width: 34ch;
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .channels {
+    margin-top: 2.5rem;
+  }
+
+  .channels li {
+    border-top: 1px solid var(--line);
+  }
+
+  .channels li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* Fila entera como enlace, igual que las de Proyectos: etiqueta, dato y flecha */
+  .channel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 0.25rem;
+    column-gap: 1.5rem;
+    align-items: baseline;
+    padding-block: 1.25rem;
+    text-decoration: none;
+  }
+
+  .channel .annotation {
+    grid-column: 1 / -1;
+  }
+
+  .channel-value {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+
+  .channel-arrow {
+    align-self: center;
+    font-size: var(--text-xl);
+  }
+
+  .channel:hover .channel-value,
+  .channel:focus-visible .channel-value {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  @media (width >= 40rem) {
+    .channel {
+      grid-template-columns: 7rem minmax(0, 1fr) auto;
+      padding-block: 1.5rem;
+    }
+
+    .channel .annotation {
+      grid-column: 1;
+    }
+
+    .channel-value {
+      font-size: var(--text-2xl);
+    }
+  }
+</style>

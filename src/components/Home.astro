@@ -1,10 +1,12 @@
 ---
-// Contenido del inicio, común a / y /en/, en el orden de la spec §5. Faltan
-// (T12, en curso) Sobre mí, Contacto y el CTA del hero.
+// Contenido del inicio, común a / y /en/, en el orden de la spec §5.
+import ArrowIcon from './ArrowIcon.astro';
 import ProjectsSection from './ProjectsSection.astro';
 import ServicesSection from './ServicesSection.astro';
 import ProcessSection from './ProcessSection.astro';
-import { useTranslations, type Lang } from '../i18n/utils';
+import AboutSection from './AboutSection.astro';
+import ContactSection from './ContactSection.astro';
+import { sectionHref, useTranslations, type Lang } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -21,8 +23,25 @@ const heroSentences = t('hero.title').split(/(?<=\.)\s+/);
     {heroSentences.map((sentence, i) => [i > 0 ? ' ' : null, <span class="hero-sentence block">{sentence}</span>])}
   </h1>
   <p class="mt-4 max-w-[46ch] text-lg text-pretty md:col-start-2 md:mt-8">{t('hero.subtitle')}</p>
+  <!-- El único bloque sólido de la pantalla (DESIGN.md, sólido + fino) y, al lado, el estado -->
+  <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-5 md:col-start-2 md:mt-10">
+    <a
+      href={sectionHref('contact', lang)}
+      class="inline-flex items-center gap-3 bg-accent px-6 py-4 text-lg font-bold text-on-accent"
+      data-magnetic
+    >
+      {t('hero.cta')}
+      <ArrowIcon />
+    </a>
+    <p class="annotation flex items-center gap-2.5 text-fg">
+      <span class="size-2 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>
+      {t('hero.available')}
+    </p>
+  </div>
 </section>
 
 <ProjectsSection lang={lang} />
 <ServicesSection lang={lang} />
 <ProcessSection lang={lang} />
+<AboutSection lang={lang} />
+<ContactSection lang={lang} />

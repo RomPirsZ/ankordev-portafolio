@@ -1,0 +1,153 @@
+---
+// Sobre mí (spec §5.6): foto, texto corto, stack y redes. El nombre y las redes
+// salen de src/lib/site.ts; lo que esté vacío no se muestra.
+import { Image } from 'astro:assets';
+import Section from './Section.astro';
+import LabLabel from './LabLabel.astro';
+import { sectionId, sectionNumber, useTranslations, type Lang } from '../i18n/utils';
+import { OWNER_NAME, SOCIALS, STACK } from '../lib/site';
+import portrait from '../assets/about/retrato.jpg';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const name = OWNER_NAME.trim();
+const socials = SOCIALS.filter((social) => social.url);
+---
+
+<Section id={sectionId('about', lang)} number={sectionNumber('about')} title={t('about.title')}>
+  <div class="about">
+    <figure class="about-photo">
+      <Image
+        src={portrait}
+        alt={name ? t('about.photoNamed', { name }) : t('about.photo')}
+        widths={[320, 560, 880]}
+        sizes="(min-width: 64rem) 20rem, (min-width: 40rem) 20rem, calc(100vw - 2rem)"
+        loading="lazy"
+      />
+      <LabLabel text="FIG-01" class="mt-3" />
+    </figure>
+
+    <div class="about-body">
+      <p class="about-intro">{name ? t('about.introNamed', { name }) : t('about.intro')}</p>
+      <p class="about-text">{t('about.text')}</p>
+
+      <dl class="about-facts">
+        <div>
+          <dt class="annotation">{t('about.stack')}</dt>
+          <dd>
+            <ul class="about-list" role="list">
+              {STACK.map((tool) => <li>{tool}</li>)}
+            </ul>
+          </dd>
+        </div>
+        {
+          socials.length > 0 && (
+            <div>
+              <dt class="annotation">{t('about.social')}</dt>
+              <dd>
+                <ul class="about-list" role="list">
+                  {socials.map((social) => (
+                    <li>
+                      <a href={social.url} rel="me noopener" class="hover:underline">
+                        {social.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          )
+        }
+      </dl>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .about {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .about-photo {
+    max-width: 20rem;
+  }
+
+  /* La foto se separa del fondo con una línea de 1 px, como las portadas */
+  .about-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    outline: 1px solid var(--line);
+  }
+
+  .about-intro {
+    max-width: 30ch;
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .about-text {
+    max-width: 60ch;
+    margin-top: 1.25rem;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .about-facts {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .about-facts dd {
+    margin-top: 0.375rem;
+  }
+
+  /* Herramientas y redes: mono en --fg, separadas por una barra en --muted. La barra
+     va detrás de cada elemento: si la lista salta de línea, ninguna empieza con ella */
+  .about-list {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .about-list li:not(:last-child)::after {
+    content: '/';
+    margin-inline: 0.625rem;
+    color: var(--muted);
+  }
+
+  /* Escritorio: texto a la izquierda, foto a la derecha */
+  @media (width >= 64rem) {
+    .about {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+      column-gap: 4rem;
+    }
+
+    .about-photo {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .about-body {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+</style>

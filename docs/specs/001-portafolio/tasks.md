@@ -26,7 +26,7 @@
 - [x] T10 Sistema i18n (`es.json`, `en.json`, `utils.ts`) + test unitario
 - [x] T11 Content Collection `projects` con los 4 proyectos (placeholders)
 - [x] T11b Identidad de marca (spec §6): paleta «Terminal cálida» y logo «Cursor», elegidos el 2026-11-06 entre los bocetos de `samples/`; favicon con el monograma; contraste AA en píxeles y `DESIGN.md` al día — *también se regeneraron las portadas provisionales con la paleta nueva*
-- [ ] T12 Secciones del inicio: Hero, Proyectos (lista y cuadrícula sin animación), Servicios, Proceso, Sobre mí, Contacto (solo maquetado) — *en curso: hero (sin CTA ni disponibilidad), Proyectos, Servicios y Proceso hechos (2026-11-07); faltan Sobre mí, Contacto y el CTA del hero; al construirlos, el menú recupera sus enlaces (`BUILT_SECTIONS` en `Nav.astro`)*
+- [x] T12 Secciones del inicio: Hero, Proyectos (lista y cuadrícula sin animación), Servicios, Proceso, Sobre mí, Contacto (solo maquetado) — *hecha 2026-11-07: CTA «Hablemos» y «Disponible para proyectos» en el hero; Proceso con la línea ligada al scroll (spec §7); Sobre mí con foto real; Contacto con WhatsApp y email (el formulario es T25). Nombre, WhatsApp y email los completa el dueño en `src/lib/site.ts`: vacíos no se muestran. Lenis ya no gestiona los enlaces a secciones (devolvía la página atrás en la última)*
 - [x] T13 Página `proyectos/[slug]` y `404`
 - [x] T14 Tests e2e 1, 4, 8, 9 + axe en los 2 temas — *1 y 4 ya estaban en `smoke.spec.ts` y `projects.spec.ts`; nuevos `no-js.spec.ts` (8), `keyboard.spec.ts` (9) y `a11y.spec.ts` (axe)*
 

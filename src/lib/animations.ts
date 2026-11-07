@@ -23,8 +23,11 @@ const tick = (time: number) => lenis?.raf(time * 1000);
 export function initAnimations() {
   if (lenis) return;
 
-  // Scroll suave también en los enlaces a secciones (#proyectos…); en táctil se mantiene el scroll nativo
-  lenis = new Lenis({ anchors: true });
+  // Scroll suave con la rueda; en táctil se mantiene el scroll nativo. Los enlaces a
+  // secciones (#contacto…) los resuelve solo el ClientRouter de Astro: con `anchors`,
+  // Lenis medía el destino después del salto del router y, en la última sección (que
+  // no llega arriba del todo), devolvía la página hacia atrás.
+  lenis = new Lenis();
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add(tick);
   gsap.ticker.lagSmoothing(0);

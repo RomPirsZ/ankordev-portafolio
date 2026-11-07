@@ -1,5 +1,6 @@
-// Secciones del inicio (spec §5, T12): Servicios y Proceso.
+// Secciones del inicio (spec §5, T12): Servicios, Proceso, Sobre mí, Contacto y el CTA del hero.
 import { test, expect, type Page } from '@playwright/test';
+import { STACK, contactChannels } from '../../src/lib/site';
 
 const PACKAGES = {
   '/': [
@@ -31,7 +32,7 @@ test('el número de cada enlace del menú es el de la etiqueta de su sección', 
   for (const link of await page.locator('nav a[href^="/#"]').all()) {
     const number = await link.locator('span[aria-hidden="true"]').textContent();
     const id = (await link.getAttribute('href'))?.split('#')[1];
-    await expect(page.locator(`[id="${id}"] [data-scramble]`)).toContainText(`[ ${number} /`);
+    await expect(page.locator(`[id="${id}"] [data-scramble]`).first()).toContainText(`[ ${number} /`);
   }
 });
 
@@ -58,4 +59,43 @@ test.describe('con reduced-motion', () => {
     await page.goto('/');
     expect(await progress(page)).toBe(1);
   });
+});
+
+test('el botón «Hablemos» del hero lleva a Contacto y se ve la disponibilidad', async ({ page }) => {
+  for (const [home, cta, available, id] of [
+    ['/', 'Hablemos', 'Disponible para proyectos', 'contacto'],
+    ['/en/', "Let's talk", 'Available for projects', 'contact'],
+  ] as const) {
+    await page.goto(home);
+    const hero = page.locator('section[aria-labelledby="hero-title"]');
+    await expect(hero.getByText(available)).toBeVisible();
+    const button = hero.getByRole('link', { name: cta });
+    await expect(button).toHaveAttribute('href', `${home}#${id}`);
+    await button.click();
+    await expect(page.getByRole('heading', { level: 2, name: home === '/' ? 'Contacto' : 'Contact' })).toBeInViewport();
+  }
+});
+
+test('Sobre mí tiene foto con texto alternativo y el stack', async ({ page }) => {
+  await page.goto('/');
+  const about = page.locator('#sobre-mi');
+  await expect(about.getByRole('img')).toHaveAttribute('alt', /^Retrato de/);
+  await expect(about.locator('.about-list').first().locator('li')).toHaveText(STACK);
+});
+
+test('Contacto enlaza solo los canales configurados', async ({ page }) => {
+  await page.goto('/');
+  const links = page.locator('#contacto a[data-channel]');
+  const channels = contactChannels();
+  await expect(links).toHaveCount(channels.length);
+  for (const [i, channel] of channels.entries()) await expect(links.nth(i)).toHaveAttribute('href', channel.href);
+});
+
+test('cada enlace del menú deja su sección en pantalla, también la última', async ({ page }) => {
+  await page.goto('/');
+  for (const link of await page.locator('nav a[href^="/#"]').all()) {
+    const id = (await link.getAttribute('href'))?.split('#')[1];
+    await link.click();
+    await expect(page.locator(`[id="${id}-title"]`)).toBeInViewport();
+  }
 });

@@ -8,7 +8,6 @@ import {
   sectionNumber,
   useTranslations,
   type Lang,
-  type Section,
 } from '../i18n/utils';
 
 interface Props {
@@ -22,12 +21,11 @@ const t = useTranslations(lang);
 const home = localizePath('home', lang);
 const otherLang = alternateLang(lang);
 
-// Orden del menú (spec §5). Solo se enlazan las secciones que ya existen en el inicio.
-// Proceso no va en el menú: por eso la numeración salta del 02 al 04.
+// Orden del menú (spec §5). Proceso no va en el menú: por eso la numeración salta
+// del 02 al 04 (cada enlace lleva el número de la etiqueta de su sección).
 const NAV_SECTIONS = ['projects', 'services', 'about', 'contact'] as const;
-const BUILT_SECTIONS: readonly Section[] = ['projects', 'services'];
 
-const links = NAV_SECTIONS.filter((section) => BUILT_SECTIONS.includes(section)).map((section) => ({
+const links = NAV_SECTIONS.map((section) => ({
   href: sectionHref(section, lang),
   number: sectionNumber(section),
   label: t(`nav.${section}`),
