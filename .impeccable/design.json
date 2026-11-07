@@ -374,7 +374,7 @@
       "name": "CTA principal",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Propuesta (aún no implementado): el único bloque sólido de su pantalla, ej. «Hablemos». Magnético en escritorio.",
+      "description": "El único bloque sólido de su pantalla: «Hablemos» en el hero (T12) e «Ir al inicio» en la 404. Magnético en escritorio.",
       "html": "<a class=\"ds-btn-primary\" href=\"#contacto\">Hablemos <span aria-hidden=\"true\">→</span></a>",
       "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--accent); color: var(--on-accent); padding: 1rem 1.75rem; border-radius: 0; font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif; font-size: 1.125rem; font-weight: 700; text-decoration: none; transition: transform 0.2s ease; } .ds-btn-primary:hover { transform: translateY(-2px); } .ds-btn-primary:active { transform: translateY(0); } .ds-btn-primary:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }"
     },

@@ -209,7 +209,7 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 
 ### Buttons
 - **Shape:** esquina recta (0 px).
-- **Primary (`[data-magnetic]`; hoy «Ir al inicio» de la 404, mañana el CTA «Hablemos»):** relleno `--accent`, texto `--on-accent` en Space Grotesk 700 `text-lg`, 24×16 px de relleno y una flecha SVG. Es el único bloque sólido de su pantalla. Con puntero fino es magnético: sigue al puntero el 30 % de la distancia a su centro y vuelve al salir; sin JS o con movimiento reducido es un botón normal.
+- **Primary (`[data-magnetic]`: el CTA «Hablemos» del hero e «Ir al inicio» de la 404):** relleno `--accent`, texto `--on-accent` en Space Grotesk 700 `text-lg`, 24×16 px de relleno y una flecha SVG. Es el único bloque sólido de su pantalla. Con puntero fino es magnético: sigue al puntero el 30 % de la distancia a su centro y vuelve al salir; sin JS o con movimiento reducido es un botón normal.
 - **Secundario / fantasma:** sin relleno, texto `--fg` en mono mayúscula, subrayado o borde de 1 px en `--fg` al interactuar.
 - **Hover / Focus:** el foco usa el contorno global (2 px `--fg`, separación 3 px). El hover nunca es la única señal de que algo es interactivo.
 
@@ -221,7 +221,7 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 - **Favicon** (`public/favicon.svg`): el monograma `[Λ]` con su cursor sobre un cuadrado Carbón, esquinas rectas. Lleva los colores del oscuro escritos directamente: un favicon no lee las variables CSS de la página.
 
 ### Navigation
-- **Estilo:** logotipo a la izquierda (enlace al inicio, con 38 px de área táctil); enlaces en mono mayúscula con su número en `--muted` (`01 Proyectos`, `02 Servicios`…).
+- **Estilo:** logotipo a la izquierda (enlace al inicio, con 38 px de área táctil); enlaces en mono mayúscula con su número en `--muted` (`01 Proyectos`, `02 Servicios`…). El número es el de la etiqueta de su sección (`sectionNumber`): como Proceso no va en el menú, salta del 02 al 04.
 - **Estados:** hover con subrayado; foco con el contorno global. El cambio de idioma es una etiqueta mono (`EN` / `ES`) con nombre accesible completo.
 - **Móvil:** los enlaces bajan a una segunda fila a todo el ancho y se reparten con `flex-wrap`.
 
@@ -241,8 +241,23 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 - **Cuadrícula:** el mismo HTML con `data-view="grid"`: tarjetas sin sombra, portada 16:10 arriba con una línea de 1 px en `--line` (la separa del fondo cuando comparten color), número, título `text-xl` y metadatos.
 - **Imagen flotante:** en la lista, con puntero fino y movimiento, la portada del proyecto bajo el puntero lo sigue a su derecha (22rem, 16:10) con la única sombra del sistema. Decorativa (`aria-hidden`).
 
+### Availability Label
+- Junto al CTA del hero: un punto de 8 px en `--accent` (el círculo de estado, The Square Rule) y «Disponible para proyectos» en mono mayúscula `--fg`. Estático: no late ni parpadea.
+
+### Package Rows (Servicios)
+- El lenguaje de las filas de proyecto, sin enlace: alcance y plazo apilados en la columna de margen (mono, la primera línea en la línea base del nombre), nombre en Space Grotesk 700 `text-3xl` (`text-2xl` en móvil), descripción en `--muted` y «Desde» + precio a la derecha, en `text-3xl` con `tabular-nums`. En móvil todo se apila y el alcance y el plazo van en una línea bajo el nombre. Nota de precios en mono debajo.
+
+### Process Line
+- Cuatro pasos (en columna en móvil, cuatro columnas desde 64rem) unidos por una línea de 1 px: riel en `--line`, avance en `--fg` y una marca cuadrada de 9 px en `--fg` por paso. La línea va de la primera marca a la última. Con movimiento, el avance se dibuja ligado al scroll (`--progress` → `scaleY`/`scaleX` de cada tramo); sin JS o con reduced-motion se ve entera. Número del paso en mono `--muted`, nombre `text-xl` 700 y texto en `--muted`.
+
+### Portrait (Sobre mí)
+- Foto cuadrada de 20rem como máximo, esquinas rectas y contorno de 1 px en `--line`, con la etiqueta `FIG-01` debajo. A la derecha del texto desde 64rem; encima en móvil. La frase de entrada va en `text-2xl` 500; stack y redes, en mono mayúscula separados por «/» en `--muted`.
+
+### Contact Rows
+- Filas a todo el ancho, como las de proyecto: etiqueta mono (`WhatsApp`, `Email`) a la izquierda, dato en Space Grotesk 700 `text-2xl` (`text-xl` en móvil) y flecha. Toda la fila es el enlace; hover y foco subrayan el dato. Un canal sin dato en `src/lib/site.ts` no se muestra.
+
 ### Lab Labels
-- Etiquetas de laboratorio (`src/components/LabLabel.astro`): `[ 01 / PROYECTOS ]`, `EXP-001`, `ERR-404`. Mono mayúscula en `--code`, en la columna de margen a la altura de su título. Decorativas (`aria-hidden`): su información ya está en el título cercano. Hacen un scramble breve al aparecer. Son el único texto en turquesa; los demás metadatos (números de fila, año, ficha) van en `--muted`.
+- Etiquetas de laboratorio (`src/components/LabLabel.astro`): `[ 01 / PROYECTOS ]`, `EXP-001`, `ERR-404`, `FIG-01`. Mono mayúscula en `--code`, en la columna de margen a la altura de su título. Decorativas (`aria-hidden`): su información ya está en el título cercano. Hacen un scramble breve al aparecer. Son el único texto en turquesa; los demás metadatos (números de fila, año, ficha) van en `--muted`.
 
 ### Portadas provisionales
 - Mientras no hay capturas reales (T30), cada proyecto lleva una portada 1600×1000 con el lenguaje del cuaderno: retícula de 64 px, etiqueta `EXP-00X`, punto de estado y el número en Monaspace Krypton 800. Alternan Carbón con punto Coral (impares) y Coral con Carbón (pares). Si cambia la paleta, se regeneran con ella.
@@ -254,7 +269,7 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 - Anillo de 44 px con borde de 1 px en `--fg` que acompaña al cursor del sistema (no lo oculta), reducido al 35 % en reposo y a tamaño completo sobre lo interactivo. Solo con puntero fino y movimiento; decorativo.
 
 ### Movimiento
-Un solo momento de autor por página: la entrada del titular (`[data-split]`), letras desde abajo con máscara y de `blur(6px)` a nítido en 0,6 s, `expo.out`. Los títulos de sección (`[data-reveal]`) se revelan por líneas al entrar en pantalla, más sobrios (`blur(4px)`). Las etiquetas (`[data-scramble]`) hacen un scramble breve. El scroll es suave en escritorio y nativo en táctil, y las páginas cambian con View Transitions. Con reduced-motion no se descarga GSAP ni hay ninguna animación, ni siquiera el fundido entre páginas.
+Un solo momento de autor por página: la entrada del titular (`[data-split]`), letras desde abajo con máscara y de `blur(6px)` a nítido en 0,6 s, `expo.out`. Los títulos de sección (`[data-reveal]`) se revelan por líneas al entrar en pantalla, más sobrios (`blur(4px)`). Las etiquetas (`[data-scramble]`) hacen un scramble breve. El scroll es suave en escritorio y nativo en táctil; los enlaces a secciones saltan sin animación (los resuelve el ClientRouter, no Lenis). Las páginas cambian con View Transitions. La línea del proceso se dibuja con el scroll. Con reduced-motion no se descarga GSAP ni hay ninguna animación, ni siquiera el fundido entre páginas.
 
 ## Do's and Don'ts
 

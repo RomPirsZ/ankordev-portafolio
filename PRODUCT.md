@@ -36,9 +36,9 @@ Lo creativo y lo técnico pesan lo mismo: el sitio es un **laboratorio creativo*
 - Fuente de verdad del alcance: `docs/constitution.md` (prioritaria), `docs/specs/001-portafolio/spec.md`, `plan.md` y `tasks.md`.
 - Stack fijado: Astro 7 + Tailwind 4, salida estática salvo `/api/contact`, en Cloudflare Workers. Ninguna dependencia nueva sin preguntar.
 - Bilingüe: español por defecto, inglés completo y enlazado (`/` y `/en/`). Todo texto de interfaz va en `src/i18n/`.
-- Contenido legible y usable sin JavaScript; el movimiento es una capa progresiva que solo anima `transform`/`opacity` y respeta `prefers-reduced-motion`.
+- Contenido legible y usable sin JavaScript; el movimiento es una capa progresiva que solo anima propiedades que no recalculan el diseño (constitución II 1.3.0) y respeta `prefers-reduced-motion`.
 - Paquetes de servicios definidos (Landing, Sitio para negocio, Tienda / App web) con alcance, plazos y precios «desde» en la spec §5 (USD; tarifa local en ES, internacional en EN). Decididos el 2026-11-01; no se cambian ni se añaden servicios u ofertas sin confirmación.
-- Fuera de alcance en v1: WebGL, sonido de interfaz, sección `/lab`, blog y dominio propio.
+- Fuera de alcance en v1: sonido de interfaz, sección `/lab`, blog y dominio propio. WebGL solo para el fondo ambiental de escritorio (constitución II 1.2.0).
 
 ## Brand Commitments
 
@@ -54,7 +54,7 @@ Lo creativo y lo técnico pesan lo mismo: el sitio es un **laboratorio creativo*
 - Proyectos 001 (restaurante/café), 002 (tienda online) y 003 (app de reservas para barbería) son proyectos propios por construir, no encargos de clientes.
 - Proyecto 004 **LEGO LBN**: sitio para una iglesia, encargo real que se entregará, todavía en curso.
 - No existen testimonios, logos de clientes, métricas de resultados ni prensa. **No se fabrican.** Los casos de estudio se cuentan como lo que son (Problema → Solución → Decisiones técnicas → Resultado).
-- Redes (GitHub, LinkedIn, Instagram) sin URL todavía en `src/lib/site.ts`; foto/ilustración de «Sobre mí» pendiente.
+- Redes (GitHub, LinkedIn, Instagram) sin URL todavía en `src/lib/site.ts`. La foto de «Sobre mí» es real (2026-11-07); el nombre, el WhatsApp y el email públicos los completa el dueño en ese mismo archivo.
 
 ## Product Principles
 
