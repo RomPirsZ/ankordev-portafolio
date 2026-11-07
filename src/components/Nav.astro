@@ -1,7 +1,15 @@
 ---
 import Logo from './Logo.astro';
 import ThemeSwitcher from './ThemeSwitcher.astro';
-import { alternateLang, localizePath, sectionHref, useTranslations, type Lang, type Section } from '../i18n/utils';
+import {
+  alternateLang,
+  localizePath,
+  sectionHref,
+  sectionNumber,
+  useTranslations,
+  type Lang,
+  type Section,
+} from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -14,13 +22,14 @@ const t = useTranslations(lang);
 const home = localizePath('home', lang);
 const otherLang = alternateLang(lang);
 
-// Orden del menú (spec §5). Solo se enlazan las secciones que ya existen en el inicio:
-// Servicios, Sobre mí y Contacto vuelven con T12.
+// Orden del menú (spec §5). Solo se enlazan las secciones que ya existen en el inicio.
+// Proceso no va en el menú: por eso la numeración salta del 02 al 04.
 const NAV_SECTIONS = ['projects', 'services', 'about', 'contact'] as const;
-const BUILT_SECTIONS: readonly Section[] = ['projects'];
+const BUILT_SECTIONS: readonly Section[] = ['projects', 'services'];
 
 const links = NAV_SECTIONS.filter((section) => BUILT_SECTIONS.includes(section)).map((section) => ({
   href: sectionHref(section, lang),
+  number: sectionNumber(section),
   label: t(`nav.${section}`),
 }));
 ---
@@ -36,10 +45,10 @@ const links = NAV_SECTIONS.filter((section) => BUILT_SECTIONS.includes(section))
     <nav aria-label={t('nav.label')} class="order-last w-full sm:order-none sm:w-auto">
       <ul class="flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-wider">
         {
-          links.map((link, i) => (
+          links.map((link) => (
             <li>
               <a href={link.href} class="inline-block py-1 hover:underline">
-                <span class="text-muted" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span> {link.label}
+                <span class="text-muted" aria-hidden="true">{link.number}</span> {link.label}
               </a>
             </li>
           ))

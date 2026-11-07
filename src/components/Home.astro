@@ -1,8 +1,9 @@
 ---
-// Contenido del inicio, común a / y /en/. Por ahora, hero sin CTA ni
-// disponibilidad, y Proyectos. Servicios, Proceso, Sobre mí, Contacto y el CTA
-// llegan con T12, cuando producción ya esté en Cloudflare (T09c).
+// Contenido del inicio, común a / y /en/, en el orden de la spec §5. Faltan
+// (T12, en curso) Sobre mí, Contacto y el CTA del hero.
 import ProjectsSection from './ProjectsSection.astro';
+import ServicesSection from './ServicesSection.astro';
+import ProcessSection from './ProcessSection.astro';
 import { useTranslations, type Lang } from '../i18n/utils';
 
 interface Props {
@@ -23,3 +24,5 @@ const heroSentences = t('hero.title').split(/(?<=\.)\s+/);
 </section>
 
 <ProjectsSection lang={lang} />
+<ServicesSection lang={lang} />
+<ProcessSection lang={lang} />

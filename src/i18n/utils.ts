@@ -69,3 +69,17 @@ export function sectionId(section: Section, lang: Lang): string {
 export function sectionHref(section: Section, lang: Lang): string {
   return `${localizePath('home', lang)}#${sectionId(section, lang)}`;
 }
+
+// Número de cada sección en el cuaderno (`[ 02 / SERVICIOS ]`). El menú usa el mismo,
+// así que el número del enlace coincide con la etiqueta a la que lleva.
+const SECTION_NUMBERS = {
+  projects: '01',
+  services: '02',
+  process: '03',
+  about: '04',
+  contact: '05',
+} as const satisfies Record<Section, string>;
+
+export function sectionNumber(section: Section): string {
+  return SECTION_NUMBERS[section];
+}

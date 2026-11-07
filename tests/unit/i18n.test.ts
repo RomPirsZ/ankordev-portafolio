@@ -10,6 +10,7 @@ import {
   localizePath,
   sectionHref,
   sectionId,
+  sectionNumber,
   useTranslations,
 } from '../../src/i18n/utils';
 
@@ -97,5 +98,10 @@ describe('rutas', () => {
     expect(sectionId('about', 'en')).toBe('about');
     expect(sectionHref('projects', 'es')).toBe('/#proyectos');
     expect(sectionHref('projects', 'en')).toBe('/en/#projects');
+  });
+
+  it('cada sección tiene su número del cuaderno, en el orden de la spec §5', () => {
+    const order = ['projects', 'services', 'process', 'about', 'contact'] as const;
+    expect(order.map(sectionNumber)).toEqual(['01', '02', '03', '04', '05']);
   });
 });

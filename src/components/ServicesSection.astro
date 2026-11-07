@@ -1,0 +1,131 @@
+---
+// Servicios y paquetes (spec §5.4). Los 3 paquetes, su alcance, plazo y precio
+// «desde» están decididos (PRODUCT.md): no se cambian sin confirmación, y un test
+// unitario lo vigila. Filas como las de Proyectos: alcance y plazo al margen,
+// nombre y descripción en el centro, precio a la derecha.
+import Section from './Section.astro';
+import { sectionId, sectionNumber, useTranslations, type Lang } from '../i18n/utils';
+import { PACKAGES } from '../lib/services';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Section id={sectionId('services', lang)} number={sectionNumber('services')} title={t('services.title')} wide>
+  <ul class="packages" role="list">
+    {
+      PACKAGES.map((id) => (
+        <li class="package">
+          <h3 class="package-name">{t(`services.${id}.name`)}</h3>
+          <p class="package-meta annotation">
+            <span>{t(`services.${id}.scope`)}</span>
+            <span class="package-sep" aria-hidden="true">
+              ·
+            </span>
+            <span>{t(`services.${id}.time`)}</span>
+          </p>
+          <p class="package-text">{t(`services.${id}.text`)}</p>
+          <p class="package-price">
+            <span class="annotation">{t('services.from')}</span>
+            <span class="package-amount">{t(`services.${id}.price`)}</span>
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="annotation mt-6 md:ml-[12.5rem]">{t('services.note')}</p>
+</Section>
+
+<style>
+  .package {
+    display: grid;
+    row-gap: 0.5rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .package:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .package-name {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  .package-meta {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+  }
+
+  .package-text {
+    max-width: 52ch;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .package-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .package-amount {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Escritorio: alcance y plazo pasan a la columna de margen, uno sobre otro,
+     como las anotaciones de una ficha; el precio se alinea a la derecha. */
+  @media (width >= 48rem) {
+    .package {
+      grid-template-columns: 11rem minmax(0, 1fr) auto;
+      column-gap: 1.5rem;
+      align-items: baseline;
+      padding-block: 2rem;
+    }
+
+    .package-name {
+      grid-column: 2;
+      grid-row: 1;
+      font-size: var(--text-3xl);
+    }
+
+    /* La primera línea comparte línea base con el nombre (DESIGN.md, Margin Rule) */
+    .package-meta {
+      grid-column: 1;
+      grid-row: 1;
+      flex-direction: column;
+    }
+
+    .package-sep {
+      display: none;
+    }
+
+    .package-text {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .package-price {
+      grid-column: 3;
+      grid-row: 1;
+      margin-top: 0;
+    }
+
+    .package-amount {
+      font-size: var(--text-3xl);
+    }
+  }
+</style>
