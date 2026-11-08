@@ -1,4 +1,5 @@
 ---
+import SocialIcon from './SocialIcon.astro';
 import { SOCIALS } from '../lib/site';
 import { formatCaracasTime } from '../lib/clock';
 import { useTranslations, type Lang } from '../i18n/utils';
@@ -25,11 +26,14 @@ const socials = SOCIALS.filter((social) => social.url);
     {
       socials.length > 0 && (
         <nav aria-label={t('footer.social')}>
-          <ul class="flex flex-wrap gap-4">
+          {/* -my-1 compensa el py-1 de los enlaces: el texto se alinea con el reloj y el crédito */}
+          <ul class="-my-1 flex flex-wrap gap-x-5 gap-y-1">
             {socials.map((social) => (
               <li>
-                <a href={social.url} rel="me noopener" class="hover:underline">
-                  {social.name}
+                {/* py-1: el área táctil llega a 24 px de alto (WCAG 2.2, 2.5.8) */}
+                <a href={social.url} rel="me noopener" class="group inline-flex items-center gap-2 py-1">
+                  <SocialIcon name={social.name} />
+                  <span class="group-hover:underline">{social.name}</span>
                 </a>
               </li>
             ))}

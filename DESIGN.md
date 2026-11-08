@@ -180,7 +180,7 @@ La escala es fluida entre 360 px y 1440 px de ancho; los pasos intermedios (`tex
 
 El contenido vive en un contenedor centrado de 80rem (`max-w-7xl`) con márgenes laterales de 16 px en móvil y 24 px desde 640 px. El fondo de todo el `body` lleva la retícula de laboratorio (celdas de 64 px, líneas de 1 px en el color Línea, alineada arriba y al centro). Nav y footer se separan del contenido con una línea de 1 px, no con bloques de color.
 
-La navegación pasa de una sola fila en escritorio (marca · enlaces · interruptor de tema e idioma) a dos filas en móvil, con los enlaces debajo y a todo el ancho. El footer pasa de una columna a tres desde 640 px (reloj · redes · crédito alineado a la derecha). Se diseña primero para el teléfono: es el dispositivo de la mayoría de las visitas.
+La navegación pasa de una sola fila en escritorio (marca · enlaces · interruptor de tema e idioma) a dos filas en móvil, con los enlaces debajo y a todo el ancho. El footer pasa de una columna a tres desde 640 px (reloj · redes con su glifo · crédito alineado a la derecha). Se diseña primero para el teléfono: es el dispositivo de la mayoría de las visitas.
 
 **The Paper Rule.** La retícula es el papel, no el contenido: nunca lleva información, nunca compite en contraste con el texto y nunca se usa para alinear a la fuerza piezas que no la necesitan.
 
@@ -235,6 +235,12 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 
 ### Footer Clock (componente firma)
 - Etiqueta mono «Hora en Caracas» en `--muted` y hora en tamaño `text-base` con `tabular-nums` y sufijo `UTC−4`. Sin JS muestra la hora del build; con JS se actualiza cada segundo.
+
+### Footer Social
+- GitHub, LinkedIn e Instagram (`SOCIALS` en `src/lib/site.ts`; una red sin URL no se muestra), cada uno con el glifo de su red a 14 px (`src/components/SocialIcon.astro`) y el nombre en mono mayúscula, en `--fg`. El glifo es decorativo (`aria-hidden`): el nombre visible es el nombre accesible del enlace.
+- Hover subraya solo el nombre. Cada enlace tiene 24 px de alto de área táctil (`py-1`); la lista lo compensa con `-my-1` para que el texto quede en la línea del reloj y el crédito.
+
+**The Third-Party-Mark Rule.** Las marcas de terceros (los glifos de las redes) van con su forma oficial, de Bootstrap Icons (MIT), rellenas en `currentColor` y sin redibujar: no siguen el trazo de 1,5 px ni la esquina recta de los iconos propios. Solo identifican adónde lleva un enlace, siempre junto a su nombre; nunca decoran.
 
 ### Project Rows (componente firma)
 - **Lista (por defecto, y la única sin JS):** filas a todo el ancho separadas por líneas de 1 px; número `001` en la columna de margen, título en Space Grotesk 700 `text-3xl` (`text-2xl` en móvil), metadatos mono debajo (tipo · origen · estado), año y flecha SVG a la derecha. Toda la fila es el enlace; hover y foco subrayan el título (2 px). No descarga portadas.

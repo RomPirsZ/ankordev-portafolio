@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { SOCIALS } from '../../src/lib/site';
 
 test('el inicio responde y tiene un h1', async ({ page }) => {
   const response = await page.goto('/');
@@ -46,6 +47,24 @@ test('las fuentes self-hosted cargan', async ({ page }) => {
   expect(loaded).toEqual({ display: true, mono: true });
   await expect(page.locator('h1')).toHaveCSS('font-family', /Space Grotesk Variable/);
   await expect(page.locator('header nav a').first()).toHaveCSS('font-family', /Monaspace Krypton/);
+});
+
+// Redes del pie: glifo de cada red + su nombre; el glifo es decorativo
+test('el pie enlaza cada red con su icono y su nombre', async ({ page }) => {
+  const socials = SOCIALS.filter((social) => social.url);
+  for (const home of ['/', '/en/']) {
+    await page.goto(home);
+    const links = page.getByRole('contentinfo').getByRole('navigation').getByRole('link');
+    await expect(links).toHaveCount(socials.length);
+    for (const [i, social] of socials.entries()) {
+      const link = links.nth(i);
+      await expect(link).toHaveAccessibleName(social.name);
+      await expect(link).toHaveAttribute('href', social.url);
+      await expect(link.locator('svg')).toHaveAttribute('aria-hidden', 'true');
+      // Área táctil mínima de WCAG 2.2 (2.5.8)
+      expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(24);
+    }
+  }
 });
 
 // Logotipo «Cursor» (T11b): dibujado en SVG decorativo; el nombre lo da el texto del enlace
