@@ -182,8 +182,15 @@ Variables (secretos del Worker con `npx wrangler secret put` o desde el panel; n
 **Datos públicos del dueño (cambio 2026-11-07).** `PUBLIC_OWNER_NAME`, `PUBLIC_OWNER_WHATSAPP` y `PUBLIC_OWNER_EMAIL` alimentan «Sobre mí» y Contacto. No son secretos, porque la página los muestra, pero no van en git: así el repositorio puede seguir siendo público sin dejar el teléfono y el email en su historial. Van en `.env` en local y como variables de build de Workers Builds en producción. Se sustituyen al compilar y solo acaban en el HTML, no en el JavaScript del cliente. `src/lib/site.ts` los interpreta con `ownerFromEnv` y `src/lib/owner.ts` es el único que lee `import.meta.env`. Vacíos no se muestran, y así queda el build de CI.
 
 **Claves de Turnstile por entorno.**
-- **Producción (Cloudflare):** las claves reales del widget `ankordev-portafolio contacto` (modo *Managed*). Su hostname es `ankordev-portafolio.ankordev.workers.dev` (el de Vercel se quitó al borrar ese proyecto, el 2026-11-06).
+- **Producción (Cloudflare):** las claves reales de un mismo widget (recreado el 2026-11-08: se habían mezclado las claves de dos widgets). Su hostname es `ankordev-portafolio.ankordev.workers.dev` (el de Vercel se quitó al borrar ese proyecto, el 2026-11-06).
 - **Local y CI:** las claves oficiales de prueba de Cloudflare, que siempre pasan: *site key* `1x00000000000000000000AA` y *secret* `1x0000000000000000000000000000000AA`. Así ninguna clave real está en el disco ni en GitHub, y los e2e no necesitan secretos.
+
+**Configuración en producción (T26, 2026-11-08).** Lo que costó dejarla bien, para no repetirlo:
+- **Dos tarjetas «Variables y secretos».** La de **Compilaciones** solo existe durante el build: ahí van las variables públicas `PUBLIC_TURNSTILE_SITE_KEY` y `PUBLIC_OWNER_*`. Los cinco secretos del endpoint (`SUPABASE_URL`, `SUPABASE_ANON_KEY`, `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY`, `CONTACT_NOTIFY_TO`) van en la del **Worker** (Configuración → Variables y secretos, fuera de Compilaciones), siempre de tipo Secreto: los de tipo «Variable» de esa tarjeta se borran en cada `wrangler deploy`.
+- **La site key es de build:** cambiarla exige un build nuevo. Un secreto del Worker, en cambio, se aplica al guardarlo.
+- **Las dos claves, del mismo widget**, y el widget con el hostname `ankordev-portafolio.ankordev.workers.dev`. Nunca las de prueba en producción: con el secreto de prueba cualquier token pasa.
+- **Cómo comprobarlo sin escribir nada:** un POST con un token inventado debe dar `403` (`verification`). Un `500` (`server`) indica que el Worker no ve un secreto válido (`contact.turnstile-misconfigured` en los logs).
+- **Verificado:** un envío real desde la web publicada llegó a `leads` y al email (el aviso solo se manda después de guardar).
 
 ## 8. Cabeceras (`public/_headers`)
 

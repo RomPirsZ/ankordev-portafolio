@@ -54,7 +54,7 @@
 - [x] T23b `notify.ts`: aviso por email de cada contacto con Resend + tests unitarios (plan §7) — *responder le escribe a quien envió el contacto; verificado con un envío real (entregado, reply-to correcto)*
 - [x] T24 `api/contact.ts` + tests de integración (todos los códigos del plan) — *hecha 2026-11-08: lógica en `contact-handler.ts` y guardado en `leads.ts`; contrato en el plan §7 (JSON y POST nativo con 303). 25 tests de integración + 6 unitarios de `leads` + e2e de la ruta en workerd. Logs del Worker activados (`observability`)*
 - [x] T25 `ContactForm` con Turnstile, honeypot, estados y fallback sin JS; página `gracias` — *hecha 2026-11-08: sin JS no se ofrece (Turnstile lo necesita) y remite a WhatsApp/email; Turnstile se carga al primer foco; validación en el navegador idéntica a la del servidor (test de coherencia); `/gracias/` y `/en/thanks/` con `noindex`. Verificado con el Turnstile real (clave de prueba): sin errores de CSP y sin peticiones a Cloudflare hasta tocar el formulario*
-- [ ] T26 Test e2e 6; envío real verificado en `leads`
+- [x] T26 Test e2e 6; envío real verificado en `leads` — *hecha 2026-11-08: e2e 6 (`contact-form.spec.ts`, 14 casos × móvil/escritorio) con API y Turnstile simulados; envío real en local (Supabase y Resend reales, Turnstile de prueba) y en producción desde la web publicada, recibido en el email. Configuración de producción documentada en el plan §7*
 
 **Hecho cuando:** todos los tests del contacto pasan y un envío real aparece en la tabla.
 
