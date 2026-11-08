@@ -24,7 +24,7 @@ test('el inicio existe en ambos idiomas y se enlazan entre sí', async ({ page }
 test('cada enlace del menú lleva a una sección que existe', async ({ page }) => {
   for (const home of ['/', '/en/']) {
     await page.goto(home);
-    const hrefs = await page.locator('nav a').evaluateAll((links) => links.map((a) => a.getAttribute('href') ?? ''));
+    const hrefs = await page.locator('header nav a').evaluateAll((links) => links.map((a) => a.getAttribute('href') ?? ''));
     expect(hrefs.length).toBeGreaterThan(0);
     for (const href of hrefs) {
       const [path, id] = href.split('#');
@@ -45,7 +45,7 @@ test('las fuentes self-hosted cargan', async ({ page }) => {
   });
   expect(loaded).toEqual({ display: true, mono: true });
   await expect(page.locator('h1')).toHaveCSS('font-family', /Space Grotesk Variable/);
-  await expect(page.locator('nav a').first()).toHaveCSS('font-family', /Monaspace Krypton/);
+  await expect(page.locator('header nav a').first()).toHaveCSS('font-family', /Monaspace Krypton/);
 });
 
 // Logotipo «Cursor» (T11b): dibujado en SVG decorativo; el nombre lo da el texto del enlace
