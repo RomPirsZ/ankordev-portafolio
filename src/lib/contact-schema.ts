@@ -1,5 +1,6 @@
 import { z } from 'astro/zod';
 import { LANGS } from '../i18n/utils';
+import { CONTACT_LIMITS, EMAIL_PATTERN, type ContactErrorCode } from './contact-fields';
 import { PROJECT_TYPES } from './project-schema';
 
 // Validación del formulario de contacto en el servidor (plan §7, constitución V).
@@ -9,20 +10,11 @@ import { PROJECT_TYPES } from './project-schema';
 export const CONTACT_FIELDS = ['name', 'email', 'project_type', 'budget', 'message', 'lang'] as const;
 export const CONTACT_PROJECT_TYPES = [...PROJECT_TYPES, 'otro'] as const;
 
-/** En caracteres, como `char_length` de Postgres (un emoji es 1, no 2 como en `.length`). */
-export const CONTACT_LIMITS = {
-  name: { min: 2, max: 80 },
-  email: { max: 254 },
-  budget: { max: 40 },
-  message: { min: 10, max: 2000 },
-} as const;
-
-/** El mismo patrón que el check de `email` (allí con `~*`: sin distinguir mayúsculas). */
-export const EMAIL_PATTERN = /^[^@\s]+@[^@\s]+\.[^@\s]+$/i;
+// Límites, patrón del email y códigos de error viven en contact-fields.ts, sin dependencias,
+// para que el formulario valide en el navegador con las mismas reglas sin descargar Zod.
+export { CONTACT_LIMITS, EMAIL_PATTERN, type ContactErrorCode };
 
 export type ContactField = (typeof CONTACT_FIELDS)[number];
-/** Códigos estables: el endpoint los devuelve y el formulario los traduce en src/i18n. */
-export type ContactErrorCode = 'required' | 'too_short' | 'too_long' | 'invalid';
 
 const chars = (text: string) => [...text].length;
 

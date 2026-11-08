@@ -1,0 +1,41 @@
+---
+// Página de gracias tras enviar el formulario (spec §3, T25), con el lenguaje de la 404:
+// titular, etiqueta al margen y una sola pieza sólida. Fuera de los buscadores.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArrowIcon from './ArrowIcon.astro';
+import LabLabel from './LabLabel.astro';
+import { alternateLang, localizePath, sectionHref, useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<BaseLayout title={`${t('thanks.title')} — ${t('site.brand')}`} lang={lang} altHref={localizePath('thanks', alternateLang(lang))} noindex>
+  <div class="margin-grid min-h-[60svh] content-center py-20 md:py-28">
+    <h1 class="max-w-[14ch] text-display font-bold text-balance md:col-start-2 md:row-start-1" data-split>
+      {t('thanks.title')}
+    </h1>
+    <LabLabel text="MSG-200" class="md:col-start-1 md:row-start-1 md:pt-[0.8em]" />
+    <div class="mt-6 md:col-start-2">
+      <p class="max-w-[50ch] text-lg text-pretty">{t('thanks.text')}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-5">
+        <a
+          href={localizePath('home', lang)}
+          class="inline-flex items-center gap-3 bg-accent px-6 py-4 text-lg font-bold text-on-accent"
+          data-magnetic
+        >
+          {t('thanks.home')}
+          <ArrowIcon />
+        </a>
+        <a href={sectionHref('projects', lang)} class="annotation inline-flex items-center gap-2 py-1 text-fg hover:underline">
+          {t('thanks.projects')}
+          <ArrowIcon />
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

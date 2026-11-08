@@ -1,0 +1,331 @@
+---
+// Formulario de contacto (spec §5.7, T25): 5 campos, aviso de privacidad y Turnstile.
+// Sin JS no se ofrece (nace oculto): Turnstile lo necesita, y WhatsApp y email quedan
+// debajo (constitución I). Envío, validación y errores: src/lib/contact-form.ts.
+import ArrowIcon from './ArrowIcon.astro';
+import { CONTACT_LIMITS, HONEYPOT_FIELD } from '../lib/contact-fields';
+import { CONTACT_PROJECT_TYPES } from '../lib/contact-schema';
+import type { ContactFormMessages } from '../lib/contact-form';
+import { localizePath, sectionId, useTranslations, type Key, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+// La de prueba de Cloudflare en local y CI; la real solo como variable de Workers Builds
+const sitekey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+
+const messages: ContactFormMessages = {
+  field: {
+    required: t('contact.form.error.required'),
+    too_short: t('contact.form.error.too_short'),
+    too_long: t('contact.form.error.too_long'),
+    invalid: t('contact.form.error.invalid'),
+    email: t('contact.form.error.email'),
+  },
+  alert: {
+    invalid: t('contact.form.alert.invalid'),
+    verification: t('contact.form.alert.verification'),
+    rate_limit: t('contact.form.alert.rate_limit'),
+    too_large: t('contact.form.alert.too_large'),
+    server: t('contact.form.alert.server'),
+    network: t('contact.form.alert.network'),
+  },
+  status: {
+    verifying: t('contact.form.status.verifying'),
+    sending: t('contact.form.status.sending'),
+  },
+};
+
+const typeLabel = (type: (typeof CONTACT_PROJECT_TYPES)[number]) =>
+  type === 'otro' ? t('contact.form.typeOther') : t(`project.type.${type}` as Key);
+const optional = `(${t('contact.form.optional')})`;
+---
+
+{/* Ancla del POST nativo con error (303 de /api/contact): se muestra con :target, sin JS */}
+<p id={`${sectionId('contact', lang)}-error`} class="fallback-error notice">{t('contact.form.fallbackError')}</p>
+
+{/* Visible sin JS; el script lo oculta al mostrar el formulario (no se usa <noscript>: así se puede probar) */}
+<p class="noscript" data-contact-no-js>{t('contact.form.noscript')}</p>
+
+<div class="form-wrap" data-contact-form-wrap hidden>
+  <form
+    class="contact-form"
+    action="/api/contact"
+    method="post"
+    enctype="multipart/form-data"
+    novalidate
+    aria-label={t('contact.form.label')}
+    data-contact-form
+    data-sitekey={sitekey}
+    data-lang={lang}
+    data-thanks={localizePath('thanks', lang)}
+    data-messages={JSON.stringify(messages)}
+  >
+    <input type="hidden" name="lang" value={lang} />
+
+    <div class="fields">
+      <div class="field">
+        <label class="annotation" for="contact-name">{t('contact.form.name')}</label>
+        <input
+          class="control"
+          id="contact-name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          required
+          minlength={CONTACT_LIMITS.name.min}
+          maxlength={CONTACT_LIMITS.name.max}
+          aria-describedby="contact-name-error"
+        />
+        <p class="field-error notice" id="contact-name-error" data-error-for="name" hidden></p>
+      </div>
+
+      <div class="field">
+        <label class="annotation" for="contact-email">{t('contact.form.email')}</label>
+        <input
+          class="control"
+          id="contact-email"
+          name="email"
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+          spellcheck="false"
+          required
+          maxlength={CONTACT_LIMITS.email.max}
+          aria-describedby="contact-email-error"
+        />
+        <p class="field-error notice" id="contact-email-error" data-error-for="email" hidden></p>
+      </div>
+
+      <div class="field">
+        <label class="annotation" for="contact-type">{t('contact.form.type')} {optional}</label>
+        <div class="select">
+          <select class="control" id="contact-type" name="project_type" aria-describedby="contact-type-error">
+            <option value="">{t('contact.form.typeNone')}</option>
+            {CONTACT_PROJECT_TYPES.map((type) => <option value={type}>{typeLabel(type)}</option>)}
+          </select>
+          <ArrowIcon direction="down" class="select-arrow" />
+        </div>
+        <p class="field-error notice" id="contact-type-error" data-error-for="project_type" hidden></p>
+      </div>
+
+      <div class="field">
+        <label class="annotation" for="contact-budget">{t('contact.form.budget')} {optional}</label>
+        <input
+          class="control"
+          id="contact-budget"
+          name="budget"
+          type="text"
+          autocomplete="off"
+          maxlength={CONTACT_LIMITS.budget.max}
+          placeholder={t('contact.form.budgetHint')}
+          aria-describedby="contact-budget-error"
+        />
+        <p class="field-error notice" id="contact-budget-error" data-error-for="budget" hidden></p>
+      </div>
+
+      <div class="field field-wide">
+        <label class="annotation" for="contact-message">{t('contact.form.message')}</label>
+        <textarea
+          class="control"
+          id="contact-message"
+          name="message"
+          rows="6"
+          required
+          minlength={CONTACT_LIMITS.message.min}
+          maxlength={CONTACT_LIMITS.message.max}
+          aria-describedby="contact-message-error"></textarea>
+        <p class="field-error notice" id="contact-message-error" data-error-for="message" hidden></p>
+      </div>
+    </div>
+
+    {/* Trampa para bots: fuera de la pantalla, del foco y del árbol de accesibilidad */}
+    <div class="honeypot" aria-hidden="true" inert>
+      <label for="contact-website">{t('contact.form.honeypot')}</label>
+      <input id="contact-website" name={HONEYPOT_FIELD} type="text" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <div class="turnstile" data-turnstile></div>
+
+    <p class="form-alert notice" role="alert" data-form-alert></p>
+
+    <div class="form-footer">
+      <button type="submit" class="submit inline-flex items-center gap-3 bg-accent px-6 py-4 text-lg font-bold text-on-accent">
+        {t('contact.form.submit')}
+        <ArrowIcon />
+      </button>
+      <p class="annotation form-status" role="status" data-form-status></p>
+      <p class="privacy">{t('contact.form.privacy')}</p>
+    </div>
+  </form>
+</div>
+
+<style>
+  .form-wrap {
+    margin-top: 2.5rem;
+  }
+
+  .fields {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (width >= 48rem) {
+    .fields {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .field-wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .field label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Campo del cuaderno: esquina recta y borde de 1 px en --fg (Línea no vale para un control) */
+  .control {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--fg);
+    border-radius: 0;
+    background-color: color-mix(in srgb, var(--bg) 82%, transparent);
+    color: var(--fg);
+    font: inherit;
+    padding: 0.75rem 1rem;
+  }
+
+  textarea.control {
+    min-height: 10rem;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  .control::placeholder {
+    color: var(--muted);
+    opacity: 1;
+  }
+
+  /* Error: el borde pasa a coral y se dobla por dentro, sin mover el diseño */
+  .control[aria-invalid='true'] {
+    border-color: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--accent);
+  }
+
+  .select {
+    position: relative;
+  }
+
+  .select .control {
+    appearance: none;
+    padding-right: 2.75rem;
+    cursor: pointer;
+  }
+
+  .select :global(.select-arrow) {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    translate: 0 -50%;
+    pointer-events: none;
+  }
+
+  /* Avisos: el punto coral es el indicador de estado (The Square Rule); el texto va en --fg */
+  .notice {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    font-size: var(--text-sm);
+  }
+
+  .notice::before {
+    content: '';
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background-color: var(--accent);
+  }
+
+  .field-error {
+    margin-top: 0.5rem;
+  }
+
+  .field-error[hidden] {
+    display: none;
+  }
+
+  .form-alert {
+    margin-top: 1.5rem;
+    font-size: var(--text-base);
+  }
+
+  .form-alert:empty {
+    display: none;
+  }
+
+  .fallback-error {
+    display: none;
+    margin-top: 2rem;
+    font-size: var(--text-base);
+  }
+
+  .fallback-error:target {
+    display: flex;
+  }
+
+  .noscript[hidden] {
+    display: none;
+  }
+
+  .noscript {
+    margin-top: 2rem;
+    max-width: 52ch;
+    color: var(--muted);
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .form-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2rem;
+    margin-top: 2rem;
+  }
+
+  .submit[aria-disabled='true'] {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  .form-status:empty {
+    display: none;
+  }
+
+  .privacy {
+    flex: 1 1 22rem;
+    max-width: 52ch;
+    font-size: var(--text-sm);
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+</style>
+
+<script>
+  import { initContactForm } from '../lib/contact-form';
+
+  initContactForm();
+  document.addEventListener('astro:page-load', initContactForm);
+</script>

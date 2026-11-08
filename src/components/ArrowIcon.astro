@@ -1,12 +1,12 @@
 ---
 // Flecha dibujada (no un carácter Unicode): trazo de 1.5 px, del color del texto.
 interface Props {
-  direction?: 'left' | 'right' | 'up-right';
+  direction?: 'left' | 'right' | 'up-right' | 'down';
   class?: string;
 }
 
 const { direction = 'right', class: className } = Astro.props;
-const rotation = { right: 0, left: 180, 'up-right': -45 }[direction];
+const rotation = { right: 0, left: 180, 'up-right': -45, down: 90 }[direction];
 ---
 
 <svg

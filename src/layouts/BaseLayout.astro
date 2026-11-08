@@ -12,9 +12,11 @@ interface Props {
   lang?: Lang;
   /** URL equivalente en el otro idioma */
   altHref?: string;
+  /** Páginas que no deben aparecer en buscadores (p. ej., la de gracias) */
+  noindex?: boolean;
 }
 
-const { title, lang = 'es', altHref } = Astro.props;
+const { title, lang = 'es', altHref, noindex = false } = Astro.props;
 const t = useTranslations(lang);
 ---
 
@@ -29,6 +31,7 @@ const t = useTranslations(lang);
     -->
     <meta name="darkreader-lock" />
     <title>{title}</title>
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <!-- Transiciones entre páginas (T19); Astro las desactiva con reduced-motion -->
     <ClientRouter />

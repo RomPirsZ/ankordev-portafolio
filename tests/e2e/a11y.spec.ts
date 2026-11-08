@@ -11,6 +11,7 @@ const PAGES = [
   { name: 'inicio EN', path: '/en/' },
   { name: 'caso de estudio', path: '/proyectos/001-restaurante/' },
   { name: '404', path: '/esto-no-existe/' },
+  { name: 'gracias', path: '/gracias/' },
 ];
 
 for (const theme of THEMES) {

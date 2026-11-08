@@ -1,9 +1,9 @@
 ---
-// Contacto (spec §5.7), maquetado de T12: WhatsApp y email. El formulario, con su
-// aviso de privacidad, llega con T25. Los canales salen de las variables de build
-// PUBLIC_OWNER_WHATSAPP y PUBLIC_OWNER_EMAIL; uno vacío no se muestra.
+// Contacto (spec §5.7): el formulario (T25) y, debajo, WhatsApp y email. Los canales salen
+// de las variables de build PUBLIC_OWNER_WHATSAPP y PUBLIC_OWNER_EMAIL; uno vacío no se muestra.
 import Section from './Section.astro';
 import ArrowIcon from './ArrowIcon.astro';
+import ContactForm from './ContactForm.astro';
 import { sectionId, sectionNumber, useTranslations, type Lang } from '../i18n/utils';
 import { contactChannels } from '../lib/site';
 import { OWNER } from '../lib/owner';
@@ -19,6 +19,10 @@ const channels = contactChannels(OWNER);
 
 <Section id={sectionId('contact', lang)} number={sectionNumber('contact')} title={t('contact.title')}>
   <p class="contact-text">{t('contact.text')}</p>
+  <ContactForm lang={lang} />
+  {
+    channels.length > 0 && <p class="annotation direct">{t('contact.direct')}</p>
+  }
   {
     channels.length > 0 && (
       <ul class="channels" role="list">
@@ -48,8 +52,12 @@ const channels = contactChannels(OWNER);
     text-wrap: balance;
   }
 
+  .direct {
+    margin-top: 4rem;
+  }
+
   .channels {
-    margin-top: 2.5rem;
+    margin-top: 1rem;
   }
 
   .channels li {

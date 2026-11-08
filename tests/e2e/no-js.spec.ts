@@ -39,3 +39,23 @@ test('la 404 se lee sin JavaScript', async ({ page }) => {
   await page.getByRole('link', { name: 'Ir al inicio' }).click();
   await expect(page).toHaveURL(/\/$/);
 });
+
+// Turnstile necesita JS: sin él no se ofrece un formulario que no puede funcionar, y se
+// avisa de que WhatsApp y email funcionan igual (constitución I)
+test('sin JavaScript el formulario no se ofrece y quedan WhatsApp y email', async ({ page }) => {
+  await page.goto('/');
+  const contact = page.locator('#contacto');
+  await expect(contact.locator('form')).toBeHidden();
+  await expect(contact.getByText('El formulario necesita JavaScript.')).toBeVisible();
+  // El aviso de error del POST nativo solo aparece cuando la URL lo señala
+  await expect(page.locator('#contacto-error')).toBeHidden();
+  await page.goto('/#contacto-error');
+  await expect(page.locator('#contacto-error')).toBeVisible();
+});
+
+test('la página de gracias se lee sin JavaScript', async ({ page }) => {
+  await page.goto('/gracias/');
+  await expectContentShown(page);
+  await page.getByRole('link', { name: 'Volver al inicio' }).click();
+  await expect(page).toHaveURL(/\/$/);
+});

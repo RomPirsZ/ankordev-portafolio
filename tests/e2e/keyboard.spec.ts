@@ -1,5 +1,6 @@
 // Plan §9, e2e 9 (constitución III): todo se usa solo con teclado, con el foco visible.
 import { test, expect, type Page } from '@playwright/test';
+import { stubTurnstile } from './turnstile-stub';
 
 test.skip(({ isMobile }) => isMobile, 'El teclado se prueba en escritorio');
 
@@ -24,11 +25,14 @@ async function tabTo(page: Page, selector: string) {
 
 for (const path of ['/', '/proyectos/001-restaurante/']) {
   test(`${path}: el Tab recorre todo lo interactivo en orden, con foco visible y sin trampas`, async ({ page }) => {
+    // Al enfocar el formulario se carga Turnstile: el sustituto local evita la red
+    await stubTurnstile(page);
     await page.goto(path);
-    // Lo interactivo que se ve, en orden del documento (ningún tabindex positivo lo altera)
-    const expected = await page.$$eval('a[href], button', (elements) =>
+    // Lo interactivo que se ve, en orden del documento (ningún tabindex positivo lo altera).
+    // El honeypot del formulario es inert: fuera del foco a propósito
+    const expected = await page.$$eval('a[href], button, input:not([type="hidden"]), select, textarea', (elements) =>
       elements
-        .filter((el) => el.checkVisibility())
+        .filter((el) => el.checkVisibility() && !el.closest('[inert]'))
         .map((el) => {
           const text = (el.textContent ?? '').replace(/\s+/g, ' ').trim();
           return `${el.tagName.toLowerCase()} ${el.getAttribute('href') ?? ''} ${text}`.trim();

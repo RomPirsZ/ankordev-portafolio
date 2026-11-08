@@ -8,7 +8,7 @@
 
 | Principio | Cómo se cumple |
 |---|---|
-| I. Contenido primero | Astro genera HTML estático; animaciones con JS solo como capa; formulario funciona con POST nativo |
+| I. Contenido primero | Astro genera HTML estático; animaciones con JS solo como capa. Contactar no depende de JS: WhatsApp y email son enlaces. El formulario sí lo necesita (Turnstile), así que sin JS no se ofrece y remite a ellos (T25) |
 | II. Movimiento con propósito | GSAP sobre `transform`/`opacity`; `filter: blur()` solo en la entrada de titulares y textos cortos (≤ 0,6 s, ≤ 8 px; constitución 1.1.0); fondo ambiental WebGL solo en escritorio con puntero fino, pausado con la pestaña oculta y con contraste AA verificado (constitución 1.2.0); todo se desactiva con `prefers-reduced-motion` |
 | III. Accesibilidad | HTML semántico, contraste verificado por tema, axe en CI |
 | IV. Rendimiento | Salida estática, fuentes self-hosted, `astro:assets` para imágenes, GSAP solo donde se usa, Lighthouse CI. El fondo WebGL no se descarga en móvil: allí el fondo es CSS estático (0 KB de JS) |
@@ -168,6 +168,14 @@ Respuestas del endpoint: `200` éxito (o honeypot lleno, sin guardar) · `400` v
 - **Origen:** Astro (`security.checkOrigin`, activo por defecto) rechaza con `403` un formulario enviado desde otro sitio.
 - **Logs:** JSON con el evento y códigos, nunca datos del visitante ni su IP.
 - **Tamaño:** urlencoded infla cada byte no ASCII (`ñ` ocupa 6). Un mensaje real de 2000 caracteres cabe de sobra, pero T25 usará `enctype="multipart/form-data"`, que envía el texto tal cual.
+
+**Formulario (T25, 2026-11-08).**
+- **Sin JS no se ofrece.** Turnstile necesita JS y el endpoint falla cerrado sin token, así que un formulario sin JS siempre fallaría. Nace oculto y, en su lugar, un aviso remite a WhatsApp y email; el script lo muestra y retira el aviso (el patrón del interruptor de tema). No se usa `<noscript>`: el Chromium de Playwright sin JS no lo muestra y no se podría probar. El POST nativo y su 303 se mantienen como red de seguridad.
+- **Turnstile al primer foco** en el formulario (`src/lib/turnstile-widget.ts`): una visita normal no hace ninguna petición a Cloudflare (constitución X) ni carga su script (IV). Modo `interaction-only` (invisible salvo que haga falta pulsar algo), `response-field: false` (el token se añade al envío) y `reset` tras cada respuesta, porque el token vale una vez.
+- **Validación en el navegador** con `validateContactText` (`src/lib/contact-fields.ts`, sin Zod): las mismas reglas y el mismo orden que el servidor, comprobados caso a caso por un test. Así un envío inválido no gasta el token.
+- **Envío** con `fetch` (multipart, `Accept: application/json`) y, si sale bien, `navigate()` a `/gracias/` o `/en/thanks/` (`noindex`). Los errores de campo se pintan con sus códigos y los generales en un `role="alert"`.
+- **Site key:** `PUBLIC_TURNSTILE_SITE_KEY` al compilar. En CI, la de prueba de Cloudflare en el paso de build; en producción, la real como variable de build de Workers Builds. Sin ella el widget no puede verificar y el formulario muestra el aviso de verificación.
+- **e2e:** `tests/e2e/turnstile-stub.ts` sirve un sustituto local en la URL real del script: los tests no dependen de la red de Cloudflare y la CSP se comprueba igual.
 
 Variables (secretos del Worker con `npx wrangler secret put` o desde el panel; nunca `PUBLIC_` salvo la site key, que va como variable de build de Workers Builds porque se usa al compilar): `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`, `RESEND_API_KEY` y `CONTACT_NOTIFY_TO`.
 

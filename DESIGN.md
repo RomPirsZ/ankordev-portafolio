@@ -209,7 +209,7 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 
 ### Buttons
 - **Shape:** esquina recta (0 px).
-- **Primary (`[data-magnetic]`: el CTA «Hablemos» del hero e «Ir al inicio» de la 404):** relleno `--accent`, texto `--on-accent` en Space Grotesk 700 `text-lg`, 24×16 px de relleno y una flecha SVG. Es el único bloque sólido de su pantalla. Con puntero fino es magnético: sigue al puntero el 30 % de la distancia a su centro y vuelve al salir; sin JS o con movimiento reducido es un botón normal.
+- **Primary (`[data-magnetic]`: el CTA «Hablemos» del hero, «Ir al inicio» de la 404 y «Volver al inicio» de gracias; «Enviar mensaje» es primario pero no magnético):** relleno `--accent`, texto `--on-accent` en Space Grotesk 700 `text-lg`, 24×16 px de relleno y una flecha SVG. Es el único bloque sólido de su pantalla. Con puntero fino es magnético: sigue al puntero el 30 % de la distancia a su centro y vuelve al salir; sin JS o con movimiento reducido es un botón normal.
 - **Secundario / fantasma:** sin relleno, texto `--fg` en mono mayúscula, subrayado o borde de 1 px en `--fg` al interactuar.
 - **Hover / Focus:** el foco usa el contorno global (2 px `--fg`, separación 3 px). El hover nunca es la única señal de que algo es interactivo.
 
@@ -259,11 +259,23 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 ### Portrait (Sobre mí)
 - Foto cuadrada de 20rem como máximo, esquinas rectas y contorno de 1 px en `--line`, con la etiqueta `FIG-01` debajo. A la derecha del texto desde 64rem; encima en móvil. La frase de entrada va en `text-2xl` 500; stack y redes, en mono mayúscula separados por «/» en `--muted`.
 
+### Contact Form
+- Va justo después de la frase de entrada de Contacto; WhatsApp y email quedan debajo, tras la anotación «O directamente».
+- **Campos:** nombre, email, tipo de proyecto (opcional), presupuesto aproximado (opcional) y mensaje. Desde 48rem van en dos columnas (nombre | email, tipo | presupuesto) y el mensaje a todo el ancho; en móvil, en una. Cada etiqueta es una anotación mono encima de su campo.
+- **Control:** esquina recta, borde de 1 px en `--fg` y fondo `--bg` al 82 % (calma la retícula detrás del texto). Placeholder en `--muted`. El tipo de proyecto es un `select` nativo sin apariencia del sistema, con la flecha SVG hacia abajo a la derecha. Foco: el contorno global.
+- **Error:** borde en `--accent` doblado hacia dentro (`box-shadow` inset de 1 px, sin mover el diseño) y `aria-invalid`. Debajo, el mensaje en `--fg` `text-sm` con el punto coral de 8 px como indicador de estado. El aviso general (`role="alert"`) usa el mismo punto, encima del botón.
+- **Envío:** el botón primario sólido («Enviar mensaje» + flecha), sin efecto magnético: un botón de enviar que se mueve no ayuda. Mientras verifica o envía queda al 60 % con `aria-disabled` y, a su lado, el estado en mono («Verificando…», «Enviando…»). El aviso de privacidad va al lado en `text-sm` `--muted`.
+- **Turnstile:** invisible salvo que Cloudflare necesite que la persona pulse algo; su script se descarga al primer foco en el formulario.
+- **Sin JS no se ofrece:** Turnstile lo necesita. En su lugar se ve un aviso en `--muted` que remite a WhatsApp y email, y el script lo retira al mostrar el formulario. El aviso de error del POST nativo (`#contacto-error`) solo se ve cuando la URL lo señala (`:target`).
+
 ### Contact Rows
 - Filas a todo el ancho, como las de proyecto: etiqueta mono (`WhatsApp`, `Email`) a la izquierda, dato en Space Grotesk 700 `text-2xl` (`text-xl` en móvil) y flecha. Toda la fila es el enlace; hover y foco subrayan el dato. Un canal sin dato (variables de build `PUBLIC_OWNER_WHATSAPP` y `PUBLIC_OWNER_EMAIL`) no se muestra.
 
+### Página de gracias
+- `/gracias/` y `/en/thanks/`, con la composición de la 404: titular display, `MSG-200` al margen, una frase y una sola pieza sólida («Volver al inicio») más el enlace mono «Ver proyectos». Lleva `noindex`.
+
 ### Lab Labels
-- Etiquetas de laboratorio (`src/components/LabLabel.astro`): `[ 01 / PROYECTOS ]`, `EXP-001`, `ERR-404`, `FIG-01`. Mono mayúscula en `--code`, en la columna de margen a la altura de su título. Decorativas (`aria-hidden`): su información ya está en el título cercano. Hacen un scramble breve al aparecer. Son el único texto en turquesa; los demás metadatos (números de fila, año, ficha) van en `--muted`.
+- Etiquetas de laboratorio (`src/components/LabLabel.astro`): `[ 01 / PROYECTOS ]`, `EXP-001`, `ERR-404`, `MSG-200`, `FIG-01`. Mono mayúscula en `--code`, en la columna de margen a la altura de su título. Decorativas (`aria-hidden`): su información ya está en el título cercano. Hacen un scramble breve al aparecer. Son el único texto en turquesa; los demás metadatos (números de fila, año, ficha) van en `--muted`.
 
 ### Portadas provisionales
 - Mientras no hay capturas reales (T30), cada proyecto lleva una portada 1600×1000 con el lenguaje del cuaderno: retícula de 64 px, etiqueta `EXP-00X`, punto de estado y el número en Monaspace Krypton 800. Alternan Carbón con punto Coral (impares) y Coral con Carbón (pares). Si cambia la paleta, se regeneran con ella.
