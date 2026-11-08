@@ -52,7 +52,7 @@
 - [x] T22 `contact-schema.ts` + tests unitarios (escribir tests primero) — *cuenta caracteres como Postgres; un test vigila que coincida con `supabase/leads.sql`*
 - [x] T23 `rate-limit.ts` + `turnstile.ts` + tests unitarios — *ventana deslizante con memoria acotada; Turnstile falla cerrado (red, timeout o respuesta inválida = no verificado)*
 - [x] T23b `notify.ts`: aviso por email de cada contacto con Resend + tests unitarios (plan §7) — *responder le escribe a quien envió el contacto; verificado con un envío real (entregado, reply-to correcto)*
-- [ ] T24 `api/contact.ts` + tests de integración (todos los códigos del plan)
+- [x] T24 `api/contact.ts` + tests de integración (todos los códigos del plan) — *hecha 2026-11-08: lógica en `contact-handler.ts` y guardado en `leads.ts`; contrato en el plan §7 (JSON y POST nativo con 303). 25 tests de integración + 6 unitarios de `leads` + e2e de la ruta en workerd. Logs del Worker activados (`observability`)*
 - [ ] T25 `ContactForm` con Turnstile, honeypot, estados y fallback sin JS; página `gracias`
 - [ ] T26 Test e2e 6; envío real verificado en `leads`
 

@@ -26,7 +26,7 @@
 **Cambio 2026-11-06 (T09c): de Vercel a Cloudflare Workers.** Vercel Hobby no admite uso comercial, y anunciar servicios lo es. Workers Free sí lo admite: el acuerdo de Cloudflare (12-sep-2025) y las condiciones de Developer Platform (28-sep-2026) no lo limitan, revisados el 2026-11-06. Límites del plan gratuito: 100 000 peticiones al día a código de servidor, 10 ms de CPU por petición (la espera de red no cuenta) y archivos estáticos gratis e ilimitados.
 - **Adaptador:** `@astrojs/cloudflare` 14.4.3 + `wrangler` 4.154.0 (dev), la versión exacta que fija `@cloudflare/vite-plugin`, así hay un solo wrangler en el árbol. Dependabot no propone wrangler: se alinea a mano al actualizar el adaptador, y `tests/unit/dependencies.test.ts` falla si las versiones se separan. Salen `@astrojs/vercel` y sus 3 `overrides`, y `npm audit` sigue en 0. Los scripts de instalación de `workerd` y `esbuild` no hacen falta con `ignore-scripts`: el binario llega como dependencia opcional por plataforma.
 - **`astro.config.mjs`:** `imageService: 'compile'` (sharp en el build, como antes, sin el servicio de pago Cloudflare Images; las 21 imágenes salen idénticas) y `session: false` (sin KV de sesiones, que el sitio no usa). Las páginas se prerenderizan en workerd.
-- **`wrangler.jsonc`:** nombre, `compatibility_date` fija y `assets.not_found_handling: "404-page"`. Sin ella, una ruta inexistente daría un 404 vacío. Mientras no haya rutas de servidor, el despliegue es solo estático, sin Worker.
+- **`wrangler.jsonc`:** nombre, `compatibility_date` fija y `assets.not_found_handling: "404-page"`. Sin ella, una ruta inexistente daría un 404 vacío. Desde T24 hay Worker por `/api/contact`: lo estático lo sigue sirviendo Cloudflare sin invocarlo, y solo llegan al Worker la API y las rutas inexistentes (Astro las responde con el `404.html` de los assets, con sus cabeceras). `observability` guarda sus logs 3 días (Workers Logs).
 - **Cabeceras:** pasan de `vercel.json` a `public/_headers` (§8).
 - **Node 26** en `.node-version`: lo leen Workers Builds (su versión por defecto es la 24) y la CI.
 - **Vitest** usa su propia config (`vitest/config`): `getViteConfig` de Astro cargaba el adaptador, que intentaba levantar el Worker dentro de Vitest.
@@ -157,6 +157,18 @@ Tabla `leads` en `supabase/leads.sql`, la fuente única del esquema: columnas co
 
 Respuestas del endpoint: `200` éxito (o honeypot lleno, sin guardar) · `400` validación · `403` Turnstile fallido · `405` método · `413` cuerpo > 10 KB · `429` límite (5 / 10 min por IP) · `500` genérico. Con `Accept: text/html` redirige a `/gracias` o vuelve con error; con JSON responde JSON.
 
+**Contrato del endpoint (T24, 2026-11-08).**
+- **Código:** la lógica está en `src/lib/contact-handler.ts`, que recibe el entorno, el límite de envíos y `fetch` como dependencias. `src/pages/api/contact.ts` solo lo conecta con el Worker y lee los secretos con `import { env } from 'cloudflare:workers'` (tipos mínimos en `src/env.d.ts`, sin `@cloudflare/workers-types`). El guardado está en `src/lib/leads.ts`.
+- **Orden:** método → tamaño → lectura del cuerpo → honeypot → Turnstile → Zod → límite de envíos → Supabase → aviso. Los envíos inválidos no gastan cupo del límite. Un token de Turnstile se gasta al verificarlo, así que el formulario debe renovarlo tras cualquier respuesta.
+- **Entrada:** `application/x-www-form-urlencoded`, `multipart/form-data` o un objeto JSON. Además de las 6 columnas llegan `cf-turnstile-response` (lo añade el widget) y el honeypot `website`; los nombres están en `src/lib/contact-fields.ts`. La IP sale de `CF-Connecting-IP`, que pone Cloudflare.
+- **JSON:** `{ ok: true }` o `{ ok: false, error, fields? }`, con `error` ∈ `invalid` · `verification` · `method` · `too_large` · `rate_limit` · `server`. `fields` lleva el código de cada campo inválido (`required`, `too_short`, `too_long`, `invalid`). El 429 añade `Retry-After` y el 405, `Allow: POST`.
+- **POST nativo (`Accept: text/html`):** siempre `303`. Si sale bien (o el honeypot está lleno), a `/gracias/` o `/en/thanks/`. Si hay error, a `/#contacto-error` o `/en/#contact-error`: un aviso genérico junto al formulario que T25 muestra con `:target`, sin JS.
+- **Configuración:** sin el secreto de Turnstile o sin los datos de Supabase, `500` y un log de error, no `403`. Si el aviso por email falla, responde igual con éxito y lo deja en los logs.
+- **Cabeceras propias:** `Cache-Control: no-store`, CSP `default-src 'none'`, `nosniff`, `X-Frame-Options`, HSTS, `Referrer-Policy` y CORP.
+- **Origen:** Astro (`security.checkOrigin`, activo por defecto) rechaza con `403` un formulario enviado desde otro sitio.
+- **Logs:** JSON con el evento y códigos, nunca datos del visitante ni su IP.
+- **Tamaño:** urlencoded infla cada byte no ASCII (`ñ` ocupa 6). Un mensaje real de 2000 caracteres cabe de sobra, pero T25 usará `enctype="multipart/form-data"`, que envía el texto tal cual.
+
 Variables (secretos del Worker con `npx wrangler secret put` o desde el panel; nunca `PUBLIC_` salvo la site key, que va como variable de build de Workers Builds porque se usa al compilar): `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`, `RESEND_API_KEY` y `CONTACT_NOTIFY_TO`.
 
 **Datos públicos del dueño (cambio 2026-11-07).** `PUBLIC_OWNER_NAME`, `PUBLIC_OWNER_WHATSAPP` y `PUBLIC_OWNER_EMAIL` alimentan «Sobre mí» y Contacto. No son secretos, porque la página los muestra, pero no van en git: así el repositorio puede seguir siendo público sin dejar el teléfono y el email en su historial. Van en `.env` en local y como variables de build de Workers Builds en producción. Se sustituyen al compilar y solo acaban en el HTML, no en el JavaScript del cliente. `src/lib/site.ts` los interpreta con `ownerFromEnv` y `src/lib/owner.ts` es el único que lee `import.meta.env`. Vacíos no se muestran, y así queda el build de CI.
@@ -186,8 +198,8 @@ Variables (secretos del Worker con `npx wrangler secret put` o desde el panel; n
 | Nivel | Qué |
 |---|---|
 | Estático | `astro check`, TS estricto |
-| Unitario | `contact-schema` (con su coherencia con `supabase/leads.sql`), `i18n/utils`, `clock`, `rate-limit`, `turnstile` |
-| Integración | Handler de `/api/contact` con Supabase y Turnstile simulados: 200, 400, 403, 405, 413, 429, honeypot |
+| Unitario | `contact-schema` (con su coherencia con `supabase/leads.sql`), `i18n/utils`, `clock`, `rate-limit`, `turnstile`, `notify`, `leads` |
+| Integración | Handler de `/api/contact` con Supabase, Turnstile y Resend simulados: 200, 400, 403, 405, 413, 429, 500, honeypot, en JSON y como POST nativo (`tests/integration/contact.test.ts`). Un e2e (`contact-api.spec.ts`) comprueba la ruta en workerd con casos que no llegan a la red |
 | E2E | 1) inicio carga · 2) tema persiste · 3) lista/cuadrícula · 4) caso de estudio y volver · 5) ES↔EN · 6) formulario (API simulada) · 7) reduced motion · 8) sin JS · 9) solo teclado |
 | Accesibilidad | axe (WCAG 2.2 AA + buenas prácticas) en inicio ES/EN, caso de estudio y 404 × 2 temas × móvil/escritorio; falla con cualquier violación seria o crítica. axe no calcula el contraste sobre el gradiente (lo deja incompleto): lo mide `gradient.spec.ts` en píxeles |
 | Rendimiento | Lighthouse CI sobre la URL de preview de Workers Builds |

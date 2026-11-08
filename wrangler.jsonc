@@ -9,6 +9,9 @@
   // previa por versión de cada rama. Fijadas aquí para que un despliegue no las apague.
   "workers_dev": true,
   "preview_urls": true,
+  // Guarda los logs de /api/contact (solo códigos de error, nunca datos del visitante) para
+  // consultarlos en el panel: Workers Logs, 3 días en el plan gratuito
+  "observability": { "enabled": true },
   "assets": {
     // Una ruta que no existe recibe 404.html con estado 404 (por defecto, un 404 vacío)
     "not_found_handling": "404-page"
