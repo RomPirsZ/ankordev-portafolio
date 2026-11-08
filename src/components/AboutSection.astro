@@ -1,11 +1,13 @@
 ---
-// Sobre mí (spec §5.6): foto, texto corto, stack y redes. El nombre y las redes
-// salen de src/lib/site.ts; lo que esté vacío no se muestra.
+// Sobre mí (spec §5.6): foto, texto corto, stack y redes. El nombre sale de la
+// variable de build PUBLIC_OWNER_NAME y las redes de src/lib/site.ts; lo que esté
+// vacío no se muestra.
 import { Image } from 'astro:assets';
 import Section from './Section.astro';
 import LabLabel from './LabLabel.astro';
 import { sectionId, sectionNumber, useTranslations, type Lang } from '../i18n/utils';
-import { OWNER_NAME, SOCIALS, STACK } from '../lib/site';
+import { SOCIALS, STACK } from '../lib/site';
+import { OWNER } from '../lib/owner';
 import portrait from '../assets/about/retrato.jpg';
 
 interface Props {
@@ -14,7 +16,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const name = OWNER_NAME.trim();
+const { name } = OWNER;
 const socials = SOCIALS.filter((social) => social.url);
 ---
 

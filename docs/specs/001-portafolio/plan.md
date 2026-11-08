@@ -159,6 +159,8 @@ Respuestas del endpoint: `200` éxito (o honeypot lleno, sin guardar) · `400` v
 
 Variables (secretos del Worker con `npx wrangler secret put` o desde el panel; nunca `PUBLIC_` salvo la site key, que va como variable de build de Workers Builds porque se usa al compilar): `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`, `RESEND_API_KEY` y `CONTACT_NOTIFY_TO`.
 
+**Datos públicos del dueño (cambio 2026-11-07).** `PUBLIC_OWNER_NAME`, `PUBLIC_OWNER_WHATSAPP` y `PUBLIC_OWNER_EMAIL` alimentan «Sobre mí» y Contacto. No son secretos, porque la página los muestra, pero no van en git: así el repositorio puede seguir siendo público sin dejar el teléfono y el email en su historial. Van en `.env` en local y como variables de build de Workers Builds en producción. Se sustituyen al compilar y solo acaban en el HTML, no en el JavaScript del cliente. `src/lib/site.ts` los interpreta con `ownerFromEnv` y `src/lib/owner.ts` es el único que lee `import.meta.env`. Vacíos no se muestran, y así queda el build de CI.
+
 **Claves de Turnstile por entorno.**
 - **Producción (Cloudflare):** las claves reales del widget `ankordev-portafolio contacto` (modo *Managed*). Su hostname es `ankordev-portafolio.ankordev.workers.dev` (el de Vercel se quitó al borrar ese proyecto, el 2026-11-06).
 - **Local y CI:** las claves oficiales de prueba de Cloudflare, que siempre pasan: *site key* `1x00000000000000000000AA` y *secret* `1x0000000000000000000000000000000AA`. Así ninguna clave real está en el disco ni en GitHub, y los e2e no necesitan secretos.

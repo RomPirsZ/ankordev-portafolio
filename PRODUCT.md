@@ -54,7 +54,7 @@ Lo creativo y lo técnico pesan lo mismo: el sitio es un **laboratorio creativo*
 - Proyectos 001 (restaurante/café), 002 (tienda online) y 003 (app de reservas para barbería) son proyectos propios por construir, no encargos de clientes.
 - Proyecto 004 **LEGO LBN**: sitio para una iglesia, encargo real que se entregará, todavía en curso.
 - No existen testimonios, logos de clientes, métricas de resultados ni prensa. **No se fabrican.** Los casos de estudio se cuentan como lo que son (Problema → Solución → Decisiones técnicas → Resultado).
-- Redes (GitHub, LinkedIn, Instagram) sin URL todavía en `src/lib/site.ts`. La foto de «Sobre mí» es real (2026-11-07); el nombre, el WhatsApp y el email públicos los completa el dueño en ese mismo archivo.
+- Redes (GitHub, LinkedIn e Instagram) configuradas en `src/lib/site.ts`. La foto de «Sobre mí» es real (2026-11-07). El nombre, el WhatsApp y el email públicos salen de las variables de build `PUBLIC_OWNER_*`: no van en git (plan §7).
 
 ## Product Principles
 

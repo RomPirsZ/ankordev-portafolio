@@ -1,11 +1,12 @@
 ---
 // Contacto (spec §5.7), maquetado de T12: WhatsApp y email. El formulario, con su
-// aviso de privacidad, llega con T25. Los canales salen de src/lib/site.ts; uno
-// vacío no se muestra.
+// aviso de privacidad, llega con T25. Los canales salen de las variables de build
+// PUBLIC_OWNER_WHATSAPP y PUBLIC_OWNER_EMAIL; uno vacío no se muestra.
 import Section from './Section.astro';
 import ArrowIcon from './ArrowIcon.astro';
 import { sectionId, sectionNumber, useTranslations, type Lang } from '../i18n/utils';
 import { contactChannels } from '../lib/site';
+import { OWNER } from '../lib/owner';
 
 interface Props {
   lang: Lang;
@@ -13,7 +14,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const channels = contactChannels();
+const channels = contactChannels(OWNER);
 ---
 
 <Section id={sectionId('contact', lang)} number={sectionNumber('contact')} title={t('contact.title')}>

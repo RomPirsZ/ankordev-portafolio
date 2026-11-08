@@ -254,7 +254,7 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 - Foto cuadrada de 20rem como máximo, esquinas rectas y contorno de 1 px en `--line`, con la etiqueta `FIG-01` debajo. A la derecha del texto desde 64rem; encima en móvil. La frase de entrada va en `text-2xl` 500; stack y redes, en mono mayúscula separados por «/» en `--muted`.
 
 ### Contact Rows
-- Filas a todo el ancho, como las de proyecto: etiqueta mono (`WhatsApp`, `Email`) a la izquierda, dato en Space Grotesk 700 `text-2xl` (`text-xl` en móvil) y flecha. Toda la fila es el enlace; hover y foco subrayan el dato. Un canal sin dato en `src/lib/site.ts` no se muestra.
+- Filas a todo el ancho, como las de proyecto: etiqueta mono (`WhatsApp`, `Email`) a la izquierda, dato en Space Grotesk 700 `text-2xl` (`text-xl` en móvil) y flecha. Toda la fila es el enlace; hover y foco subrayan el dato. Un canal sin dato (variables de build `PUBLIC_OWNER_WHATSAPP` y `PUBLIC_OWNER_EMAIL`) no se muestra.
 
 ### Lab Labels
 - Etiquetas de laboratorio (`src/components/LabLabel.astro`): `[ 01 / PROYECTOS ]`, `EXP-001`, `ERR-404`, `FIG-01`. Mono mayúscula en `--code`, en la columna de margen a la altura de su título. Decorativas (`aria-hidden`): su información ya está en el título cercano. Hacen un scramble breve al aparecer. Son el único texto en turquesa; los demás metadatos (números de fila, año, ficha) van en `--muted`.

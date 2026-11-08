@@ -1,6 +1,20 @@
 // Secciones del inicio (spec §5, T12): Servicios, Proceso, Sobre mí, Contacto y el CTA del hero.
+import { readFileSync } from 'node:fs';
+import { parseEnv } from 'node:util';
 import { test, expect, type Page } from '@playwright/test';
-import { STACK, contactChannels } from '../../src/lib/site';
+import { STACK, contactChannels, ownerFromEnv } from '../../src/lib/site';
+
+// Los datos del dueño que vio el build. Al compilar, el adaptador de Cloudflare
+// vuelca `.env` sobre el entorno, así que `.env` manda. En CI y en Workers Builds
+// no existe y se usa el entorno (en CI, vacío: no se muestra nada).
+function readDotEnv(): Record<string, string | undefined> {
+  try {
+    return parseEnv(readFileSync('.env', 'utf8'));
+  } catch {
+    return {};
+  }
+}
+const OWNER = ownerFromEnv({ ...process.env, ...readDotEnv() });
 
 const PACKAGES = {
   '/': [
@@ -80,13 +94,17 @@ test('Sobre mí tiene foto con texto alternativo y el stack', async ({ page }) =
   await page.goto('/');
   const about = page.locator('#sobre-mi');
   await expect(about.getByRole('img')).toHaveAttribute('alt', /^Retrato de/);
+  if (OWNER.name) {
+    expect(await about.getByRole('img').getAttribute('alt')).toContain(OWNER.name);
+    await expect(about.locator('.about-intro')).toContainText(OWNER.name);
+  }
   await expect(about.locator('.about-list').first().locator('li')).toHaveText(STACK);
 });
 
 test('Contacto enlaza solo los canales configurados', async ({ page }) => {
   await page.goto('/');
   const links = page.locator('#contacto a[data-channel]');
-  const channels = contactChannels();
+  const channels = contactChannels(OWNER);
   await expect(links).toHaveCount(channels.length);
   for (const [i, channel] of channels.entries()) await expect(links.nth(i)).toHaveAttribute('href', channel.href);
 });
