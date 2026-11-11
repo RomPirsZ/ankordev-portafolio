@@ -1,14 +1,18 @@
 // Handler de /api/contact con Supabase, Turnstile y Resend simulados (plan §9):
-// 200, 400, 403, 405, 413, 429, 500 y honeypot, en JSON y como POST nativo (HTML).
+// 200, 400, 403, 405, 413, 429, 500 y honeypot, en JSON y como POST nativo (HTML), y el tope
+// de avisos por email (T26f).
 import { describe, expect, it, vi } from 'vitest';
 import { HONEYPOT_FIELD, MAX_BODY_BYTES, TURNSTILE_FIELD } from '../../src/lib/contact-fields';
 import { handleContact, type ContactLog } from '../../src/lib/contact-handler';
-import { RESEND_API_URL } from '../../src/lib/notify';
+import { RECENT_LEADS_RPC } from '../../src/lib/leads';
+import { NOTIFY_CAP_24H, RESEND_API_URL } from '../../src/lib/notify';
 import { createRateLimiter } from '../../src/lib/rate-limit';
 import { SITEVERIFY_URL } from '../../src/lib/turnstile';
 
 const ENDPOINT = 'https://ankordev.example/api/contact';
 const SUPABASE_URL = 'https://proyecto.supabase.co';
+const LEADS_URL = `${SUPABASE_URL}/rest/v1/leads`;
+const RECENT_URL = `${SUPABASE_URL}/rest/v1/rpc/${RECENT_LEADS_RPC}`;
 const ENV = {
   SUPABASE_URL,
   SUPABASE_ANON_KEY: 'sb_publishable_prueba',
@@ -30,14 +34,17 @@ const VALID = {
 interface Services {
   turnstile?: unknown;
   supabase?: number | Error;
+  /** Contactos de las últimas 24 h que devuelve el contador, o el estado HTTP de su fallo. */
+  recent?: number | { status: number };
   resend?: number;
 }
 
 /** fetch simulado que responde como cada servicio; cualquier otra URL hace fallar el test. */
-function services({ turnstile = { success: true }, supabase = 201, resend = 200 }: Services = {}) {
+function services({ turnstile = { success: true }, supabase = 201, recent = 1, resend = 200 }: Services = {}) {
   return vi.fn<typeof globalThis.fetch>(async (input) => {
     const url = String(input);
     if (url === SITEVERIFY_URL) return Response.json(turnstile);
+    if (url === RECENT_URL) return typeof recent === 'number' ? Response.json(recent) : new Response('{"code":"PGRST202"}', recent);
     if (url.startsWith(SUPABASE_URL)) {
       if (supabase instanceof Error) throw supabase;
       return new Response(null, { status: supabase });
@@ -92,7 +99,7 @@ describe('200: envío válido', () => {
     expect(verifyBody.get('remoteip')).toBe(IP);
 
     // A Supabase solo llegan las columnas del formulario: ni el token ni el honeypot
-    const [, saveInit] = callsTo(fetch, SUPABASE_URL)[0]!;
+    const [, saveInit] = callsTo(fetch, LEADS_URL)[0]!;
     expect(JSON.parse(saveInit!.body as string)).toEqual({
       name: 'Ana Pérez',
       email: 'ana@example.com',
@@ -106,10 +113,10 @@ describe('200: envío válido', () => {
     expect(JSON.parse(notifyInit!.body as string)).toMatchObject({ to: ['yo@example.com'], reply_to: 'ana@example.com' });
   });
 
-  it('el orden es Turnstile → Supabase → Resend', async () => {
+  it('el orden es Turnstile → Supabase (guardar y contar) → Resend', async () => {
     const { fetch, send } = setup();
     await send(jsonRequest(VALID));
-    expect(fetch.mock.calls.map(([url]) => String(url).split('?')[0])).toEqual([SITEVERIFY_URL, `${SUPABASE_URL}/rest/v1/leads`, RESEND_API_URL]);
+    expect(fetch.mock.calls.map(([url]) => String(url).split('?')[0])).toEqual([SITEVERIFY_URL, LEADS_URL, RECENT_URL, RESEND_API_URL]);
   });
 
   it('un POST nativo del formulario redirige con 303 a la página de gracias de su idioma', async () => {
@@ -129,7 +136,7 @@ describe('200: envío válido', () => {
     const response = await send(new Request(ENDPOINT, { method: 'POST', headers: { Accept: 'application/json', 'CF-Connecting-IP': IP }, body: form }));
 
     expect(response.status).toBe(200);
-    expect(callsTo(fetch, SUPABASE_URL)).toHaveLength(1);
+    expect(callsTo(fetch, LEADS_URL)).toHaveLength(1);
   });
 
   it('si el aviso por email falla, el contacto ya está guardado: responde 200 y lo deja en los logs', async () => {
@@ -163,7 +170,7 @@ describe('400: datos inválidos', () => {
       error: 'invalid',
       fields: { name: 'required', email: 'invalid', message: 'too_short' },
     });
-    expect(callsTo(fetch, SUPABASE_URL)).toHaveLength(0);
+    expect(callsTo(fetch, LEADS_URL)).toHaveLength(0);
     expect(callsTo(fetch, RESEND_API_URL)).toHaveLength(0);
   });
 
@@ -211,7 +218,7 @@ describe('403: Turnstile', () => {
     const response = await send(jsonRequest(VALID));
 
     expect(response.status).toBe(403);
-    expect(callsTo(fetch, SUPABASE_URL)).toHaveLength(0);
+    expect(callsTo(fetch, LEADS_URL)).toHaveLength(0);
     // Inventar un token no cuesta nada: si dejara un log, gastaría el cupo de Workers Logs
     expect(log).not.toHaveBeenCalled();
   });
@@ -289,7 +296,7 @@ describe('429: límite de envíos', () => {
     expect(blocked.status).toBe(429);
     expect(await blocked.json()).toEqual({ ok: false, error: 'rate_limit' });
     expect(Number(blocked.headers.get('retry-after'))).toBeGreaterThan(0);
-    expect(callsTo(fetch, SUPABASE_URL)).toHaveLength(5);
+    expect(callsTo(fetch, LEADS_URL)).toHaveLength(5);
 
     // Otra IP no se ve afectada
     expect((await send(jsonRequest(VALID, { 'CF-Connecting-IP': '198.51.100.20' }))).status).toBe(200);
@@ -327,7 +334,7 @@ describe('500: fallo del servidor', () => {
   it('sin la configuración de Supabase no se intenta guardar', async () => {
     const { fetch, log, send } = setup({ env: { ...ENV, SUPABASE_URL: undefined } });
     expect((await send(jsonRequest(VALID))).status).toBe(500);
-    expect(callsTo(fetch, SUPABASE_URL)).toHaveLength(0);
+    expect(callsTo(fetch, LEADS_URL)).toHaveLength(0);
     expect(log).toHaveBeenCalledWith('error', 'save-failed', { error: 'missing-config' });
   });
 
@@ -364,6 +371,46 @@ describe('honeypot', () => {
   it('vacío o con espacios no cuenta como relleno', async () => {
     const { send } = setup();
     expect((await send(jsonRequest({ ...VALID, [HONEYPOT_FIELD]: '  ' }))).status).toBe(200);
+  });
+});
+
+// Auditoría 2026-11-10: sin tope, quien consiguiera tokens de Turnstile válidos podía agotar
+// la cuota diaria de Resend y dejar sin aviso a los clientes reales
+describe('tope de avisos por email (T26f)', () => {
+  it(`hasta ${NOTIFY_CAP_24H} contactos en 24 horas, cada uno avisa`, async () => {
+    const { fetch, log, send } = setup({ recent: NOTIFY_CAP_24H });
+    expect((await send(jsonRequest(VALID))).status).toBe(200);
+    expect(callsTo(fetch, RESEND_API_URL)).toHaveLength(1);
+    expect(log).not.toHaveBeenCalled();
+  });
+
+  it('pasado el tope, el contacto se guarda y el visitante ve éxito, pero no se envía email', async () => {
+    const { fetch, log, send } = setup({ recent: NOTIFY_CAP_24H + 1 });
+    const json = await send(jsonRequest(VALID));
+    expect(json.status).toBe(200);
+    expect(await json.json()).toEqual({ ok: true });
+
+    const form = await send(formRequest(VALID));
+    expect(form.status).toBe(303);
+    expect(form.headers.get('location')).toBe('/gracias/');
+
+    expect(callsTo(fetch, LEADS_URL)).toHaveLength(2);
+    expect(callsTo(fetch, RESEND_API_URL)).toHaveLength(0);
+    expect(log).toHaveBeenCalledWith('warn', 'notify-capped', { recent: NOTIFY_CAP_24H + 1 });
+  });
+
+  it('si no se puede contar (por ejemplo, falta la función en Supabase), avisa igual y lo registra', async () => {
+    const { fetch, log, send } = setup({ recent: { status: 404 } });
+    expect((await send(jsonRequest(VALID))).status).toBe(200);
+    expect(callsTo(fetch, RESEND_API_URL)).toHaveLength(1);
+    expect(log).toHaveBeenCalledWith('warn', 'count-failed', { error: 'http-404' });
+  });
+
+  it('si no se guardó, ni cuenta ni avisa', async () => {
+    const { fetch, send } = setup({ supabase: 500 });
+    expect((await send(jsonRequest(VALID))).status).toBe(500);
+    expect(callsTo(fetch, RECENT_URL)).toHaveLength(0);
+    expect(callsTo(fetch, RESEND_API_URL)).toHaveLength(0);
   });
 });
 

@@ -66,7 +66,7 @@ Auditoría de solo código fuente con la skill security-audit: 0 hallazgos confi
 - [x] T26c Logs sin coste para el atacante: sin log del honeypot ni de Turnstile fallido, `invocation_logs: false` — *un test vigila `wrangler.jsonc`; el plan §7 explica qué se registra y por qué*
 - [x] T26d Cabeceras de seguridad también en las respuestas que genera el Worker (`src/middleware.ts`) — */_image servía el SVG sin CSP ni `nosniff`; lista única en `server-headers.ts`, que también usa `/api/contact`; e2e sobre `/_image` y `/_server-islands`*
 - [x] T26e Límite de envíos por prefijo /64 en IPv6 (`rateLimitKey`) — *un cliente IPv6 suele tener el /64 entero; una IPv4 escrita como IPv6 cuenta como la IPv4*
-- [ ] T26f Tope compartido de envíos y de avisos por email — *pendiente de decisión: el binding Rate Limiting solo admite periodos de 10 o 60 s*
+- [x] T26f Tope de avisos por email: como mucho 80 en 24 horas, contados en Supabase (`leads_count_24h()`) — *el binding Rate Limiting no servía (periodos de 10 o 60 s, por ubicación); pasado el tope se guarda sin email; si no se puede contar, se avisa igual. La función la crea el dueño en el SQL Editor*
 
 ## Fase 5 — Proyectos (objetivo: 5–9 nov)
 

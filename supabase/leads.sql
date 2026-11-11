@@ -37,3 +37,23 @@ comment on policy "anon solo inserta" on public.leads is
 --       char_length(email) <= 254
 --       and email ~* '^[^@\s]+@[^@\s.]+(?:\.[^@\s.]+)+$'
 --     );
+
+-- Tope de avisos por email (T26f, 2026-11-10): /api/contact pregunta cuántos contactos hubo
+-- en las últimas 24 horas y, pasado el tope (src/lib/notify.ts), guarda sin enviar email.
+-- security definer porque anon no puede leer leads: la función solo devuelve el número, sin
+-- ninguna fila. Si el Security Advisor avisa de una función security definer que anon puede
+-- ejecutar, es intencional por eso mismo. search_path vacío y nombres con esquema.
+create or replace function public.leads_count_24h()
+  returns integer
+  language sql
+  stable
+  security definer
+  set search_path = ''
+  as $$
+    select count(*)::integer
+    from public.leads
+    where created_at > now() - interval '24 hours'
+  $$;
+
+revoke execute on function public.leads_count_24h() from public, authenticated;
+grant execute on function public.leads_count_24h() to anon;

@@ -42,3 +42,34 @@ export async function saveLead(lead: Contact, { url, key, fetch = globalThis.fet
 
   return response.ok ? { success: true } : { success: false, error: `http-${response.status}` };
 }
+
+/** Función de supabase/leads.sql: cuántos contactos se guardaron en las últimas 24 horas. */
+export const RECENT_LEADS_RPC = 'leads_count_24h';
+
+export type CountResult = { count: number } | { error: string };
+
+/**
+ * Cuenta los contactos de las últimas 24 horas (incluido el que se acaba de guardar) para el
+ * tope de avisos por email (T26f). anon no puede leer `leads`: la función solo devuelve el
+ * número. Espera menos que el guardado, porque solo decide si se avisa.
+ */
+export async function countRecentLeads({ url, key, fetch = globalThis.fetch, timeoutMs = 3000 }: Options): Promise<CountResult> {
+  if (!url || !key) return { error: 'missing-config' };
+
+  let response: Response;
+  try {
+    response = await fetch(`${url.replace(/\/+$/, '')}/rest/v1/rpc/${RECENT_LEADS_RPC}`, {
+      method: 'POST',
+      headers: { apikey: key, 'Content-Type': 'application/json' },
+      body: '{}',
+      signal: AbortSignal.timeout(timeoutMs),
+    });
+  } catch (error) {
+    return { error: isTimeout(error) ? 'timeout' : 'network-error' };
+  }
+  if (!response.ok) return { error: `http-${response.status}` };
+
+  // PostgREST devuelve el número suelto, sin envoltorio
+  const count: unknown = await response.json().catch(() => null);
+  return typeof count === 'number' && Number.isInteger(count) && count >= 0 ? { count } : { error: 'invalid-response' };
+}

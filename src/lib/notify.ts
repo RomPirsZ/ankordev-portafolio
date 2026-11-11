@@ -8,6 +8,14 @@ export const RESEND_API_URL = 'https://api.resend.com/emails';
 /** Remitente de pruebas de Resend: sin dominio propio verificado, solo entrega en el email de la cuenta. */
 export const DEFAULT_FROM = 'Portafolio [A]nkordev <onboarding@resend.dev>';
 
+/**
+ * Avisos como máximo en 24 horas (T26f). Resend gratis admite 100 emails al día y 3 000 al
+ * mes: 80 deja margen para pruebas, y 80 × 31 días = 2 480 tampoco llega al tope mensual.
+ * Pasado el tope, el contacto se guarda igual pero sin email: así un bot con tokens válidos
+ * no puede agotar la cuota y dejar sin aviso a los clientes reales.
+ */
+export const NOTIFY_CAP_24H = 80;
+
 const SUBJECT_MAX = 120;
 
 export interface NotifyResult {

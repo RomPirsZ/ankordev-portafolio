@@ -1,13 +1,14 @@
 import { DEFAULT_LANG, isLang, localizePath, sectionId, type Lang } from '../i18n/utils';
 import { HONEYPOT_FIELD, MAX_BODY_BYTES, TURNSTILE_FIELD } from './contact-fields';
 import { parseContact, type ContactErrorCode, type ContactField } from './contact-schema';
-import { saveLead } from './leads';
-import { notifyNewLead } from './notify';
+import { countRecentLeads, saveLead } from './leads';
+import { NOTIFY_CAP_24H, notifyNewLead } from './notify';
 import { rateLimitKey, type RateLimitResult } from './rate-limit';
 import { SERVER_SECURITY_HEADERS } from './server-headers';
 import { verifyTurnstile } from './turnstile';
 
-// POST /api/contact (plan §7): Turnstile → Zod → límite de envíos → Supabase → aviso por email.
+// POST /api/contact (plan §7): Turnstile → Zod → límite de envíos → Supabase → tope de avisos →
+// aviso por email.
 // Recibe el entorno, el límite, fetch y los logs como dependencias, para probarse sin red ni
 // Worker; src/pages/api/contact.ts solo lo conecta con el runtime.
 
@@ -42,8 +43,8 @@ export interface ContactDeps {
   fetch?: typeof globalThis.fetch;
   /**
    * Solo códigos de error, nunca datos del visitante (constitución V y X). Solo se registra
-   * lo que pide intervención (configuración, Supabase, Resend) y el límite de envíos, que
-   * exige un token de Turnstile válido.
+   * lo que pide intervención (configuración, Supabase, Resend, el contador de avisos) y los
+   * topes (límite de envíos y de avisos), que exigen un token de Turnstile válido.
    */
   log?: ContactLog;
 }
@@ -103,6 +104,15 @@ export async function handleContact(request: Request, { env, limiter, fetch = gl
   if (!saved.success) {
     log('error', 'save-failed', { error: saved.error });
     return reply({ ok: false, error: 'server' });
+  }
+
+  // Tope de avisos (T26f): pasado NOTIFY_CAP_24H en 24 horas, el contacto queda guardado sin
+  // email. Si no se puede contar, se avisa igual: un fallo del contador no quita avisos.
+  const recent = await countRecentLeads({ url: setting('SUPABASE_URL'), key: setting('SUPABASE_ANON_KEY'), fetch });
+  if ('error' in recent) log('warn', 'count-failed', { error: recent.error });
+  else if (recent.count > NOTIFY_CAP_24H) {
+    log('warn', 'notify-capped', { recent: recent.count });
+    return reply({ ok: true });
   }
 
   // Best effort: el contacto ya está guardado, así que un fallo aquí solo va a los logs
