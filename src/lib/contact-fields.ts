@@ -17,8 +17,13 @@ export const CONTACT_LIMITS = {
   message: { min: 10, max: 2000 },
 } as const;
 
-/** El mismo patrón que el check de `email` en supabase/leads.sql (allí con `~*`). */
-export const EMAIL_PATTERN = /^[^@\s]+@[^@\s]+\.[^@\s]+$/i;
+/**
+ * El mismo patrón que el check de `email` en supabase/leads.sql (allí con `~*`). Las partes
+ * del dominio no admiten puntos y van separadas por uno: así no hay dos cuantificadores que
+ * compitan por el mismo texto y la comprobación es lineal (con `[^@\s]+\.[^@\s]+` un dominio
+ * lleno de puntos tardaba un tiempo cuadrático; auditoría de seguridad 2026-11-10).
+ */
+export const EMAIL_PATTERN = /^[^@\s]+@[^@\s.]+(?:\.[^@\s.]+)+$/i;
 
 /** Códigos estables: el endpoint los devuelve y el formulario los traduce en src/i18n. */
 export type ContactErrorCode = 'required' | 'too_short' | 'too_long' | 'invalid';

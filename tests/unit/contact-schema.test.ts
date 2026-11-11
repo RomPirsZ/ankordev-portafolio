@@ -5,6 +5,7 @@ import {
   CONTACT_LIMITS,
   CONTACT_PROJECT_TYPES,
   EMAIL_PATTERN,
+  contactSchema,
   parseContact,
 } from '../../src/lib/contact-schema';
 import { LANGS } from '../../src/i18n/utils';
@@ -102,6 +103,29 @@ describe('parseContact', () => {
       expect(errorsOf({ ...valid, email }), email).toEqual({ email: 'invalid' });
     }
     expect(parseContact({ ...valid, email: 'Ana.Perez+web@Example.COM' }).success).toBe(true);
+    expect(parseContact({ ...valid, email: 'ana@correo.example.co.uk' }).success).toBe(true);
+  });
+
+  it('el dominio del email no admite puntos seguidos, al principio ni al final', () => {
+    for (const email of ['ana@example..com', 'ana@.example.com', 'ana@example.com.', 'ana@.']) {
+      expect(errorsOf({ ...valid, email }), email).toEqual({ email: 'invalid' });
+    }
+  });
+
+  // Auditoría 2026-11-10: con el patrón anterior, un dominio lleno de puntos que no termina
+  // de casar tardaba un tiempo cuadrático. El nuevo es lineal: 100 000 caracteres, al momento.
+  it('el patrón del email es lineal ante un dominio malicioso', () => {
+    for (const email of [`a@${'.'.repeat(100_000)}@`, `a@${'b.'.repeat(50_000)}@`, `a@b${'.b'.repeat(50_000)}.`]) {
+      const start = performance.now();
+      expect(EMAIL_PATTERN.test(email)).toBe(false);
+      expect(performance.now() - start).toBeLessThan(500);
+    }
+  });
+
+  it('un email demasiado largo solo da too_long: el patrón ya no se evalúa', () => {
+    const result = contactSchema.safeParse({ ...valid, email: `a@${'.'.repeat(9_000)}@` });
+    const issues = result.error?.issues.filter((issue) => issue.path[0] === 'email').map((issue) => issue.message);
+    expect(issues).toEqual(['too_long']);
   });
 
   it('el tipo de proyecto y el idioma solo admiten sus valores', () => {

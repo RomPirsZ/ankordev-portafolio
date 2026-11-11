@@ -58,6 +58,15 @@
 
 **Hecho cuando:** todos los tests del contacto pasan y un envío real aparece en la tabla.
 
+### Correcciones de la auditoría de seguridad (run-1, 2026-11-10)
+
+Auditoría de solo código fuente con la skill security-audit: 0 hallazgos confirmados, 6 pistas por validar y notas de endurecimiento. Informe fuera del repo (`~/security-audit-skill/sdd-portafolio/run-1/`).
+
+- [x] T26b Patrón del email lineal y corte por longitud antes de evaluarlo — *el patrón anterior tardaba un tiempo cuadrático con un dominio lleno de puntos; `abort` en el límite de longitud; `leads.sql` con el `alter` para la tabla ya creada (lo aplica el dueño en Supabase)*
+- [ ] T26c Logs sin coste para el atacante: sin log del honeypot ni de Turnstile fallido, `invocation_logs: false`
+- [ ] T26d Cabeceras de seguridad también en las respuestas que genera el Worker (`src/middleware.ts`)
+- [ ] T26e Tope compartido de envíos y de avisos por email — *pendiente de decisión: el binding Rate Limiting solo admite periodos de 10 o 60 s*
+
 ## Fase 5 — Proyectos (objetivo: 5–9 nov)
 
 - [x] T27 Proyecto 001 restaurante — *repo propio en `../restaurante/` (café ficticio «Molienda», Mérida), con su spec, plan y tareas en `docs/specs/001-sitio/`; M00–M10 hechas (revisión final de impeccable aprobada, `DESIGN.md`, Lighthouse móvil 99–100/100/100/100); sin despliegue hasta nuevo aviso; el caso de estudio va en T30*

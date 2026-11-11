@@ -28,7 +28,9 @@ function text({ min, max }: { min?: number; max: number }) {
     // Postgres no admite el carácter nulo en un text: fallaría al insertar
     .refine((value) => !value.includes('\u0000'), { error: 'invalid' })
     .refine((value) => min === undefined || chars(value) >= min, { error: 'too_short' })
-    .refine((value) => chars(value) <= max, { error: 'too_long' });
+    // abort: un texto demasiado largo no pasa a las comprobaciones siguientes (el patrón del
+    // email no llega a ejecutarse sobre los ~10 KB que admite el cuerpo)
+    .refine((value) => chars(value) <= max, { error: 'too_long', abort: true });
 }
 
 const required = <T extends z.ZodType>(schema: T) => z.preprocess(blankToUndefined, schema);
