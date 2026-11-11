@@ -10,8 +10,10 @@
   "workers_dev": true,
   "preview_urls": true,
   // Guarda los logs de /api/contact (solo códigos de error, nunca datos del visitante) para
-  // consultarlos en el panel: Workers Logs, 3 días en el plan gratuito
-  "observability": { "enabled": true },
+  // consultarlos en el panel: Workers Logs, 3 días en el plan gratuito. Sin los logs de
+  // invocación, que Cloudflare escribe por cada petición con la URL, las cabeceras y la IP:
+  // incumplirían esa promesa y gastarían el cupo diario de eventos (auditoría 2026-11-10)
+  "observability": { "enabled": true, "logs": { "invocation_logs": false } },
   "assets": {
     // Una ruta que no existe recibe 404.html con estado 404 (por defecto, un 404 vacío)
     "not_found_handling": "404-page"

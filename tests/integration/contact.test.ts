@@ -206,13 +206,14 @@ describe('403: Turnstile', () => {
     expect(fetch).not.toHaveBeenCalled();
   });
 
-  it('un token que Cloudflare no valida no guarda nada y va a los logs', async () => {
+  it('un token que Cloudflare no valida no guarda nada ni escribe en los logs', async () => {
     const { fetch, log, send } = setup({ turnstile: { success: false, 'error-codes': ['timeout-or-duplicate'] } });
     const response = await send(jsonRequest(VALID));
 
     expect(response.status).toBe(403);
     expect(callsTo(fetch, SUPABASE_URL)).toHaveLength(0);
-    expect(log).toHaveBeenCalledWith('warn', 'turnstile-failed', { codes: ['timeout-or-duplicate'] });
+    // Inventar un token no cuesta nada: si dejara un log, gastaría el cupo de Workers Logs
+    expect(log).not.toHaveBeenCalled();
   });
 
   it('se verifica antes de validar: un envío inválido sin token también es 403', async () => {
@@ -348,7 +349,7 @@ describe('honeypot', () => {
     expect(form.headers.get('location')).toBe('/gracias/');
 
     expect(fetch).not.toHaveBeenCalled();
-    expect(log).toHaveBeenCalledWith('warn', 'honeypot');
+    expect(log).not.toHaveBeenCalled();
   });
 
   it('vacío o con espacios no cuenta como relleno', async () => {
@@ -364,5 +365,17 @@ describe('logs', () => {
     await send(jsonRequest({ ...VALID, [HONEYPOT_FIELD]: 'x' }));
     const written = JSON.stringify(log.mock.calls);
     for (const value of ['Ana', 'ana@example.com', 'café', IP]) expect(written).not.toContain(value);
+  });
+
+  // Auditoría 2026-11-10: lo que no cuesta nada (honeypot, sin token, token inventado) no deja
+  // log, así no se puede agotar el cupo diario de Workers Logs que guarda los fallos reales
+  it('lo que no le cuesta nada a quien ataca no deja log', async () => {
+    const { log, send } = setup({ turnstile: { success: false, 'error-codes': ['invalid-input-response'] } });
+    const withoutToken: Record<string, string> = { ...VALID };
+    delete withoutToken[TURNSTILE_FIELD];
+    await send(jsonRequest({ ...VALID, [HONEYPOT_FIELD]: 'x' }));
+    await send(jsonRequest(withoutToken));
+    await send(jsonRequest(VALID));
+    expect(log).not.toHaveBeenCalled();
   });
 });

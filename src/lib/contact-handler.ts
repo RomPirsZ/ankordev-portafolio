@@ -47,7 +47,11 @@ export interface ContactDeps {
   env: Record<string, unknown>;
   limiter: { check(key: string): RateLimitResult };
   fetch?: typeof globalThis.fetch;
-  /** Solo códigos de error, nunca datos del visitante (constitución V y X). */
+  /**
+   * Solo códigos de error, nunca datos del visitante (constitución V y X). Solo se registra
+   * lo que pide intervención (configuración, Supabase, Resend) y el límite de envíos, que
+   * exige un token de Turnstile válido.
+   */
   log?: ContactLog;
 }
 
@@ -78,11 +82,10 @@ export async function handleContact(request: Request, { env, limiter, fetch = gl
   if (!raw) return reply({ ok: false, error: 'invalid' });
   if (isLang(raw['lang'])) lang = raw['lang'];
 
-  // Al bot se le responde como si hubiera funcionado, sin guardar ni avisar
-  if (isFilled(raw[HONEYPOT_FIELD])) {
-    log('warn', 'honeypot');
-    return reply({ ok: true });
-  }
+  // Al bot se le responde como si hubiera funcionado, sin guardar ni avisar. Sin log: el
+  // honeypot y un token ausente o rechazado no le cuestan nada a quien ataca, y cada log
+  // gastaría del cupo diario de Workers Logs, donde están los fallos que sí importan.
+  if (isFilled(raw[HONEYPOT_FIELD])) return reply({ ok: true });
 
   const human = await verifyTurnstile(raw[TURNSTILE_FIELD], { secret: setting('TURNSTILE_SECRET_KEY'), remoteip: ip || undefined, fetch });
   if (!human.success) {
@@ -90,7 +93,6 @@ export async function handleContact(request: Request, { env, limiter, fetch = gl
       log('error', 'turnstile-misconfigured', { codes: human.errorCodes });
       return reply({ ok: false, error: 'server' });
     }
-    log('warn', 'turnstile-failed', { codes: human.errorCodes });
     return reply({ ok: false, error: 'verification' });
   }
 

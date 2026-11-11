@@ -63,7 +63,7 @@
 Auditoría de solo código fuente con la skill security-audit: 0 hallazgos confirmados, 6 pistas por validar y notas de endurecimiento. Informe fuera del repo (`~/security-audit-skill/sdd-portafolio/run-1/`).
 
 - [x] T26b Patrón del email lineal y corte por longitud antes de evaluarlo — *el patrón anterior tardaba un tiempo cuadrático con un dominio lleno de puntos; `abort` en el límite de longitud; `leads.sql` con el `alter` para la tabla ya creada (lo aplica el dueño en Supabase)*
-- [ ] T26c Logs sin coste para el atacante: sin log del honeypot ni de Turnstile fallido, `invocation_logs: false`
+- [x] T26c Logs sin coste para el atacante: sin log del honeypot ni de Turnstile fallido, `invocation_logs: false` — *un test vigila `wrangler.jsonc`; el plan §7 explica qué se registra y por qué*
 - [ ] T26d Cabeceras de seguridad también en las respuestas que genera el Worker (`src/middleware.ts`)
 - [ ] T26e Tope compartido de envíos y de avisos por email — *pendiente de decisión: el binding Rate Limiting solo admite periodos de 10 o 60 s*
 
