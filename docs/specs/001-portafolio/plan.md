@@ -31,11 +31,19 @@
 - **Node 26** en `.node-version`: lo leen Workers Builds (su versión por defecto es la 24) y la CI.
 - **Vitest** usa su propia config (`vitest/config`): `getViteConfig` de Astro cargaba el adaptador, que intentaba levantar el Worker dentro de Vitest.
 - **`astro preview`** corre ahora en workerd y aplica `_headers` igual que producción. Los e2e ya no inyectan las cabeceras: comprueban las que el servidor envía de verdad, y todo el e2e corre bajo la CSP real.
-- **Despliegue:** Workers Builds conectado al repositorio, con build `npm run build` y deploy `npx wrangler deploy`. Las ramas que no son `main` suben versiones con URL de preview. Producción: **https://ankordev-portafolio.ankordev.workers.dev** (subdominio de cuenta `ankordev`). `workers_dev` y `preview_urls` quedan fijados en `wrangler.jsonc`. Verificado el 2026-11-06: cabeceras de `_headers` en páginas, assets y 404, y caché inmutable en `/_astro/*`.
+- **Despliegue:** Workers Builds conectado al repositorio, con build `npm run build` y deploy `npx wrangler deploy`. Las compilaciones de vista previa (ramas que no son `main`) están **desactivadas** (comprobado el 2026-11-10): un PR de Dependabot no se compila en Cloudflare con el token de despliegue, lo prueba la CI de GitHub. `preview_urls` sigue activo, así que cada versión de `main` tiene su URL de preview (Cloudflare les pone `noindex`). Producción: **https://ankordev-portafolio.ankordev.workers.dev** (subdominio de cuenta `ankordev`). `workers_dev` y `preview_urls` quedan fijados en `wrangler.jsonc`. Verificado el 2026-11-06: cabeceras de `_headers` en páginas, assets y 404, y caché inmutable en `/_astro/*`.
 
 **Excepción justificada (VII):** el fondo usa la librería oficial **ShaderGradient** (React + three.js + React Three Fiber, ~300 KB gzip) para reproducir el aspecto y los presets de shadergradient.co, decisión del cliente. Queda aislada en una sola isla de React que solo se descarga en escritorio con puntero fino y sin reduced-motion; el resto del sitio sigue sin framework de UI.
 
 **Excepción justificada:** el rate limit en memoria se reinicia entre instancias (isolates) del Worker. Se acepta en v1 porque Turnstile es la defensa principal y el tráfico esperado es bajo.
+
+**Revisión de seguridad (2026-11-10), comprobado en los paneles** tras la auditoría run-1:
+- **Supabase:** `anon` solo inserta en las columnas del formulario de `leads` y `authenticated` no tiene permisos. La única función que `anon` puede ejecutar es `ping()` (`rls_auto_enable` sigue revocada). El check del email ya usa el patrón nuevo (T26b).
+- **Turnstile:** widget en modo Gestionado con un único hostname, `ankordev-portafolio.ankordev.workers.dev`. El servidor no comprueba el `hostname` de la respuesta de Turnstile: depende de esa lista. Comprobarlo también en el servidor es una mejora opcional para cuando haya dominio propio.
+- **Riesgos aceptados en v1:**
+  1. El token de Workers Builds es el que crea Cloudflare: permisos de zona en todas las cuentas y sin caducidad. Hoy no hay ninguna zona (solo `workers.dev`) y solo lo usan los builds de `main`. Al añadir un dominio, sustituirlo por uno limitado a esa cuenta y esa zona.
+  2. Workers Free: 100 000 peticiones diarias al Worker para toda la cuenta. Quien las agote deja el formulario sin servicio hasta el reinicio diario; las páginas estáticas y los enlaces de WhatsApp y email siguen funcionando. En `workers.dev` no hay reglas WAF: la defensa llega con dominio propio (regla de rate limiting) o con el plan Paid.
+  3. Las preview URLs de versiones anteriores de `main` son públicas y conservan los secretos con los que se subieron. Es código propio ya revisado. Protegerlas con Access exige dar de alta Zero Trust con tarjeta.
 
 ## 2. Stack
 
@@ -219,7 +227,7 @@ Variables (secretos del Worker con `npx wrangler secret put` o desde el panel; n
 | Integración | Handler de `/api/contact` con Supabase, Turnstile y Resend simulados: 200, 400, 403, 405, 413, 429, 500, honeypot, en JSON y como POST nativo (`tests/integration/contact.test.ts`). Un e2e (`contact-api.spec.ts`) comprueba la ruta en workerd con casos que no llegan a la red |
 | E2E | 1) inicio carga · 2) tema persiste · 3) lista/cuadrícula · 4) caso de estudio y volver · 5) ES↔EN · 6) formulario (API simulada) · 7) reduced motion · 8) sin JS · 9) solo teclado |
 | Accesibilidad | axe (WCAG 2.2 AA + buenas prácticas) en inicio ES/EN, caso de estudio y 404 × 2 temas × móvil/escritorio; falla con cualquier violación seria o crítica. axe no calcula el contraste sobre el gradiente (lo deja incompleto): lo mide `gradient.spec.ts` en píxeles |
-| Rendimiento | Lighthouse CI sobre la URL de preview de Workers Builds |
+| Rendimiento | Lighthouse CI sobre la URL de preview de una versión de `main` o sobre el build local (las previews de rama están desactivadas desde el 2026-11-10); se decide en T33 |
 
 CI (`ci.yml`): `npm ci` → `astro check` → `vitest run` → `astro build` → `playwright test` → `npm audit --audit-level=high`.
 
