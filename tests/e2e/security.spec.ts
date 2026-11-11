@@ -3,6 +3,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { test, expect, type APIResponse } from '@playwright/test';
 import { CSP as csp, HEADER_RULES, SECURITY_HEADERS as headers } from './headers';
+import { SERVER_SECURITY_HEADERS } from '../../src/lib/server-headers';
 
 /** Cada cabecera de _headers llega con su valor exacto. */
 function expectSecurityHeaders(response: APIResponse | null, what: string) {
@@ -47,6 +48,22 @@ test('una ruta que no existe responde la página 404 con estado 404 y las cabece
   expect(response.status()).toBe(404);
   expect(await response.text()).toContain('<html');
   expectSecurityHeaders(response, '/no-existe');
+});
+
+// _headers no llega a lo que genera el código del Worker (plan §8): src/middleware.ts le pone
+// una base (auditoría 2026-11-10). Sin ella, /_image servía el SVG sin CSP ni nosniff. El 403
+// de checkOrigin lo responde Astro antes que el middleware: un texto fijo, sin nada del visitante.
+test('lo que responde el Worker fuera de /api/contact también lleva cabeceras de seguridad', async ({ request }) => {
+  for (const [path, status] of [
+    ['/_image?href=%2Ffavicon.svg', 200],
+    ['/_server-islands/no-existe', 400],
+  ] as const) {
+    const response = await request.get(path);
+    expect(response.status(), path).toBe(status);
+    for (const [key, value] of Object.entries(SERVER_SECURITY_HEADERS)) {
+      expect(response.headers()[key.toLowerCase()], `${path}: ${key}`).toBe(value);
+    }
+  }
 });
 
 test('la CSP no abre puertas: sin unsafe-*, sin plugins, sin <base> y sin iframes ajenos', () => {

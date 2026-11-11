@@ -4,6 +4,7 @@ import { parseContact, type ContactErrorCode, type ContactField } from './contac
 import { saveLead } from './leads';
 import { notifyNewLead } from './notify';
 import type { RateLimitResult } from './rate-limit';
+import { SERVER_SECURITY_HEADERS } from './server-headers';
 import { verifyTurnstile } from './turnstile';
 
 // POST /api/contact (plan §7): Turnstile → Zod → límite de envíos → Supabase → aviso por email.
@@ -30,15 +31,7 @@ const STATUS: Record<ContactApiError, number> = {
 const TURNSTILE_CONFIG_ERRORS = ['missing-input-secret', 'invalid-input-secret'];
 
 // public/_headers no llega a las respuestas de código de servidor (plan §8): se ponen aquí
-const API_HEADERS = {
-  'Cache-Control': 'no-store',
-  'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'",
-  'Cross-Origin-Resource-Policy': 'same-origin',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Strict-Transport-Security': 'max-age=63072000; includeSubDomains',
-  'X-Content-Type-Options': 'nosniff',
-  'X-Frame-Options': 'DENY',
-};
+const API_HEADERS = { 'Cache-Control': 'no-store', ...SERVER_SECURITY_HEADERS };
 
 export type ContactLog = (level: 'warn' | 'error', event: string, detail?: Record<string, unknown>) => void;
 
