@@ -29,8 +29,11 @@ comment on policy "anon solo inserta" on public.leads is
   'Intencional: formulario público de contacto. Validan los check de la tabla y /api/contact (Turnstile, Zod, límite de envíos). anon no puede leer, editar ni borrar.';
 
 -- Cambio 2026-11-10 (auditoría de seguridad): patrón del email sin backtracking cuadrático.
--- En una tabla ya creada se aplica una vez así (el nombre lo pone Postgres al crearla):
+-- En una tabla ya creada se aplica una vez así (el nombre lo pone Postgres al crearla). Una
+-- sola sentencia: si falla, la regla anterior sigue. Líneas cortas para copiarla sin cortes.
 --   alter table public.leads
 --     drop constraint leads_email_check,
---     add constraint leads_email_check
---       check (char_length(email) <= 254 and email ~* '^[^@\s]+@[^@\s.]+(?:\.[^@\s.]+)+$');
+--     add constraint leads_email_check check (
+--       char_length(email) <= 254
+--       and email ~* '^[^@\s]+@[^@\s.]+(?:\.[^@\s.]+)+$'
+--     );
