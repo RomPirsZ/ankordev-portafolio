@@ -3,7 +3,7 @@ import { HONEYPOT_FIELD, MAX_BODY_BYTES, TURNSTILE_FIELD } from './contact-field
 import { parseContact, type ContactErrorCode, type ContactField } from './contact-schema';
 import { saveLead } from './leads';
 import { notifyNewLead } from './notify';
-import type { RateLimitResult } from './rate-limit';
+import { rateLimitKey, type RateLimitResult } from './rate-limit';
 import { SERVER_SECURITY_HEADERS } from './server-headers';
 import { verifyTurnstile } from './turnstile';
 
@@ -93,7 +93,7 @@ export async function handleContact(request: Request, { env, limiter, fetch = gl
   if (!parsed.success) return reply({ ok: false, error: 'invalid', fields: parsed.errors });
   lang = parsed.data.lang;
 
-  const limit = limiter.check(ip || 'unknown');
+  const limit = limiter.check(rateLimitKey(ip));
   if (!limit.allowed) {
     log('warn', 'rate-limited', { retryAfter: limit.retryAfter });
     return reply({ ok: false, error: 'rate_limit' }, { 'Retry-After': String(limit.retryAfter) });

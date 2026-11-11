@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createRateLimiter } from '../../src/lib/rate-limit';
+import { createRateLimiter, rateLimitKey } from '../../src/lib/rate-limit';
 
 const MINUTE = 60_000;
 
@@ -77,5 +77,32 @@ describe('createRateLimiter', () => {
       // «a» se olvidó: vuelve a empezar con su límite completo
       expect(limiter.check('a').allowed).toBe(true);
     });
+  });
+});
+
+// Auditoría 2026-11-10: un cliente IPv6 suele tener un /64 entero (miles de millones de
+// direcciones), así que contar cada dirección exacta no lo limitaba
+describe('rateLimitKey', () => {
+  it('una IPv4 cuenta tal cual', () => {
+    expect(rateLimitKey('203.0.113.7')).toBe('203.0.113.7');
+  });
+
+  it('una IPv6 cuenta por su prefijo /64, se escriba como se escriba', () => {
+    const key = '2001:db8:85a3:8d3::/64';
+    for (const ip of ['2001:db8:85a3:8d3:1319:8a2e:370:7348', '2001:0DB8:85a3:08d3::1', '2001:db8:85a3:8d3:ffff:ffff:ffff:ffff']) {
+      expect(rateLimitKey(ip), ip).toBe(key);
+    }
+    expect(rateLimitKey('2001:db8:85a3:8d4::1')).not.toBe(key);
+    expect(rateLimitKey('2001:db8::1')).toBe('2001:db8:0:0::/64');
+    expect(rateLimitKey('::1')).toBe('0:0:0:0::/64');
+  });
+
+  it('una IPv4 escrita como IPv6 cuenta como la IPv4', () => {
+    expect(rateLimitKey('::ffff:203.0.113.7')).toBe('203.0.113.7');
+  });
+
+  it('sin IP o con una que no se entiende, una clave fija o la cadena tal cual', () => {
+    expect(rateLimitKey('')).toBe('unknown');
+    expect(rateLimitKey('no:es:una:ip:valida:de:mas:de:ocho:grupos')).toBe('no:es:una:ip:valida:de:mas:de:ocho:grupos');
   });
 });

@@ -295,6 +295,15 @@ describe('429: límite de envíos', () => {
     expect((await send(jsonRequest(VALID, { 'CF-Connecting-IP': '198.51.100.20' }))).status).toBe(200);
   });
 
+  it('en IPv6 cuenta el prefijo /64: cambiar de dirección dentro de él no da más envíos', async () => {
+    const { send } = setup();
+    for (let i = 1; i <= 5; i++) {
+      expect((await send(jsonRequest(VALID, { 'CF-Connecting-IP': `2001:db8:1:2::${i}` }))).status).toBe(200);
+    }
+    expect((await send(jsonRequest(VALID, { 'CF-Connecting-IP': '2001:db8:1:2::99' }))).status).toBe(429);
+    expect((await send(jsonRequest(VALID, { 'CF-Connecting-IP': '2001:db8:1:3::1' }))).status).toBe(200);
+  });
+
   it('los envíos inválidos no gastan el cupo', async () => {
     const { send } = setup();
     for (let i = 0; i < 10; i++) expect((await send(jsonRequest({ ...VALID, email: 'mal' }))).status).toBe(400);

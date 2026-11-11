@@ -155,7 +155,7 @@ Tabla `leads` en `supabase/leads.sql`, la fuente única del esquema: columnas co
 - Si Supabase no responde, el workflow falla y GitHub avisa por email.
 - Límite: GitHub desactiva los workflows programados de un repositorio público tras 60 días sin actividad, y avisa antes. Se reactiva con un push o desde Actions.
 
-Respuestas del endpoint: `200` éxito (o honeypot lleno, sin guardar) · `400` validación · `403` Turnstile fallido · `405` método · `413` cuerpo > 10 KB · `429` límite (5 / 10 min por IP) · `500` genérico. Con `Accept: text/html` redirige a `/gracias` o vuelve con error; con JSON responde JSON.
+Respuestas del endpoint: `200` éxito (o honeypot lleno, sin guardar) · `400` validación · `403` Turnstile fallido · `405` método · `413` cuerpo > 10 KB · `429` límite (5 / 10 min por IP; en IPv6, por prefijo /64 desde el 2026-11-10, porque un cliente suele tener el /64 entero) · `500` genérico. Con `Accept: text/html` redirige a `/gracias` o vuelve con error; con JSON responde JSON.
 
 **Contrato del endpoint (T24, 2026-11-08).**
 - **Código:** la lógica está en `src/lib/contact-handler.ts`, que recibe el entorno, el límite de envíos y `fetch` como dependencias. `src/pages/api/contact.ts` solo lo conecta con el Worker y lee los secretos con `import { env } from 'cloudflare:workers'` (tipos mínimos en `src/env.d.ts`, sin `@cloudflare/workers-types`). El guardado está en `src/lib/leads.ts`.

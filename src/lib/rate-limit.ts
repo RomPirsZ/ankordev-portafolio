@@ -17,6 +17,25 @@ interface Options {
   maxKeys?: number;
 }
 
+/**
+ * Clave del límite para una IP. Un cliente IPv6 suele tener un /64 entero (miles de millones
+ * de direcciones), así que se cuenta por ese prefijo y no por la dirección exacta
+ * (auditoría 2026-11-10). Una IPv4, también escrita como IPv6 (`::ffff:a.b.c.d`), va tal cual.
+ */
+export function rateLimitKey(ip: string): string {
+  if (!ip) return 'unknown';
+  if (!ip.includes(':')) return ip;
+  const mappedIPv4 = ip.match(/^::ffff:(\d{1,3}(?:\.\d{1,3}){3})$/i);
+  if (mappedIPv4) return mappedIPv4[1]!;
+
+  const [head = '', tail = ''] = ip.toLowerCase().split('::');
+  const left = head ? head.split(':') : [];
+  const right = tail ? tail.split(':') : [];
+  const groups = ip.includes('::') ? [...left, ...Array<string>(8 - left.length - right.length).fill('0'), ...right] : left;
+  if (groups.length !== 8 || !groups.every((group) => /^[0-9a-f]{1,4}$/.test(group))) return ip;
+  return `${groups.slice(0, 4).map((group) => group.replace(/^0+(?=.)/, '')).join(':')}::/64`;
+}
+
 export function createRateLimiter({ limit = 5, windowMs = 10 * 60_000, now = Date.now, maxKeys = 10_000 }: Options = {}) {
   /** Momentos de los envíos aceptados de cada IP, del más antiguo al más reciente. */
   const hits = new Map<string, number[]>();
