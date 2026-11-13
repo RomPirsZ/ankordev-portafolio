@@ -68,6 +68,12 @@ Auditoría de solo código fuente con la skill security-audit: 0 hallazgos confi
 - [x] T26e Límite de envíos por prefijo /64 en IPv6 (`rateLimitKey`) — *un cliente IPv6 suele tener el /64 entero; una IPv4 escrita como IPv6 cuenta como la IPv4*
 - [x] T26f Tope de avisos por email: como mucho 80 en 24 horas, contados en Supabase (`leads_count_24h()`) — *el binding Rate Limiting no servía (periodos de 10 o 60 s, por ubicación); pasado el tope se guarda sin email; si no se puede contar, se avisa igual. La función la crea el dueño en el SQL Editor*
 
+### Comprobación de las correcciones (run-2, 2026-11-13)
+
+Auditoría `quick` de solo código fuente sobre el diff de T26b–T26f (`02603a48..a352885`): 0 hallazgos confirmados; cierra las pistas del patrón del email, de los logs sin coste y de los logs de invocación. Queda una por validar, que corrige T26g. Informe en `~/security-audit-skill/sdd-portafolio/run-2/`.
+
+- [x] T26g Aviso único de «tope alcanzado» al dueño — *una sola fuente con unos 81 tokens válidos podía llenar el tope y los contactos reales siguientes se guardaban sin que el dueño se enterase; el primero que pasa el tope manda un email sin datos del visitante (`notifyCapReached`); nunca más de 81 emails en 24 horas*
+
 ## Fase 5 — Proyectos (objetivo: 5–9 nov)
 
 - [x] T27 Proyecto 001 restaurante — *repo propio en `../restaurante/` (café ficticio «Molienda», Mérida), con su spec, plan y tareas en `docs/specs/001-sitio/`; M00–M10 hechas (revisión final de impeccable aprobada, `DESIGN.md`, Lighthouse móvil 99–100/100/100/100); sin despliegue hasta nuevo aviso; el caso de estudio va en T30*

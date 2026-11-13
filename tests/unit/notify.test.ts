@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { Contact } from '../../src/lib/contact-schema';
-import { DEFAULT_FROM, RESEND_API_URL, notifyNewLead } from '../../src/lib/notify';
+import { CAP_ALERT_SUBJECT, DEFAULT_FROM, NOTIFY_CAP_24H, RESEND_API_URL, notifyCapReached, notifyNewLead } from '../../src/lib/notify';
 
 const lead: Contact = {
   name: 'Ana Pérez',
@@ -72,6 +72,24 @@ describe('notifyNewLead', () => {
       expect(await notifyNewLead(lead, { ...config, fetch })).toEqual({ success: false, error: 'missing-config' });
       expect(fetch).not.toHaveBeenCalled();
     }
+  });
+
+  describe('notifyCapReached (T26g)', () => {
+    it('avisa al dueño del tope, en texto plano y sin responder-a', async () => {
+      const fetch = ok();
+      expect(await notifyCapReached(options(fetch))).toEqual({ success: true });
+      const body = sent(fetch);
+      expect(body).toMatchObject({ from: DEFAULT_FROM, to: ['yo@example.com'], subject: CAP_ALERT_SUBJECT });
+      expect(body).not.toHaveProperty('reply_to');
+      expect(body.text).toContain(String(NOTIFY_CAP_24H));
+      expect(body.text).toContain('leads');
+    });
+
+    it('sin clave no llama a Resend', async () => {
+      const fetch = ok();
+      expect(await notifyCapReached({ apiKey: '', to: 'yo@example.com', fetch })).toEqual({ success: false, error: 'missing-config' });
+      expect(fetch).not.toHaveBeenCalled();
+    });
   });
 
   describe('nunca lanza: devuelve el fallo para los logs', () => {

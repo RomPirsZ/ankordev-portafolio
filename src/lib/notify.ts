@@ -12,7 +12,8 @@ export const DEFAULT_FROM = 'Portafolio [A]nkordev <onboarding@resend.dev>';
  * Avisos como máximo en 24 horas (T26f). Resend gratis admite 100 emails al día y 3 000 al
  * mes: 80 deja margen para pruebas, y 80 × 31 días = 2 480 tampoco llega al tope mensual.
  * Pasado el tope, el contacto se guarda igual pero sin email: así un bot con tokens válidos
- * no puede agotar la cuota y dejar sin aviso a los clientes reales.
+ * no puede agotar la cuota. El primer contacto que pasa el tope manda en su lugar un aviso
+ * de «tope alcanzado» (T26g), para que el dueño sepa que hay contactos sin email.
  */
 export const NOTIFY_CAP_24H = 80;
 
@@ -58,8 +59,35 @@ function textFor(lead: Contact) {
   ].join('\n');
 }
 
-export async function notifyNewLead(
-  lead: Contact,
+export const CAP_ALERT_SUBJECT = 'Tope de avisos alcanzado: revisa la tabla leads';
+
+/**
+ * Aviso único al pasar el tope (T26g). Sin datos del visitante: quien llena el tope suele ser
+ * un bot, así que ni su texto ni su email llegan aquí.
+ */
+function capAlertText() {
+  return [
+    `Llegaron más de ${NOTIFY_CAP_24H} contactos en 24 horas.`,
+    '',
+    'Desde ahora se siguen guardando en Supabase, pero sin email, hasta que el recuento de las',
+    'últimas 24 horas vuelva a bajar del tope. Revisa la tabla leads: si hay un contacto real',
+    'entre ellos, no te va a llegar aviso de él.',
+    '',
+    'En Workers Logs, cada contacto sin aviso queda como contact.notify-capped.',
+  ].join('\n');
+}
+
+export function notifyNewLead(lead: Contact, options: Options): Promise<NotifyResult> {
+  // Texto plano, sin HTML: lo que escribió el visitante no puede inyectar nada
+  return send({ reply_to: lead.email, subject: subjectFor(lead), text: textFor(lead) }, options);
+}
+
+export function notifyCapReached(options: Options): Promise<NotifyResult> {
+  return send({ subject: CAP_ALERT_SUBJECT, text: capAlertText() }, options);
+}
+
+async function send(
+  message: { subject: string; text: string; reply_to?: string },
   { apiKey, to, from = DEFAULT_FROM, fetch = globalThis.fetch, timeoutMs = 5000 }: Options,
 ): Promise<NotifyResult> {
   if (!apiKey || !to) return { success: false, error: 'missing-config' };
@@ -69,8 +97,7 @@ export async function notifyNewLead(
     response = await fetch(RESEND_API_URL, {
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-      // Texto plano, sin HTML: lo que escribió el visitante no puede inyectar nada
-      body: JSON.stringify({ from, to: [to], reply_to: lead.email, subject: subjectFor(lead), text: textFor(lead) }),
+      body: JSON.stringify({ from, to: [to], ...message }),
       signal: AbortSignal.timeout(timeoutMs),
     });
   } catch (error) {

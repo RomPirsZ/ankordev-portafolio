@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { HONEYPOT_FIELD, MAX_BODY_BYTES, TURNSTILE_FIELD } from '../../src/lib/contact-fields';
 import { handleContact, type ContactLog } from '../../src/lib/contact-handler';
 import { RECENT_LEADS_RPC } from '../../src/lib/leads';
-import { NOTIFY_CAP_24H, RESEND_API_URL } from '../../src/lib/notify';
+import { CAP_ALERT_SUBJECT, NOTIFY_CAP_24H, RESEND_API_URL } from '../../src/lib/notify';
 import { createRateLimiter } from '../../src/lib/rate-limit';
 import { SITEVERIFY_URL } from '../../src/lib/turnstile';
 
@@ -385,7 +385,7 @@ describe('tope de avisos por email (T26f)', () => {
   });
 
   it('pasado el tope, el contacto se guarda y el visitante ve éxito, pero no se envía email', async () => {
-    const { fetch, log, send } = setup({ recent: NOTIFY_CAP_24H + 1 });
+    const { fetch, log, send } = setup({ recent: NOTIFY_CAP_24H + 2 });
     const json = await send(jsonRequest(VALID));
     expect(json.status).toBe(200);
     expect(await json.json()).toEqual({ ok: true });
@@ -396,7 +396,43 @@ describe('tope de avisos por email (T26f)', () => {
 
     expect(callsTo(fetch, LEADS_URL)).toHaveLength(2);
     expect(callsTo(fetch, RESEND_API_URL)).toHaveLength(0);
-    expect(log).toHaveBeenCalledWith('warn', 'notify-capped', { recent: NOTIFY_CAP_24H + 1 });
+    expect(log).toHaveBeenCalledWith('warn', 'notify-capped', { recent: NOTIFY_CAP_24H + 2 });
+  });
+
+  // Auditoría run-2 (2026-11-13): una sola fuente con tokens válidos podía llenar el tope y los
+  // contactos reales posteriores se guardaban sin que el dueño se enterara
+  describe('aviso de tope alcanzado (T26g)', () => {
+    /** Cuerpo JSON de cada llamada a Resend. */
+    const resendBodies = (fetch: ReturnType<typeof services>) =>
+      callsTo(fetch, RESEND_API_URL).map(([, init]) => JSON.parse(init!.body as string) as Record<string, unknown>);
+
+    it('el primer contacto que pasa el tope manda un único aviso al dueño, sin datos del visitante', async () => {
+      const { fetch, log, send } = setup({ recent: NOTIFY_CAP_24H + 1 });
+      const response = await send(jsonRequest(VALID));
+      expect(response.status).toBe(200);
+      expect(await response.json()).toEqual({ ok: true });
+
+      const bodies = resendBodies(fetch);
+      expect(bodies).toHaveLength(1);
+      expect(bodies[0]).toMatchObject({ to: [ENV.CONTACT_NOTIFY_TO], subject: CAP_ALERT_SUBJECT });
+      expect(bodies[0]).not.toHaveProperty('reply_to');
+      for (const value of ['Ana', 'ana@example.com', 'café', IP]) expect(JSON.stringify(bodies[0])).not.toContain(value);
+      expect(log).toHaveBeenCalledWith('warn', 'notify-capped', { recent: NOTIFY_CAP_24H + 1 });
+    });
+
+    it('si el aviso falla, el visitante ve éxito igual y queda en los logs', async () => {
+      const { log, send } = setup({ recent: NOTIFY_CAP_24H + 1, resend: 500 });
+      expect((await send(jsonRequest(VALID))).status).toBe(200);
+      expect(log).toHaveBeenCalledWith('error', 'cap-alert-failed', { error: 'http-500' });
+    });
+
+    it('los siguientes no vuelven a avisar', async () => {
+      for (const recent of [NOTIFY_CAP_24H + 2, NOTIFY_CAP_24H + 50]) {
+        const { fetch, send } = setup({ recent });
+        await send(jsonRequest(VALID));
+        expect(callsTo(fetch, RESEND_API_URL)).toHaveLength(0);
+      }
+    });
   });
 
   it('si no se puede contar (por ejemplo, falta la función en Supabase), avisa igual y lo registra', async () => {

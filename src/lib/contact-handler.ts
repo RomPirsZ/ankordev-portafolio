@@ -2,7 +2,7 @@ import { DEFAULT_LANG, isLang, localizePath, sectionId, type Lang } from '../i18
 import { HONEYPOT_FIELD, MAX_BODY_BYTES, TURNSTILE_FIELD } from './contact-fields';
 import { parseContact, type ContactErrorCode, type ContactField } from './contact-schema';
 import { countRecentLeads, saveLead } from './leads';
-import { NOTIFY_CAP_24H, notifyNewLead } from './notify';
+import { NOTIFY_CAP_24H, notifyCapReached, notifyNewLead } from './notify';
 import { rateLimitKey, type RateLimitResult } from './rate-limit';
 import { SERVER_SECURITY_HEADERS } from './server-headers';
 import { verifyTurnstile } from './turnstile';
@@ -106,17 +106,26 @@ export async function handleContact(request: Request, { env, limiter, fetch = gl
     return reply({ ok: false, error: 'server' });
   }
 
+  const resend = { apiKey: setting('RESEND_API_KEY'), to: setting('CONTACT_NOTIFY_TO'), fetch };
+
   // Tope de avisos (T26f): pasado NOTIFY_CAP_24H en 24 horas, el contacto queda guardado sin
   // email. Si no se puede contar, se avisa igual: un fallo del contador no quita avisos.
   const recent = await countRecentLeads({ url: setting('SUPABASE_URL'), key: setting('SUPABASE_ANON_KEY'), fetch });
   if ('error' in recent) log('warn', 'count-failed', { error: recent.error });
   else if (recent.count > NOTIFY_CAP_24H) {
     log('warn', 'notify-capped', { recent: recent.count });
+    // T26g: el primero que pasa el tope avisa al dueño de que hay contactos sin email. Cada
+    // contacto manda como mucho un email y el n.º k de una ventana de 24 horas cuenta al menos
+    // k, así que solo los 81 primeros pueden mandar algo: nunca más de 81 emails en 24 horas.
+    if (recent.count === NOTIFY_CAP_24H + 1) {
+      const alerted = await notifyCapReached(resend);
+      if (!alerted.success) log('error', 'cap-alert-failed', { error: alerted.error });
+    }
     return reply({ ok: true });
   }
 
   // Best effort: el contacto ya está guardado, así que un fallo aquí solo va a los logs
-  const notified = await notifyNewLead(parsed.data, { apiKey: setting('RESEND_API_KEY'), to: setting('CONTACT_NOTIFY_TO'), fetch });
+  const notified = await notifyNewLead(parsed.data, resend);
   if (!notified.success) log('error', 'notify-failed', { error: notified.error });
 
   return reply({ ok: true });
