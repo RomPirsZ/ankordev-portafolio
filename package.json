@@ -11,7 +11,8 @@
     "astro": "astro",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
-    "test": "npm run test:unit && npm run test:e2e"
+    "test": "npm run test:unit && npm run test:e2e",
+    "lighthouse": "lhci autorun"
   },
   "dependencies": {
     "@astrojs/cloudflare": "14.4.3",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@astrojs/check": "0.9.12",
     "@axe-core/playwright": "4.14.0",
+    "@lhci/cli": "0.16.0",
     "@playwright/test": "1.64.1",
     "@types/node": "26.6.6",
     "@types/react": "19.3.0",
@@ -44,5 +46,8 @@
   },
   "engines": {
     "node": "26.x"
+  },
+  "overrides": {
+    "basic-ftp": "6.2.6"
   }
 }

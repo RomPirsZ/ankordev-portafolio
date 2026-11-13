@@ -132,7 +132,7 @@
   no llega en 2,5 s, se muestran igual: el contenido nunca depende de JS.
 */
 @media (prefers-reduced-motion: no-preference) {
-  .motion:not(.motion-ready) :is([data-split], [data-reveal]) {
+  .motion:not(.motion-ready) [data-split] {
     opacity: 0;
     animation: motion-fallback 0s 2.5s forwards;
   }

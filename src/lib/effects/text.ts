@@ -7,7 +7,6 @@ import { SplitText } from 'gsap/SplitText';
 // con duración ≤ 0,6 s y radio ≤ 8 px.
 const DURATION = 0.6;
 const BLUR_TITLE = 'blur(6px)';
-const BLUR_LINE = 'blur(4px)';
 const EASE = 'expo.out';
 const SCRAMBLE_CHARS = '0123456789[]/-·°ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -15,7 +14,7 @@ const SCRAMBLE_CHARS = '0123456789[]/-·°ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const alreadyShown = (element: HTMLElement) => getComputedStyle(element).opacity !== '0';
 
 /** Titular principal (hero, caso de estudio, 404): letras escalonadas desde abajo. */
-function splitTitles(root: ParentNode) {
+export function splitTitles(root: ParentNode) {
   root.querySelectorAll<HTMLElement>('[data-split]').forEach((element) => {
     if (alreadyShown(element)) return;
     SplitText.create(element, {
@@ -40,31 +39,8 @@ function splitTitles(root: ParentNode) {
   });
 }
 
-/** Títulos de sección: se revelan por líneas al entrar en pantalla. */
-function revealHeadings(root: ParentNode) {
-  root.querySelectorAll<HTMLElement>('[data-reveal]').forEach((element) => {
-    SplitText.create(element, {
-      type: 'lines',
-      mask: 'lines',
-      aria: 'auto',
-      autoSplit: true,
-      onSplit: (self) =>
-        gsap.from(self.lines, {
-          yPercent: 100,
-          opacity: 0,
-          filter: BLUR_LINE,
-          duration: DURATION,
-          ease: EASE,
-          stagger: 0.08,
-          clearProps: 'filter',
-          scrollTrigger: { trigger: element, start: 'top 85%', once: true },
-        }),
-    });
-  });
-}
-
-/** Etiquetas de laboratorio: "scramble" breve al aparecer. Son aria-hidden. */
-function scrambleLabels(root: ParentNode) {
+/** Etiquetas de laboratorio y títulos de sección: "scramble" breve al aparecer. Su texto es aria-hidden. */
+export function scrambleLabels(root: ParentNode) {
   root.querySelectorAll<HTMLElement>('[data-scramble]').forEach((element) => {
     gsap.to(element, {
       duration: 0.8,
@@ -75,8 +51,3 @@ function scrambleLabels(root: ParentNode) {
   });
 }
 
-export function textEffects(root: ParentNode) {
-  splitTitles(root);
-  revealHeadings(root);
-  scrambleLabels(root);
-}

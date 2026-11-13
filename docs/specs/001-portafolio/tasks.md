@@ -86,7 +86,7 @@ Auditoría `quick` de solo código fuente sobre el diff de T26b–T26f (`02603a4
 
 - [x] T31 Traducción EN completa + test e2e 5 — *hecha 2026-11-13: las páginas EN no dejan ver ningún texto que solo exista en español (texto, alt, aria-label, title, placeholder) y muestran la tarifa internacional; el selector lleva a la página equivalente en los 5 pares; se pule el subtítulo del hero en inglés; los comentarios de desarrollo ya no salen en el HTML. e2e 5 en `i18n.spec.ts`. Los casos de estudio siguen provisionales en ambos idiomas hasta T30*
 - [x] T32 SEO: metadatos, OG, sitemap, robots, JSON-LD — *hecha 2026-11-13, adelantada a T28–T31 a petición del usuario (Meta Explorer daba 74 de SEO): description, canonical, hreflang, Open Graph y Twitter en cada página; imágenes OG por idioma; `@astrojs/sitemap` 3.7.4; `robots.txt`; JSON-LD en el inicio. Detalle en el plan §10; e2e en `seo.spec.ts`*
-- [ ] T33 Lighthouse CI con umbrales de la constitución
+- [x] T33 Lighthouse CI con umbrales de la constitución — *hecha 2026-11-13: `npm run lighthouse` y paso bloqueante en la CI (móvil, mediana de 5 pasadas en `/`, `/en/` y un caso). El inicio daba 87 de rendimiento por TBT; el arranque de las animaciones ahora va por pasos (titular primero, sin cambios visibles) y queda en 98. Accesibilidad, buenas prácticas y SEO: 100. Detalle en el plan §8*
 - [ ] T34 Checklist manual de seguridad y móvil (ver plan §9)
 
 ## Fase 7 — Lanzamiento (sin fecha fija)

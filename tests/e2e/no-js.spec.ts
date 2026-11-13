@@ -6,7 +6,7 @@ test.use({ javaScriptEnabled: false });
 /** Nada queda oculto a la espera de las animaciones: titulares, secciones y etiquetas. */
 async function expectContentShown(page: Page) {
   await expect(page.locator('h1')).toBeVisible();
-  const animated = page.locator('[data-split], [data-reveal], [data-scramble]');
+  const animated = page.locator('[data-split], [data-scramble]');
   expect(await animated.count()).toBeGreaterThan(0);
   for (const element of await animated.all()) {
     await expect(element).toHaveCSS('opacity', '1');
