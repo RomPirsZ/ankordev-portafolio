@@ -1,7 +1,19 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/space-grotesk';
-/* Mono: solo el peso 400, el único que usa el sitio */
-@import '@fontsource/monaspace-krypton/400.css';
+/*
+  Mono: solo el peso 400, el único que usa el sitio. Se declara aquí y no con el CSS de
+  Fontsource (que usa `swap`) para poder usar `optional`: si la fuente no llega en ~100 ms
+  (BaseLayout la precarga), la página se queda con la mono del sistema y no salta. Con
+  `swap`, el menú en inglés cabía en una línea con Krypton y no con la de reserva, y toda
+  la página bajaba 32 px al cargar la fuente (CLS 0,35 en la CI, T33).
+*/
+@font-face {
+  font-family: 'Monaspace Krypton';
+  font-style: normal;
+  font-display: optional;
+  font-weight: 400;
+  src: url('@fontsource/monaspace-krypton/files/monaspace-krypton-latin-400-normal.woff2') format('woff2');
+}
 
 /*
   Temas (spec §6): paleta «Terminal cálida» (T11b), oscuro (por defecto) y claro.

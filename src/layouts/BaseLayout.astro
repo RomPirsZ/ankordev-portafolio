@@ -7,6 +7,11 @@ import GradientBackground from '../components/GradientBackground';
 import { DEFAULT_THEME, THEMES, THEME_STORAGE_KEY } from '../lib/themes';
 import { useTranslations, type Lang } from '../i18n/utils';
 import { SITE_URL } from '../lib/site';
+// Fuentes precargadas: el titular (Space Grotesk, el LCP) y la mono de menú y etiquetas,
+// que con `optional` (global.css) solo se usa si llega a tiempo. Vite les da la misma URL
+// con hash que en el CSS.
+import groteskUrl from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
+import kryptonUrl from '@fontsource/monaspace-krypton/files/monaspace-krypton-latin-400-normal.woff2?url';
 
 interface Props {
   title: string;
@@ -57,6 +62,8 @@ const OG_LOCALE = { es: 'es_VE', en: 'en_US' } as const satisfies Record<Lang, s
         </>
       )
     }
+    <link rel="preload" href={groteskUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={kryptonUrl} as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     {/* Vista previa al compartir (WhatsApp, redes): imagen 1200×630 por idioma */}

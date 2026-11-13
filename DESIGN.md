@@ -172,6 +172,8 @@ Los componentes nunca usan un color de tema directamente: usan los roles (`--bg`
 **Body Font:** Space Grotesk Variable (misma familia)
 **Label/Mono Font:** Monaspace Krypton, solo peso 400 (con `ui-monospace, monospace`)
 
+**Carga de fuentes:** las dos se precargan. Space Grotesk va con `font-display: swap`, porque es el titular y la marca. Krypton va con `optional` (declarada en `global.css`, no con el CSS de Fontsource): si no llega en ~100 ms, esa vista se queda con la mono del sistema y no salta. Antes, con `swap`, el menú en inglés cambiaba de una línea a dos y movía la página entera (T33).
+
 **Character:** Una grotesca geométrica con rarezas (la «a», la «G») que en tamaño display se siente construida a mano, y Monaspace Krypton, una mono mecánica de trazo técnico, para las anotaciones del cuaderno. La grotesca habla; la mono numera, etiqueta y mide. Si alguna anotación necesita otro peso de Krypton, se importa solo ese peso (cada uno pesa ~43 KB).
 
 ### Hierarchy
