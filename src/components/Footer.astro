@@ -17,7 +17,7 @@ const socials = SOCIALS.filter((social) => social.url);
   <div class="page-frame grid gap-6 py-8 font-mono text-xs uppercase tracking-wider sm:grid-cols-3">
     <p>
       <span class="text-muted">{t('footer.clock')}</span>
-      <!-- Sin JS queda la hora del build; el script la mantiene al día -->
+      {/* Sin JS queda la hora del build; el script la mantiene al día */}
       <time class="block text-base tabular-nums" data-clock data-lang={lang}>
         {formatCaracasTime(new Date(), lang).slice(0, 5)} UTC−4
       </time>
@@ -44,7 +44,7 @@ const socials = SOCIALS.filter((social) => social.url);
 
     <p class="sm:col-start-3 sm:text-right">
       {t('footer.copyright', { year: new Date().getFullYear() })}{' '}
-      <!-- La marca se escribe tal cual, aunque la etiqueta vaya en mayúsculas -->
+      {/* La marca se escribe tal cual, aunque la etiqueta vaya en mayúsculas */}
       <span class="normal-case">{t('site.brand')}</span>
     </p>
   </div>

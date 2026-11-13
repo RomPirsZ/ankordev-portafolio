@@ -11,7 +11,7 @@ const t = useTranslations(Astro.props.lang);
 const options: Theme[] = ['claro', 'oscuro'];
 ---
 
-<!-- Interruptor claro/oscuro. Sin JS no puede funcionar: nace oculto y el script lo muestra -->
+{/* Interruptor claro/oscuro. Sin JS no puede funcionar: nace oculto y el script lo muestra */}
 <div class="theme-switcher" role="group" aria-label={t('theme.label')} hidden>
   {
     options.map((theme) => (

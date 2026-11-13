@@ -38,11 +38,11 @@ const OG_LOCALE = { es: 'es_VE', en: 'en_US' } as const satisfies Record<Lang, s
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!--
+    {/*
       El sitio tiene tema oscuro propio: Dark Reader se desactiva con esta etiqueta.
       Sin ella oscurecía el tema claro al recargar, borraba el gradiente y seguía
       activo al volver al oscuro (solo quedaba la retícula).
-    -->
+    */}
     <meta name="darkreader-lock" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -59,7 +59,7 @@ const OG_LOCALE = { es: 'es_VE', en: 'en_US' } as const satisfies Record<Lang, s
     }
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <!-- Vista previa al compartir (WhatsApp, redes): imagen 1200×630 por idioma -->
+    {/* Vista previa al compartir (WhatsApp, redes): imagen 1200×630 por idioma */}
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content={t('site.brand')} />
     <meta property="og:title" content={title} />
@@ -78,13 +78,13 @@ const OG_LOCALE = { es: 'es_VE', en: 'en_US' } as const satisfies Record<Lang, s
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={t('og.alt')} />
     <slot name="head" />
-    <!-- Transiciones entre páginas (T19); Astro las desactiva con reduced-motion -->
+    {/* Transiciones entre páginas (T19); Astro las desactiva con reduced-motion */}
     <ClientRouter />
-    <!--
+    {/*
       Antes del primer pintado: aplica el tema guardado y, si hay movimiento,
       marca la página para que las entradas animadas nazcan ocultas (global.css).
       Si cambia este script, cambia su hash en la CSP de public/_headers.
-    -->
+    */}
     <script is:inline define:vars={{ themes: THEMES, key: THEME_STORAGE_KEY }}>
       try {
         const saved = localStorage.getItem(key);
@@ -96,12 +96,12 @@ const OG_LOCALE = { es: 'es_VE', en: 'en_US' } as const satisfies Record<Lang, s
     </script>
   </head>
   <body class="lab-grid flex min-h-dvh flex-col text-fg">
-    <!--
+    {/*
       Sin bg-bg: <html> pinta el color del tema y .gradient-bg, encima, el gradiente estático,
       el canvas (si lo hay) y el grano (global.css).
       Fondo animado (plan §6.1): su JS solo se descarga en escritorio con puntero fino
       y sin reduced-motion. Persiste entre páginas para no reiniciarse al navegar.
-    -->
+    */}
     <div class="gradient-bg" aria-hidden="true" transition:persist="gradient-bg">
       <GradientBackground client:media="(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)" />
     </div>

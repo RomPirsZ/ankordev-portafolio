@@ -23,7 +23,7 @@ const heroSentences = t('hero.title').split(/(?<=\.)\s+/);
     {heroSentences.map((sentence, i) => [i > 0 ? ' ' : null, <span class="hero-sentence block">{sentence}</span>])}
   </h1>
   <p class="mt-4 max-w-[46ch] text-lg text-pretty md:mt-8">{t('hero.subtitle')}</p>
-  <!-- El único bloque sólido de la pantalla (DESIGN.md, sólido + fino) y, al lado, el estado -->
+  {/* El único bloque sólido de la pantalla (DESIGN.md, sólido + fino) y, al lado, el estado */}
   <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-5 md:mt-10">
     <a
       href={sectionHref('contact', lang)}
