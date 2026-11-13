@@ -5,7 +5,7 @@
 import { Image } from 'astro:assets';
 import Section from './Section.astro';
 import LabLabel from './LabLabel.astro';
-import { sectionId, sectionNumber, useTranslations, type Lang } from '../i18n/utils';
+import { sectionId, useTranslations, type Lang } from '../i18n/utils';
 import { SOCIALS, STACK } from '../lib/site';
 import { OWNER } from '../lib/owner';
 import portrait from '../assets/about/retrato.jpg';
@@ -20,7 +20,7 @@ const { name } = OWNER;
 const socials = SOCIALS.filter((social) => social.url);
 ---
 
-<Section id={sectionId('about', lang)} number={sectionNumber('about')} title={t('about.title')}>
+<Section id={sectionId('about', lang)} title={t('about.title')}>
   <div class="about">
     <figure class="about-photo">
       <Image

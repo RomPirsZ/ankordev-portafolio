@@ -4,7 +4,7 @@
 // effects/process.ts). Sin JS o con reduced-motion se ve entera. Vertical en móvil,
 // horizontal desde 64rem.
 import Section from './Section.astro';
-import { sectionId, sectionNumber, useTranslations, type Lang } from '../i18n/utils';
+import { sectionId, useTranslations, type Lang } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -15,7 +15,7 @@ const t = useTranslations(lang);
 const STEPS = ['discover', 'specify', 'build', 'launch'] as const;
 ---
 
-<Section id={sectionId('process', lang)} number={sectionNumber('process')} title={t('process.title')}>
+<Section id={sectionId('process', lang)} title={t('process.title')}>
   <div class="process" data-process>
     <ol class="process-steps" role="list">
       {

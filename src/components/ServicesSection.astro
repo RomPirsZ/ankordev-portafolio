@@ -1,10 +1,10 @@
 ---
 // Servicios y paquetes (spec §5.4). Los 3 paquetes, su alcance, plazo y precio
 // «desde» están decididos (PRODUCT.md): no se cambian sin confirmación, y un test
-// unitario lo vigila. Filas como las de Proyectos: alcance y plazo al margen,
-// nombre y descripción en el centro, precio a la derecha.
+// unitario lo vigila. Cada fila: nombre, alcance y plazo debajo, descripción; el
+// precio a la derecha en escritorio.
 import Section from './Section.astro';
-import { sectionId, sectionNumber, useTranslations, type Lang } from '../i18n/utils';
+import { sectionId, useTranslations, type Lang } from '../i18n/utils';
 import { PACKAGES } from '../lib/services';
 
 interface Props {
@@ -15,7 +15,7 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<Section id={sectionId('services', lang)} number={sectionNumber('services')} title={t('services.title')} wide>
+<Section id={sectionId('services', lang)} title={t('services.title')}>
   <ul class="packages" role="list">
     {
       PACKAGES.map((id) => (
@@ -37,7 +37,7 @@ const t = useTranslations(lang);
       ))
     }
   </ul>
-  <p class="annotation mt-6 md:ml-[12.5rem]">{t('services.note')}</p>
+  <p class="annotation mt-6">{t('services.note')}</p>
 </Section>
 
 <style>
@@ -86,40 +86,28 @@ const t = useTranslations(lang);
     font-variant-numeric: tabular-nums;
   }
 
-  /* Escritorio: alcance y plazo pasan a la columna de margen, uno sobre otro,
-     como las anotaciones de una ficha; el precio se alinea a la derecha. */
+  /* Escritorio: el precio pasa a la derecha, a la altura del nombre */
   @media (width >= 48rem) {
     .package {
-      grid-template-columns: 11rem minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       column-gap: 1.5rem;
       align-items: baseline;
       padding-block: 2rem;
     }
 
     .package-name {
-      grid-column: 2;
+      grid-column: 1;
       grid-row: 1;
       font-size: var(--text-3xl);
     }
 
-    /* La primera línea comparte línea base con el nombre (DESIGN.md, Margin Rule) */
-    .package-meta {
-      grid-column: 1;
-      grid-row: 1;
-      flex-direction: column;
-    }
-
-    .package-sep {
-      display: none;
-    }
-
+    .package-meta,
     .package-text {
-      grid-column: 2;
-      grid-row: 2;
+      grid-column: 1;
     }
 
     .package-price {
-      grid-column: 3;
+      grid-column: 2;
       grid-row: 1;
       margin-top: 0;
     }

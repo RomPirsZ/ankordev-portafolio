@@ -1,38 +1,31 @@
 ---
-// Sección del inicio con columna de margen (DESIGN.md: anotaciones al margen del
-// cuaderno). La etiqueta va a la altura del título, nunca encima; en móvil, debajo.
-import LabLabel from './LabLabel.astro';
+// Sección del inicio, en una sola columna centrada (2026-11-13: sin columna de margen; la
+// etiqueta `[ 02 / SERVICIOS ]` repetía el título). El título lleva el efecto scramble de
+// las etiquetas de laboratorio con su propia tipografía: el texto animado es aria-hidden y
+// los lectores de pantalla leen la copia oculta, así que el efecto no les afecta.
 
 interface Props {
   id: string;
-  number: string;
   title: string;
-  /** El contenido ocupa también la columna de margen (filas con número al margen). */
-  wide?: boolean;
 }
 
-const { id, number, title, wide = false } = Astro.props;
+const { id, title } = Astro.props;
 ---
 
 <section id={id} aria-labelledby={`${id}-title`} class="border-t border-line">
-  <div class="margin-grid py-16 md:py-24">
-    <h2
-      id={`${id}-title`}
-      class="text-3xl font-bold tracking-tight text-balance md:col-start-2 md:row-start-1 md:justify-self-start"
-      data-reveal
-    >
-      {title}
+  <div class="content-grid py-16 md:py-24">
+    <h2 id={`${id}-title`} class="text-3xl font-bold tracking-tight text-balance md:row-start-1 md:justify-self-start">
+      <span class="sr-only">{title}</span>
+      <span aria-hidden="true" data-scramble>{title}</span>
     </h2>
-    <LabLabel text={`[ ${number} / ${title} ]`} class="md:col-start-1 md:row-start-1 md:pt-[0.9em]" />
     {
       Astro.slots.has('actions') && (
-        /* relative: por encima de las líneas del título, que SplitText posiciona */
-        <div class="relative mt-6 md:col-start-2 md:row-start-1 md:mt-0 md:self-center md:justify-self-end">
+        <div class="mt-6 md:row-start-1 md:mt-0 md:self-center md:justify-self-end">
           <slot name="actions" />
         </div>
       )
     }
-    <div class:list={['mt-8 md:mt-12', wide ? 'md:col-span-2' : 'md:col-start-2']}>
+    <div class="mt-8 md:mt-12">
       <slot />
     </div>
   </div>

@@ -29,11 +29,14 @@ test('el título de sección se revela al llegar a él', async ({ page }) => {
   await expect.poll(() => heading.evaluate((element) => getComputedStyle(element).opacity)).toBe('1');
 });
 
-test('las etiquetas de laboratorio terminan con su texto real', async ({ page }) => {
+test('los títulos de sección hacen scramble y terminan con su texto real', async ({ page }) => {
   await page.goto('/');
-  const label = page.locator('#proyectos [data-scramble]');
+  const label = page.locator('#proyectos h2 [data-scramble]');
   await label.scrollIntoViewIfNeeded();
-  await expect(label).toHaveText('[ 01 / Proyectos ]', { timeout: 5000 });
+  await expect(label).toHaveText('Proyectos', { timeout: 5000 });
+  // El lector de pantalla lee la copia oculta, no el texto que cambia
+  await expect(label).toHaveAttribute('aria-hidden', 'true');
+  await expect(page.getByRole('heading', { level: 2, name: 'Proyectos', exact: true })).toBeAttached();
 });
 
 test('si las animaciones no cargan, el contenido se muestra igual', async ({ page }) => {

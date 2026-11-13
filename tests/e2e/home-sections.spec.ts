@@ -41,12 +41,14 @@ test('Servicios muestra los 3 paquetes con la tarifa de cada idioma', async ({ p
   }
 });
 
-test('el número de cada enlace del menú es el de la etiqueta de su sección', async ({ page }) => {
+test('cada enlace del menú lleva a una sección con su título, sin etiqueta repetida', async ({ page }) => {
   await page.goto('/');
   for (const link of await page.locator('nav a[href^="/#"]').all()) {
-    const number = await link.locator('span[aria-hidden="true"]').textContent();
     const id = (await link.getAttribute('href'))?.split('#')[1];
-    await expect(page.locator(`[id="${id}"] [data-scramble]`).first()).toContainText(`[ ${number} /`);
+    const section = page.locator(`[id="${id}"]`);
+    await expect(section.getByRole('heading', { level: 2 })).toBeAttached();
+    // 2026-11-13: la etiqueta `[ 02 / SERVICIOS ]` repetía el título y se quitó
+    await expect(section.getByText(/^\[ \d{2} \//)).toHaveCount(0);
   }
 });
 

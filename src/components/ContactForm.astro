@@ -314,9 +314,10 @@ const optional = `(${t('contact.form.optional')})`;
     display: none;
   }
 
+  /* En su propia línea, bajo el botón: el botón queda solo (2026-11-13) */
   .privacy {
-    flex: 1 1 22rem;
-    max-width: 52ch;
+    flex-basis: 100%;
+    max-width: 60ch;
     font-size: var(--text-sm);
     color: var(--muted);
     text-wrap: pretty;

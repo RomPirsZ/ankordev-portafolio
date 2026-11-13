@@ -30,7 +30,7 @@ test('en todo el recorrido nada se anima y GSAP ni se descarga', async ({ page, 
   await page.getByRole('button', { name: 'Cuadrícula' }).click();
   await page.getByRole('button', { name: 'Lista' }).click();
   await nothingMoves(page);
-  await expect(page.locator('#proyectos [data-scramble]')).toHaveText('[ 01 / Proyectos ]');
+  await expect(page.locator('#proyectos h2 [data-scramble]')).toHaveText('Proyectos');
 
   // Caso de estudio, por transición de página
   await row.click();

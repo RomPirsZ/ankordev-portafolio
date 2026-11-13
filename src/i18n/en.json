@@ -84,7 +84,7 @@
   "contact.form.optional": "optional",
   "contact.form.honeypot": "Leave this field empty",
   "contact.form.submit": "Send message",
-  "contact.form.privacy": "The message is stored in Supabase and delivered by email through Resend; it is only used to reply. Cloudflare Turnstile checks that it is not spam.",
+  "contact.form.privacy": "Only used to reply to you: stored in Supabase, delivered by email through Resend, with Cloudflare Turnstile filtering spam.",
   "contact.form.noscript": "The form needs JavaScript. WhatsApp and email work just the same without it.",
   "contact.form.fallbackError": "The message could not be sent. Try again, or write via WhatsApp or email.",
   "contact.form.status.verifying": "Verifying…",

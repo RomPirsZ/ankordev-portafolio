@@ -184,9 +184,9 @@ La navegación pasa de una sola fila en escritorio (marca · enlaces · interrup
 
 **The Paper Rule.** La retícula es el papel, no el contenido: nunca lleva información, nunca compite en contraste con el texto y nunca se usa para alinear a la fuerza piezas que no la necesitan.
 
-Las páginas usan una retícula de dos columnas desde 768 px (`.margin-grid`): una **columna de margen** de 11rem para anotaciones (etiquetas de sección, `EXP-001`, ficha del proyecto, «Volver») y la columna de contenido. Las secciones del inicio se separan con una línea de 1 px arriba y 64–96 px de aire vertical. En móvil la columna de margen desaparece y cada anotación cae **debajo** de su título.
+El inicio usa una sola columna centrada (`.content-grid`, máx. 80rem, mismos márgenes a ambos lados): hero y secciones arrancan en el borde del contenedor, sin sangría. Las páginas con etiqueta propia (caso de estudio, 404, gracias) mantienen la retícula de dos columnas desde 768 px (`.margin-grid`): una **columna de margen** de 11rem para anotaciones (`EXP-001`, ficha del proyecto, «Volver») y la columna de contenido. Las secciones del inicio se separan con una línea de 1 px arriba y 64–96 px de aire vertical. En móvil la columna de margen desaparece y cada anotación cae **debajo** de su título.
 
-**The Margin Rule.** Una etiqueta de laboratorio va al margen, a la altura de su título, nunca encima como antetítulo. Si no hay margen (móvil), va debajo.
+**The Margin Rule.** Una etiqueta de laboratorio va al margen, a la altura de su título, nunca encima como antetítulo. Si no hay margen (móvil), va debajo. Si solo repetiría el título (las secciones del inicio), no se pone: el título mismo hace el scramble, con su tipografía (2026-11-13).
 
 ## Elevation & Depth
 
@@ -243,7 +243,7 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 **The Third-Party-Mark Rule.** Las marcas de terceros (los glifos de las redes) van con su forma oficial, de Bootstrap Icons (MIT), rellenas en `currentColor` y sin redibujar: no siguen el trazo de 1,5 px ni la esquina recta de los iconos propios. Solo identifican adónde lleva un enlace, siempre junto a su nombre; nunca decoran.
 
 ### Project Rows (componente firma)
-- **Lista (por defecto, y la única sin JS):** filas a todo el ancho separadas por líneas de 1 px; número `001` en la columna de margen, título en Space Grotesk 700 `text-3xl` (`text-2xl` en móvil), metadatos mono debajo (tipo · origen · estado), año y flecha SVG a la derecha. Toda la fila es el enlace; hover y foco subrayan el título (2 px). No descarga portadas.
+- **Lista (por defecto, y la única sin JS):** filas a todo el ancho separadas por líneas de 1 px; número `001` en una columna estrecha de 4rem a la izquierda, título en Space Grotesk 700 `text-3xl` (`text-2xl` en móvil), metadatos mono debajo (tipo · origen · estado), año y flecha SVG a la derecha. Toda la fila es el enlace; hover y foco subrayan el título (2 px). No descarga portadas.
 - **Cuadrícula:** el mismo HTML con `data-view="grid"`: tarjetas sin sombra, portada 16:10 arriba con una línea de 1 px en `--line` (la separa del fondo cuando comparten color), número, título `text-xl` y metadatos.
 - **Imagen flotante:** en la lista, con puntero fino y movimiento, la portada del proyecto bajo el puntero lo sigue a su derecha (22rem, 16:10) con la única sombra del sistema. Decorativa (`aria-hidden`).
 
@@ -251,7 +251,7 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 - Junto al CTA del hero: un punto de 8 px en `--accent` (el círculo de estado, The Square Rule) y «Disponible para proyectos» en mono mayúscula `--fg`. Estático: no late ni parpadea.
 
 ### Package Rows (Servicios)
-- El lenguaje de las filas de proyecto, sin enlace: alcance y plazo apilados en la columna de margen (mono, la primera línea en la línea base del nombre), nombre en Space Grotesk 700 `text-3xl` (`text-2xl` en móvil), descripción en `--muted` y «Desde» + precio a la derecha, en `text-3xl` con `tabular-nums`. En móvil todo se apila y el alcance y el plazo van en una línea bajo el nombre. Nota de precios en mono debajo.
+- El lenguaje de las filas de proyecto, sin enlace: nombre en Space Grotesk 700 `text-3xl` (`text-2xl` en móvil), alcance y plazo en una línea mono bajo el nombre («1 PÁGINA · 5–7 DÍAS»), descripción en `--muted` y «Desde» + precio a la derecha, en `text-3xl` con `tabular-nums`. En móvil el precio también va debajo. Nota de precios en mono debajo.
 
 ### Process Line
 - Cuatro pasos (en columna en móvil, cuatro columnas desde 64rem) unidos por una línea de 1 px: riel en `--line`, avance en `--fg` y una marca cuadrada de 9 px en `--fg` por paso. La línea va de la primera marca a la última. Con movimiento, el avance se dibuja ligado al scroll (`--progress` → `scaleY`/`scaleX` de cada tramo); sin JS o con reduced-motion se ve entera. Número del paso en mono `--muted`, nombre `text-xl` 700 y texto en `--muted`.
@@ -275,7 +275,7 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 - `/gracias/` y `/en/thanks/`, con la composición de la 404: titular display, `MSG-200` al margen, una frase y una sola pieza sólida («Volver al inicio») más el enlace mono «Ver proyectos». Lleva `noindex`.
 
 ### Lab Labels
-- Etiquetas de laboratorio (`src/components/LabLabel.astro`): `[ 01 / PROYECTOS ]`, `EXP-001`, `ERR-404`, `MSG-200`, `FIG-01`. Mono mayúscula en `--code`, en la columna de margen a la altura de su título. Decorativas (`aria-hidden`): su información ya está en el título cercano. Hacen un scramble breve al aparecer. Son el único texto en turquesa; los demás metadatos (números de fila, año, ficha) van en `--muted`.
+- Etiquetas de laboratorio (`src/components/LabLabel.astro`): `EXP-001`, `ERR-404`, `MSG-200`, `FIG-01` (las de sección, `[ 01 / PROYECTOS ]`, se quitaron el 2026-11-13: repetían el título, que ahora hace el scramble). Mono mayúscula en `--code`, en la columna de margen a la altura de su título. Decorativas (`aria-hidden`): su información ya está en el título cercano. Hacen un scramble breve al aparecer. Son el único texto en turquesa; los demás metadatos (números de fila, año, ficha) van en `--muted`.
 
 ### Portadas provisionales
 - Mientras no hay capturas reales (T30), cada proyecto lleva una portada 1600×1000 con el lenguaje del cuaderno: retícula de 64 px, etiqueta `EXP-00X`, punto de estado y el número en Monaspace Krypton 800. Alternan Carbón con punto Coral (impares) y Coral con Carbón (pares). Si cambia la paleta, se regeneran con ella.

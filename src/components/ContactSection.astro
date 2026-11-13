@@ -4,7 +4,7 @@
 import Section from './Section.astro';
 import ArrowIcon from './ArrowIcon.astro';
 import ContactForm from './ContactForm.astro';
-import { sectionId, sectionNumber, useTranslations, type Lang } from '../i18n/utils';
+import { sectionId, useTranslations, type Lang } from '../i18n/utils';
 import { contactChannels } from '../lib/site';
 import { OWNER } from '../lib/owner';
 
@@ -17,7 +17,7 @@ const t = useTranslations(lang);
 const channels = contactChannels(OWNER);
 ---
 
-<Section id={sectionId('contact', lang)} number={sectionNumber('contact')} title={t('contact.title')}>
+<Section id={sectionId('contact', lang)} title={t('contact.title')}>
   <p class="contact-text">{t('contact.text')}</p>
   <ContactForm lang={lang} />
   {

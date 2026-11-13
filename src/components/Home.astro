@@ -18,13 +18,13 @@ const t = useTranslations(lang);
 const heroSentences = t('hero.title').split(/(?<=\.)\s+/);
 ---
 
-<section aria-labelledby="hero-title" class="margin-grid min-h-[72svh] content-end pt-16 pb-14 md:pb-20">
-  <h1 id="hero-title" class="max-w-[14ch] text-display font-bold text-balance md:col-start-2" data-split>
+<section aria-labelledby="hero-title" class="content-grid min-h-[72svh] content-end pt-16 pb-14 md:pb-20">
+  <h1 id="hero-title" class="max-w-[14ch] text-display font-bold text-balance" data-split>
     {heroSentences.map((sentence, i) => [i > 0 ? ' ' : null, <span class="hero-sentence block">{sentence}</span>])}
   </h1>
-  <p class="mt-4 max-w-[46ch] text-lg text-pretty md:col-start-2 md:mt-8">{t('hero.subtitle')}</p>
+  <p class="mt-4 max-w-[46ch] text-lg text-pretty md:mt-8">{t('hero.subtitle')}</p>
   <!-- El único bloque sólido de la pantalla (DESIGN.md, sólido + fino) y, al lado, el estado -->
-  <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-5 md:col-start-2 md:mt-10">
+  <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-5 md:mt-10">
     <a
       href={sectionHref('contact', lang)}
       class="inline-flex items-center gap-3 bg-accent px-6 py-4 text-lg font-bold text-on-accent"
