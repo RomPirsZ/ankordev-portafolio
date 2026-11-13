@@ -43,12 +43,12 @@ const links = [
     <LabLabel text={`EXP-${data.number}`} class="mt-4 md:col-start-1 md:row-start-2 md:mt-0 md:pt-[0.8em]" />
   </header>
 
-  <figure class="mx-auto max-w-7xl px-4 sm:px-6">
+  <figure class="page-frame">
     <Image
       src={data.cover}
       alt={data.coverAlt}
       widths={[640, 960, 1280, 1600]}
-      sizes="(min-width: 80rem) 77rem, calc(100vw - 2rem)"
+      sizes="(min-width: 72rem) 66rem, (min-width: 64rem) calc(100vw - 6rem), (min-width: 40rem) calc(100vw - 4rem), calc(100vw - 2rem)"
       loading="eager"
       class="h-auto w-full border border-line"
     />
@@ -90,7 +90,7 @@ const links = [
 
   {
     data.gallery.length > 0 && (
-      <section aria-labelledby="case-gallery" class="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
+      <section aria-labelledby="case-gallery" class="page-frame pb-20">
         <h2 id="case-gallery" class="sr-only">
           {t('case.gallery')}
         </h2>
