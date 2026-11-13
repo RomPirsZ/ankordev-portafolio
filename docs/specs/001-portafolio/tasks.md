@@ -4,6 +4,7 @@
 > Si hay retrasos: se recortan la versión EN (F6) y el proyecto 003 (F5). Tests y seguridad no se recortan.
 > **Orden acordado 2026-11-02:** hasta pasar a Vercel Pro no se despliega nada comercial (servicios, precios, CTA ni formulario). Se adelantan las tareas que no lo son: T14 → T21–T23 → Fase 5. Esperan a Pro: el resto de T12 y T24–T26.
 > **Cambio 2026-11-06:** el hosting pasa a Cloudflare Workers Free (T09c), que admite uso comercial, y se descarta Vercel Pro. Lo que esperaba a Pro queda libre cuando producción esté en Cloudflare **y** el proyecto de Vercel desconectado: mientras siga conectado, cada push a `main` también despliega en Vercel Hobby.
+> **Replanificado 2026-11-13:** sin fecha fija de lanzamiento; se prioriza hacer cada parte bien. Orden: primero lo que queda del propio portafolio (Fase 6: T31 → T33 → T34), después los proyectos (Fase 5: T28 → T29 → T30, cada uno sin prisa) y al final T35.
 
 ## Fase 1 — Base (objetivo: 2 nov)
 
@@ -74,20 +75,20 @@ Auditoría `quick` de solo código fuente sobre el diff de T26b–T26f (`02603a4
 
 - [x] T26g Aviso único de «tope alcanzado» al dueño — *una sola fuente con unos 81 tokens válidos podía llenar el tope y los contactos reales siguientes se guardaban sin que el dueño se enterase; el primero que pasa el tope manda un email sin datos del visitante (`notifyCapReached`); nunca más de 81 emails en 24 horas*
 
-## Fase 5 — Proyectos (objetivo: 5–9 nov)
+## Fase 5 — Proyectos (sin fecha fija; después de la Fase 6)
 
 - [x] T27 Proyecto 001 restaurante — *repo propio en `../restaurante/` (café ficticio «Molienda», Mérida), con su spec, plan y tareas en `docs/specs/001-sitio/`; M00–M10 hechas (revisión final de impeccable aprobada, `DESIGN.md`, Lighthouse móvil 99–100/100/100/100); sin despliegue hasta nuevo aviso; el caso de estudio va en T30*
 - [ ] T28 Proyecto 002 tienda (`docs/specs/003-tienda/`)
 - [ ] T29 Proyecto 003 reservas, versión mínima (`docs/specs/004-reservas/`)
 - [ ] T30 Casos de estudio con capturas y enlaces reales
 
-## Fase 6 — Pulido (objetivo: 10 nov)
+## Fase 6 — Pulido (sin fecha fija; siguiente)
 
 - [ ] T31 Traducción EN completa + test e2e 5
 - [x] T32 SEO: metadatos, OG, sitemap, robots, JSON-LD — *hecha 2026-11-13, adelantada a T28–T31 a petición del usuario (Meta Explorer daba 74 de SEO): description, canonical, hreflang, Open Graph y Twitter en cada página; imágenes OG por idioma; `@astrojs/sitemap` 3.7.4; `robots.txt`; JSON-LD en el inicio. Detalle en el plan §10; e2e en `seo.spec.ts`*
 - [ ] T33 Lighthouse CI con umbrales de la constitución
 - [ ] T34 Checklist manual de seguridad y móvil (ver plan §9)
 
-## Fase 7 — Lanzamiento (11 nov)
+## Fase 7 — Lanzamiento (sin fecha fija)
 
 - [ ] T35 Revisión final, publicar y anunciar

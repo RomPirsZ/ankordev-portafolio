@@ -18,7 +18,7 @@ La tarea central de todos es la misma: entender la oferta y contactar (formulari
 
 Portafolio de marca personal de un desarrollador y diseñador web independiente en Venezuela. Muestra proyectos con casos de estudio, explica servicios y paquetes con precio y plazo, y convierte visitas en contactos.
 
-**Éxito:** primer cliente pagado antes del 2026-11-30. Lanzamiento previsto el 2026-11-11.
+**Éxito:** primer cliente pagado antes del 2026-11-30. Lanzamiento sin fecha fija (replanificado el 2026-11-13: antes, 2026-11-11); se prioriza la calidad de cada parte.
 
 ## Positioning
 
