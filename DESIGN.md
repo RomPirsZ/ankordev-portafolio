@@ -48,9 +48,10 @@ rounded:
   full: "9999px"
 spacing:
   gutter-mobile: "16px"
-  gutter: "24px"
+  gutter-tablet: "32px"
+  gutter: "48px"
   grid-cell: "64px"
-  container: "80rem"
+  container: "72rem"
 components:
   brand-logo:
     textColor: "{colors.hueso}"
@@ -74,6 +75,18 @@ components:
   footer-clock:
     textColor: "{colors.hueso}"
     typography: "{typography.label}"
+  button-primary:
+    backgroundColor: "{colors.coral}"
+    textColor: "{colors.carbon}"
+    rounded: "{rounded.none}"
+    padding: "16px 24px"
+  input:
+    textColor: "{colors.hueso}"
+    rounded: "{rounded.none}"
+    padding: "12px 16px"
+  project-row:
+    textColor: "{colors.hueso}"
+    padding: "32px 0"
 ---
 
 # Design System: [A]nkordev
@@ -178,7 +191,7 @@ La escala es fluida entre 360 px y 1440 px de ancho; los pasos intermedios (`tex
 
 ## Layout
 
-El contenido vive en un contenedor centrado de 80rem (`max-w-7xl`) con márgenes laterales de 16 px en móvil y 24 px desde 640 px. El fondo de todo el `body` lleva la retícula de laboratorio (celdas de 64 px, líneas de 1 px en el color Línea, alineada arriba y al centro). Nav y footer se separan del contenido con una línea de 1 px, no con bloques de color.
+El contenido vive en un marco centrado de 72rem (`.page-frame`) con márgenes laterales de 16 px en móvil, 32 px desde 640 px y 48 px desde 1024 px. El fondo de todo el `body` lleva la retícula de laboratorio (celdas de 64 px, líneas de 1 px en el color Línea, alineada arriba y al centro). Nav y footer se separan del contenido con una línea de 1 px, no con bloques de color.
 
 La navegación pasa de una sola fila en escritorio (marca · enlaces · interruptor de tema e idioma) a dos filas en móvil, con los enlaces debajo y a todo el ancho. El footer pasa de una columna a tres desde 640 px (reloj · redes con su glifo · crédito alineado a la derecha). Se diseña primero para el teléfono: es el dispositivo de la mayoría de las visitas.
 
@@ -264,7 +277,7 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 - **Campos:** nombre, email, tipo de proyecto (opcional), presupuesto aproximado (opcional) y mensaje. Desde 48rem van en dos columnas (nombre | email, tipo | presupuesto) y el mensaje a todo el ancho; en móvil, en una. Cada etiqueta es una anotación mono encima de su campo.
 - **Control:** esquina recta, borde de 1 px en `--fg` y fondo `--bg` al 82 % (calma la retícula detrás del texto). Placeholder en `--muted`. El tipo de proyecto es un `select` nativo sin apariencia del sistema, con la flecha SVG hacia abajo a la derecha. Foco: el contorno global.
 - **Error:** borde en `--accent` doblado hacia dentro (`box-shadow` inset de 1 px, sin mover el diseño) y `aria-invalid`. Debajo, el mensaje en `--fg` `text-sm` con el punto coral de 8 px como indicador de estado. El aviso general (`role="alert"`) usa el mismo punto, encima del botón.
-- **Envío:** el botón primario sólido («Enviar mensaje» + flecha), sin efecto magnético: un botón de enviar que se mueve no ayuda. Mientras verifica o envía queda al 60 % con `aria-disabled` y, a su lado, el estado en mono («Verificando…», «Enviando…»). El aviso de privacidad va al lado en `text-sm` `--muted`.
+- **Envío:** el botón primario sólido («Enviar mensaje» + flecha), sin efecto magnético: un botón de enviar que se mueve no ayuda. Mientras verifica o envía queda al 60 % con `aria-disabled` y, a su lado, el estado en mono («Verificando…», «Enviando…»). El botón queda solo en su fila; el aviso de privacidad, breve, va debajo en `text-sm` `--muted` (2026-11-13).
 - **Turnstile:** invisible salvo que Cloudflare necesite que la persona pulse algo; su script se descarga al primer foco en el formulario.
 - **Sin JS no se ofrece:** Turnstile lo necesita. En su lugar se ve un aviso en `--muted` que remite a WhatsApp y email, y el script lo retira al mostrar el formulario. El aviso de error del POST nativo (`#contacto-error`) solo se ve cuando la URL lo señala (`:target`).
 
@@ -281,13 +294,13 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 - Mientras no hay capturas reales (T30), cada proyecto lleva una portada 1600×1000 con el lenguaje del cuaderno: retícula de 64 px, etiqueta `EXP-00X`, punto de estado y el número en Monaspace Krypton 800. Alternan Carbón con punto Coral (impares) y Coral con Carbón (pares). Si cambia la paleta, se regeneran con ella.
 
 ### View Controls
-- Dos botones mono en mayúscula dentro de un borde de 1 px en `--fg`, con icono SVG de 14 px; el activo va invertido (`--fg` de fondo, `--bg` de texto) y lleva `aria-pressed`. Ocultos sin JS. Van al final de la fila del título de la sección, o debajo de su etiqueta en móvil.
+- Dos botones mono en mayúscula dentro de un borde de 1 px en `--fg`, con icono SVG de 14 px; el activo va invertido (`--fg` de fondo, `--bg` de texto) y lleva `aria-pressed`. Ocultos sin JS. Van al final de la fila del título de la sección, o debajo del título en móvil.
 
 ### Lab Cursor
 - Anillo de 44 px con borde de 1 px en `--fg` que acompaña al cursor del sistema (no lo oculta), reducido al 35 % en reposo y a tamaño completo sobre lo interactivo. Solo con puntero fino y movimiento; decorativo.
 
 ### Movimiento
-Un solo momento de autor por página: la entrada del titular (`[data-split]`), letras desde abajo con máscara y de `blur(6px)` a nítido en 0,6 s, `expo.out`. Los títulos de sección (`[data-reveal]`) se revelan por líneas al entrar en pantalla, más sobrios (`blur(4px)`). Las etiquetas (`[data-scramble]`) hacen un scramble breve. El scroll es suave en escritorio y nativo en táctil; los enlaces a secciones saltan sin animación (los resuelve el ClientRouter, no Lenis). Las páginas cambian con View Transitions. La línea del proceso se dibuja con el scroll. Con reduced-motion no se descarga GSAP ni hay ninguna animación, ni siquiera el fundido entre páginas.
+Un solo momento de autor por página: la entrada del titular (`[data-split]`), letras desde abajo con máscara y de `blur(6px)` a nítido en 0,6 s, `expo.out`. Los títulos de sección y las etiquetas (`[data-scramble]`) hacen un scramble breve al entrar en pantalla; en los títulos, el texto que cambia es `aria-hidden` y el lector de pantalla lee una copia oculta (2026-11-13: antes los títulos se revelaban por líneas). El scroll es suave en escritorio y nativo en táctil; los enlaces a secciones saltan sin animación (los resuelve el ClientRouter, no Lenis). Las páginas cambian con View Transitions. La línea del proceso se dibuja con el scroll. Con reduced-motion no se descarga GSAP ni hay ninguna animación, ni siquiera el fundido entre páginas.
 
 ## Do's and Don'ts
 

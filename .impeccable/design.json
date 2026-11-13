@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-06T20:05:45.919Z",
+  "generatedAt": "2026-11-13T19:49:41.000Z",
   "title": "Design System: [A]nkordev",
   "extensions": {
     "colorMeta": {
@@ -303,20 +303,24 @@
     ],
     "breakpoints": [
       {
-        "name": "sm",
-        "value": "640px"
-      },
-      {
         "name": "fluid-min",
         "value": "360px"
       },
       {
-        "name": "fluid-max",
-        "value": "1440px"
+        "name": "sm",
+        "value": "640px"
       },
       {
         "name": "md",
         "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "fluid-max",
+        "value": "1440px"
       }
     ],
     "themes": {
@@ -406,25 +410,25 @@
       "name": "Etiqueta de laboratorio",
       "kind": "chip",
       "refersTo": "lab-label",
-      "description": "Anotación al margen ([ 01 / PROYECTOS ], EXP-001) en --code. Decorativa (aria-hidden); el único texto en turquesa.",
-      "html": "<span class=\"ds-lab-label\" aria-hidden=\"true\">[ 01 / Proyectos ]</span>",
+      "description": "Anotación al margen de páginas con etiqueta propia (EXP-001, ERR-404, MSG-200, FIG-01) en --code, con scramble breve. Decorativa (aria-hidden); el único texto en turquesa. Las secciones del inicio no la llevan: el título hace el scramble.",
+      "html": "<span class=\"ds-lab-label\" aria-hidden=\"true\">EXP-001</span>",
       "css": ".ds-lab-label { display: block; color: var(--code); font-family: 'Monaspace Krypton', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; }"
     },
     {
       "name": "Campo de formulario",
       "kind": "input",
       "refersTo": "input",
-      "description": "Propuesta (aún no implementado, T25): etiqueta mono arriba, campo recto con línea de 1 px en --fg.",
-      "html": "<label class=\"ds-field\"><span>Nombre</span><input type=\"text\" name=\"name\" autocomplete=\"name\"></label>",
-      "css": ".ds-field { display: grid; gap: 0.5rem; color: var(--fg); } .ds-field span { font-family: 'Monaspace Krypton', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); } .ds-field input { background: transparent; color: var(--fg); border: 0; border-bottom: 1px solid var(--fg); border-radius: 0; padding: 0.75rem 0; font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif; font-size: 1.125rem; } .ds-field input:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }"
+      "description": "Implementado (src/components/ContactForm.astro): etiqueta mono encima; control recto con borde de 1 px en --fg y fondo --bg al 82 %; error con borde --accent doblado hacia dentro.",
+      "html": "<label class=\"ds-field\"><span>Nombre</span><input type=\"text\" name=\"name\" autocomplete=\"name\"></label><label class=\"ds-field\"><span>Email</span><input type=\"email\" name=\"email\" aria-invalid=\"true\" value=\"ana@\"></label>",
+      "css": ".ds-field { display: grid; gap: 0.5rem; color: var(--fg); margin-bottom: 1rem; } .ds-field span { font-family: 'Monaspace Krypton', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); } .ds-field input { background: color-mix(in srgb, var(--bg) 82%, transparent); color: var(--fg); border: 1px solid var(--fg); border-radius: 0; padding: 0.75rem 1rem; font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif; font-size: 1rem; } .ds-field input::placeholder { color: var(--muted); } .ds-field input:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; } .ds-field input[aria-invalid='true'] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }"
     },
     {
-      "name": "Tarjeta de proyecto",
+      "name": "Fila de proyecto",
       "kind": "card",
-      "refersTo": "card",
-      "description": "Propuesta (aún no implementado, T12): superficie por tono, sin sombra, numeración mono y título en grotesca.",
-      "html": "<article class=\"ds-card\"><p class=\"ds-card-meta\">004 · Iglesia · En progreso</p><h3>LEGO LBN</h3></article>",
-      "css": ".ds-card { background: var(--surface); color: var(--fg); border-radius: 0; padding: 1.5rem; display: grid; gap: 0.75rem; } .ds-card-meta { margin: 0; font-family: 'Monaspace Krypton', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); } .ds-card h3 { margin: 0; font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif; font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; }"
+      "refersTo": "project-row",
+      "description": "Implementado (src/components/ProjectsSection.astro), componente firma: fila a todo el ancho entre líneas de 1 px; número mono en una columna de 4rem, título grotesco 700, metadatos mono debajo, año y flecha a la derecha. Toda la fila es el enlace; hover y foco subrayan el título.",
+      "html": "<a class=\"ds-project-row\" href=\"#\"><span class=\"ds-pr-num\">001</span><span class=\"ds-pr-body\"><span class=\"ds-pr-title\">Restaurante / café local</span><span class=\"ds-pr-meta\">Negocio local · Proyecto propio · Por construir</span></span><span class=\"ds-pr-year\">2026</span><svg class=\"ds-pr-arrow\" width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M5 15 15 5M7 5h8v8\"/></svg></a>",
+      "css": ".ds-project-row { display: grid; grid-template-columns: 4rem minmax(0, 1fr) auto auto; column-gap: 1.5rem; align-items: baseline; padding: 2rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--fg); text-decoration: none; } .ds-pr-num, .ds-pr-year { font-family: 'Monaspace Krypton', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); } .ds-pr-body { display: grid; gap: 0.5rem; } .ds-pr-title { font-family: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif; font-size: 2.25rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; } .ds-pr-meta { font-family: 'Monaspace Krypton', ui-monospace, monospace; font-size: 0.8125rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); } .ds-pr-arrow { align-self: center; } .ds-project-row:hover .ds-pr-title, .ds-project-row:focus-visible .ds-pr-title { text-decoration: underline; text-decoration-thickness: 2px; } .ds-project-row:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }"
     },
     {
       "name": "Reloj de Caracas",
@@ -497,7 +501,7 @@
       },
       {
         "name": "The Margin Rule",
-        "body": "Una etiqueta de laboratorio va al margen, a la altura de su título, nunca encima como antetítulo. Si no hay margen (móvil), va debajo.",
+        "body": "Una etiqueta de laboratorio va al margen, a la altura de su título, nunca encima como antetítulo. Si no hay margen (móvil), va debajo. Si solo repetiría el título (las secciones del inicio), no se pone: el título mismo hace el scramble, con su tipografía (2026-11-13).",
         "section": "layout"
       },
       {
@@ -509,6 +513,11 @@
         "name": "The Square Rule",
         "body": "Si tiene esquina, la esquina es recta. El único círculo legítimo es el que representa un estado.",
         "section": "shapes"
+      },
+      {
+        "name": "The Third-Party-Mark Rule",
+        "body": "Las marcas de terceros (los glifos de las redes) van con su forma oficial, de Bootstrap Icons (MIT), rellenas en `currentColor` y sin redibujar: no siguen el trazo de 1,5 px ni la esquina recta de los iconos propios. Solo identifican adónde lleva un enlace, siempre junto a su nombre; nunca decoran.",
+        "section": "components"
       }
     ],
     "dos": [
