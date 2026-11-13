@@ -238,3 +238,11 @@ CI (`ci.yml`): `npm ci` → `astro check` → `vitest run` → `astro build` →
 ## 10. SEO
 
 `<title>` y description por página e idioma, `hreflang`, Open Graph 1200×630, `@astrojs/sitemap`, `robots.txt`, JSON-LD `Person` + `ProfessionalService`, favicon.
+
+**Implementado (T32, 2026-11-13):**
+- **URL base:** `SITE_URL` en `src/lib/site.ts` (hoy `https://ankordev-portafolio.ankordev.workers.dev`), que usa `site` en `astro.config.mjs`. Con dominio propio se cambia solo ahí.
+- **`<head>` (`src/layouts/BaseLayout.astro`):** description obligatoria por página (inicio: `site.description`, 120–160 caracteres; casos: su `summary`; 404 y gracias: su texto), canonical absoluta, `hreflang` es/en/x-default, Open Graph (`og:type` `article` en los casos), Twitter `summary_large_image` y `rel="sitemap"`. Gracias y 404 llevan `noindex` y no tienen canonical ni hreflang.
+- **Imágenes OG:** `public/og/og-es.png` y `og-en.png`, 1200×630 y menos de 300 KB (WhatsApp). Están compuestas con el sistema de DESIGN.md: logotipo, frase del hero, retícula y gradiente del tema oscuro. Si cambia la paleta o la frase, se regeneran.
+- **Sitemap:** `@astrojs/sitemap` 3.7.4, versión exacta (la 3.7.5 no cumplía `min-release-age`). Sin gracias ni 404. Los casos emparejan sus alternas con `serialize`, porque cambian de segmento (`/proyectos/` ↔ `/en/projects/`).
+- **`public/robots.txt`:** permite todo menos `/api/` y apunta al sitemap. Cloudflare puede anteponer su bloque de content signals.
+- **JSON-LD (`src/components/StructuredData.astro`, solo en el inicio):** `WebSite`, `ProfessionalService` y `Person`. `Person` solo aparece si existe `PUBLIC_OWNER_NAME`. No lleva precios, valoraciones ni clientes. Es un bloque de datos, así que la CSP no necesita su hash.

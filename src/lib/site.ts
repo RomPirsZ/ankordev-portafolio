@@ -2,6 +2,12 @@
 // vacío no se muestra.
 
 /**
+ * URL pública del sitio (T32): canonical, hreflang, Open Graph, sitemap y JSON-LD.
+ * Sin dominio propio todavía (spec §8); el día que lo haya, se cambia solo aquí.
+ */
+export const SITE_URL = 'https://ankordev-portafolio.ankordev.workers.dev';
+
+/**
  * Datos públicos del dueño (spec §5.6 y §5.7). No van en git: salen de variables
  * de build, en `.env` en local y en Workers Builds en producción (plan §7).
  */

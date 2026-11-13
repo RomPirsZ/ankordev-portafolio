@@ -18,6 +18,8 @@ const t = useTranslations('es');
 
 <BaseLayout
   title={`${entry.data.title} — ${t('site.brand')}`}
+  description={entry.data.summary}
+  type="article"
   lang="es"
   altHref={localizePath('project', 'en', { slug: projectSlug(entry.id) })}
 >

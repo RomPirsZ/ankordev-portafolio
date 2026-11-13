@@ -10,7 +10,13 @@ const es = useTranslations('es');
 const en = useTranslations('en');
 ---
 
-<BaseLayout title={`${es('notFound.title')} — ${es('site.brand')}`} lang="es" altHref={localizePath('home', 'en')}>
+<BaseLayout
+  title={`${es('notFound.title')} — ${es('site.brand')}`}
+  description={es('notFound.text')}
+  lang="es"
+  altHref={localizePath('home', 'en')}
+  noindex
+>
   <div class="margin-grid min-h-[60svh] content-center py-20 md:py-28">
     <h1 class="max-w-[14ch] text-display font-bold text-balance md:col-start-2 md:row-start-1" data-split>
       {es('notFound.title')}

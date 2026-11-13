@@ -1,6 +1,9 @@
 {
   "site.brand": "[A]nkordev",
   "site.title": "[A]nkordev — Web design and development",
+  "site.description": "Custom web design and development from Venezuela: landing pages, business websites and online stores or web apps that are fast, accessible and distinctive.",
+  "og.alt": "[A]nkordev: design with character, development made to measure.",
+  "schema.jobTitle": "Web developer and designer",
   "nav.label": "Main",
   "nav.skip": "Skip to content",
   "nav.home": "Home",

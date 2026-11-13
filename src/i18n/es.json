@@ -1,6 +1,9 @@
 {
   "site.brand": "[A]nkordev",
   "site.title": "[A]nkordev — Diseño y desarrollo web",
+  "site.description": "Diseño y desarrollo web a la medida desde Venezuela: landings, sitios para negocios y tiendas o apps web rápidas, accesibles y con carácter propio.",
+  "og.alt": "[A]nkordev: diseño con carácter, desarrollo a la medida.",
+  "schema.jobTitle": "Desarrollador y diseñador web",
   "nav.label": "Principal",
   "nav.skip": "Saltar al contenido",
   "nav.home": "Inicio",

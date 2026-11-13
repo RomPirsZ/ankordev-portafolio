@@ -75,7 +75,11 @@ test('la CSP no abre puertas: sin unsafe-*, sin plugins, sin <base> y sin iframe
 
 test('la CSP permite cada script inline del build', async ({ page }) => {
   await page.goto('/');
-  const inline = await page.$$eval('script:not([src])', (scripts) => scripts.map((s) => s.textContent ?? ''));
+  // El JSON-LD (T32) es un bloque de datos: el navegador no lo ejecuta y la CSP no lo mira.
+  // Su contenido cambia con las variables de build, así que tampoco puede ir en la CSP.
+  const inline = await page.$$eval('script:not([src]):not([type="application/ld+json"])', (scripts) =>
+    scripts.map((s) => s.textContent ?? ''),
+  );
   expect(inline.length).toBeGreaterThan(0);
   for (const code of inline) {
     const hash = createHash('sha256').update(code).digest('base64');

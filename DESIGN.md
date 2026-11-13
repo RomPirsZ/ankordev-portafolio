@@ -290,6 +290,9 @@ Filosofía: **sólido + fino**. El CTA principal es un bloque sólido y táctil 
 ### Lab Labels
 - Etiquetas de laboratorio (`src/components/LabLabel.astro`): `EXP-001`, `ERR-404`, `MSG-200`, `FIG-01` (las de sección, `[ 01 / PROYECTOS ]`, se quitaron el 2026-11-13: repetían el título, que ahora hace el scramble). Mono mayúscula en `--code`, en la columna de margen a la altura de su título. Decorativas (`aria-hidden`): su información ya está en el título cercano. Hacen un scramble breve al aparecer. Son el único texto en turquesa; los demás metadatos (números de fila, año, ficha) van en `--muted`.
 
+### Imágenes de vista previa (Open Graph)
+- `public/og/og-es.png` y `og-en.png`, 1200×630: fondo del tema oscuro (gradiente grafito → musgo con la retícula de 64 px), logotipo «Cursor» arriba a la izquierda y la frase del hero en Space Grotesk 700 (84 px, `-0.03em`, en 4 líneas como en el hero). Abajo, la etiqueta de disponibilidad con su punto coral y `EXP-000` en `--code`. Todo va alineado a la retícula, con un margen de una celda (64 px). Sin sombras ni grano, para no pasar de 300 KB.
+
 ### Portadas provisionales
 - Mientras no hay capturas reales (T30), cada proyecto lleva una portada 1600×1000 con el lenguaje del cuaderno: retícula de 64 px, etiqueta `EXP-00X`, punto de estado y el número en Monaspace Krypton 800. Alternan Carbón con punto Coral (impares) y Coral con Carbón (pares). Si cambia la paleta, se regeneran con ella.
 

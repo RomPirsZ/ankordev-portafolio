@@ -105,3 +105,13 @@ describe('rutas', () => {
     expect(order.map(sectionNumber)).toEqual(['01', '02', '03', '04', '05']);
   });
 });
+
+// T32: la meta description se corta en los resultados de búsqueda pasados ~160 caracteres
+describe('SEO', () => {
+  it('la descripción del sitio mide entre 120 y 160 caracteres en los dos idiomas', () => {
+    for (const dictionary of [es, en]) {
+      expect(dictionary['site.description'].length).toBeGreaterThanOrEqual(120);
+      expect(dictionary['site.description'].length).toBeLessThanOrEqual(160);
+    }
+  });
+});

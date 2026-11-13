@@ -1,0 +1,58 @@
+---
+// Datos estructurados del inicio (T32, plan §10): quién está detrás del sitio y qué
+// ofrece, en JSON-LD. Solo hechos del propio sitio: nada de precios, valoraciones ni
+// clientes (PRODUCT.md). El nombre sale de PUBLIC_OWNER_NAME; sin él, no hay Person.
+// Es un bloque de datos, no un script: el navegador no lo ejecuta y la CSP no lo afecta.
+import { localizePath, useTranslations, type Lang } from '../i18n/utils';
+import { OWNER } from '../lib/owner';
+import { SITE_URL, SOCIALS, STACK } from '../lib/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const home = new URL(localizePath('home', lang), SITE_URL).href;
+const personId = `${SITE_URL}/#person`;
+const sameAs = SOCIALS.filter(({ url }) => url).map(({ url }) => url);
+
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'WebSite',
+    '@id': `${home}#website`,
+    url: home,
+    name: t('site.brand'),
+    description: t('site.description'),
+    inLanguage: lang,
+  },
+  {
+    '@type': 'ProfessionalService',
+    '@id': `${SITE_URL}/#service`,
+    name: t('site.brand'),
+    url: home,
+    description: t('site.description'),
+    image: new URL(`/og/og-${lang}.png`, SITE_URL).href,
+    address: { '@type': 'PostalAddress', addressCountry: 'VE' },
+    ...(OWNER.name && { founder: { '@id': personId } }),
+    ...(sameAs.length > 0 && { sameAs }),
+  },
+];
+
+if (OWNER.name) {
+  graph.push({
+    '@type': 'Person',
+    '@id': personId,
+    name: OWNER.name,
+    jobTitle: t('schema.jobTitle'),
+    url: home,
+    knowsAbout: STACK,
+    ...(sameAs.length > 0 && { sameAs }),
+  });
+}
+
+// `<` escapado: el texto no puede cerrar la etiqueta <script>
+const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
+---
+
+<script type="application/ld+json" is:inline set:html={json} />

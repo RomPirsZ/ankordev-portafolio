@@ -14,7 +14,13 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<BaseLayout title={`${t('thanks.title')} — ${t('site.brand')}`} lang={lang} altHref={localizePath('thanks', alternateLang(lang))} noindex>
+<BaseLayout
+  title={`${t('thanks.title')} — ${t('site.brand')}`}
+  description={t('thanks.text')}
+  lang={lang}
+  altHref={localizePath('thanks', alternateLang(lang))}
+  noindex
+>
   <div class="margin-grid min-h-[60svh] content-center py-20 md:py-28">
     <h1 class="max-w-[14ch] text-display font-bold text-balance md:col-start-2 md:row-start-1" data-split>
       {t('thanks.title')}

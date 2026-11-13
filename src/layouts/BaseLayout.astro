@@ -6,18 +6,32 @@ import Footer from '../components/Footer.astro';
 import GradientBackground from '../components/GradientBackground';
 import { DEFAULT_THEME, THEMES, THEME_STORAGE_KEY } from '../lib/themes';
 import { useTranslations, type Lang } from '../i18n/utils';
+import { SITE_URL } from '../lib/site';
 
 interface Props {
   title: string;
+  /** Meta description y Open Graph (T32): 140–160 caracteres en el inicio */
+  description: string;
   lang?: Lang;
   /** URL equivalente en el otro idioma */
   altHref?: string;
   /** Páginas que no deben aparecer en buscadores (p. ej., la de gracias) */
   noindex?: boolean;
+  /** `article` en los casos de estudio */
+  type?: 'website' | 'article';
 }
 
-const { title, lang = 'es', altHref, noindex = false } = Astro.props;
+const { title, description, lang = 'es', altHref, noindex = false, type = 'website' } = Astro.props;
 const t = useTranslations(lang);
+
+// SEO (T32, plan §10). URLs absolutas: los buscadores y las vistas previas no resuelven rutas.
+const site = Astro.site ?? new URL(SITE_URL);
+const absolute = (path: string) => new URL(path, site).href;
+const canonical = absolute(Astro.url.pathname);
+// Cada página existe en los dos idiomas; altHref es la del otro
+const hrefs = { es: lang === 'es' ? canonical : altHref && absolute(altHref), en: lang === 'en' ? canonical : altHref && absolute(altHref) };
+const ogImage = absolute(`/og/og-${lang}.png`);
+const OG_LOCALE = { es: 'es_VE', en: 'en_US' } as const satisfies Record<Lang, string>;
 ---
 
 <html lang={lang} data-theme={DEFAULT_THEME}>
@@ -31,8 +45,39 @@ const t = useTranslations(lang);
     -->
     <meta name="darkreader-lock" />
     <title>{title}</title>
+    <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
+    {
+      !noindex && (
+        <>
+          <link rel="canonical" href={canonical} />
+          {hrefs.es && <link rel="alternate" hreflang="es" href={hrefs.es} />}
+          {hrefs.en && <link rel="alternate" hreflang="en" href={hrefs.en} />}
+          {hrefs.es && <link rel="alternate" hreflang="x-default" href={hrefs.es} />}
+        </>
+      )
+    }
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <!-- Vista previa al compartir (WhatsApp, redes): imagen 1200×630 por idioma -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={t('site.brand')} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
+    <meta property="og:locale:alternate" content={OG_LOCALE[lang === 'es' ? 'en' : 'es']} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t('og.alt')} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={t('og.alt')} />
+    <slot name="head" />
     <!-- Transiciones entre páginas (T19); Astro las desactiva con reduced-motion -->
     <ClientRouter />
     <!--

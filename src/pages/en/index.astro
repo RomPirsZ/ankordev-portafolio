@@ -1,12 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Home from '../../components/Home.astro';
+import StructuredData from '../../components/StructuredData.astro';
 import { localizePath, useTranslations, type Lang } from '../../i18n/utils';
 
 const lang: Lang = 'en';
 const t = useTranslations(lang);
 ---
 
-<BaseLayout title={t('site.title')} lang={lang} altHref={localizePath('home', 'es')}>
+<BaseLayout title={t('site.title')} description={t('site.description')} lang={lang} altHref={localizePath('home', 'es')}>
+  <StructuredData slot="head" lang={lang} />
   <Home lang={lang} />
 </BaseLayout>

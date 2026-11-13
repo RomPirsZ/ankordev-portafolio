@@ -84,7 +84,7 @@ Auditoría `quick` de solo código fuente sobre el diff de T26b–T26f (`02603a4
 ## Fase 6 — Pulido (objetivo: 10 nov)
 
 - [ ] T31 Traducción EN completa + test e2e 5
-- [ ] T32 SEO: metadatos, OG, sitemap, robots, JSON-LD
+- [x] T32 SEO: metadatos, OG, sitemap, robots, JSON-LD — *hecha 2026-11-13, adelantada a T28–T31 a petición del usuario (Meta Explorer daba 74 de SEO): description, canonical, hreflang, Open Graph y Twitter en cada página; imágenes OG por idioma; `@astrojs/sitemap` 3.7.4; `robots.txt`; JSON-LD en el inicio. Detalle en el plan §10; e2e en `seo.spec.ts`*
 - [ ] T33 Lighthouse CI con umbrales de la constitución
 - [ ] T34 Checklist manual de seguridad y móvil (ver plan §9)
 
