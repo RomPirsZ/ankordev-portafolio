@@ -154,7 +154,7 @@ Tabla `leads` en `supabase/leads.sql`, la fuente única del esquema: columnas co
 
 **Cambio 2026-11-02 (T21):**
 - **Grants explícitos.** Desde el 30 de mayo de 2026, Supabase ya no expone a su API las tablas nuevas de `public` sin un `GRANT`. Por eso el SQL revoca todo a `anon` y `authenticated` y da a `anon` solo `insert`, y solo de las 6 columnas del formulario: `id` y `created_at` los pone siempre la base de datos, así que nadie puede fechar un contacto a su gusto. Desde la API pública nadie lee, edita ni borra contactos, ni aunque falle una política.
-- **Security Advisor: sin avisos.** La política de inserción es `with check (true)` a propósito, porque el formulario es público, y está documentada en un `comment on policy`. El lint 0024 la marcaba hasta que el `insert` se limitó a las columnas del formulario. La opción *Enable automatic RLS* del proyecto crea `public.rls_auto_enable()` (`security definer`), que la API podía ejecutar (lints 0028 y 0029). Se le quitó `execute` a `public`, `anon` y `authenticated`, y la activación automática de RLS sigue funcionando al crear tablas.
+- **Security Advisor: 2 avisos intencionales, sin errores (revisado 2026-11-14, T34).** *RLS Policy Always True* (lint 0024) señala la política de inserción `with check (true)`: es a propósito, porque el formulario es público, y está documentada en un `comment on policy`; filtran los `check` de la tabla y `/api/contact`. *Public Can Execute SECURITY DEFINER Function* (lint 0028) señala `leads_count_24h()` (T26f): `anon` necesita contar sin poder leer la tabla, y la función solo devuelve un número. Quitarlos obligaría a usar la clave secreta en el Worker o a abrir la lectura, y eso sería peor. Cualquier aviso distinto de estos dos sí hay que revisarlo. La opción *Enable automatic RLS* del proyecto crea `public.rls_auto_enable()` (`security definer`), que la API podía ejecutar (lints 0028 y 0029). Se le quitó `execute` a `public`, `anon` y `authenticated`, y la activación automática de RLS sigue funcionando al crear tablas.
 - **Consecuencias para el endpoint.** Inserta con `Prefer: return=minimal`, porque sin `select` no puede devolver la fila. Usa la clave *publishable* (rol `anon`), nunca la secreta ni `service_role`.
 - **`created_at` pasa a `not null`.**
 - **Región: East US (North Virginia).** Se eligió junto a `iad1`, la región de las funciones de Vercel. En Workers el código corre en el centro de datos más cercano al visitante y la consulta viaja a Virginia; con un contacto de vez en cuando, no compensa moverla.
@@ -233,7 +233,7 @@ Variables (secretos del Worker con `npx wrangler secret put` o desde el panel; n
 
 CI (`ci.yml`): `npm ci` → `astro check` → `vitest run` → `astro build` → `playwright test` → `npm audit --audit-level=high`.
 
-**Checklist manual antes de lanzar:** Android real con datos móviles, envío real a `leads`, securityheaders.com nota A, Security Advisor de Supabase sin alertas, vista previa en WhatsApp.
+**Checklist manual antes de lanzar:** Android real con datos móviles, envío real a `leads`, securityheaders.com nota A, Security Advisor de Supabase sin alertas salvo las 2 intencionales (§7), vista previa en WhatsApp. Pasado el 2026-11-14 (T34): A+, Advisor solo con las 2 intencionales y todo lo demás sin fallos.
 
 ## 10. SEO
 
