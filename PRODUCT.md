@@ -38,7 +38,7 @@ Lo creativo y lo técnico pesan lo mismo: el sitio es un **laboratorio creativo*
 - Bilingüe: español por defecto, inglés completo y enlazado (`/` y `/en/`). Todo texto de interfaz va en `src/i18n/`.
 - Contenido legible y usable sin JavaScript; el movimiento es una capa progresiva que solo anima propiedades que no recalculan el diseño (constitución II 1.3.0) y respeta `prefers-reduced-motion`.
 - Paquetes de servicios definidos (Landing, Sitio para negocio, Tienda / App web) con alcance, plazos y precios «desde» en la spec §5 (USD; tarifa local en ES, internacional en EN). Decididos el 2026-11-01; no se cambian ni se añaden servicios u ofertas sin confirmación.
-- Fuera de alcance en v1: sonido de interfaz, sección `/lab`, blog y dominio propio. WebGL solo para el fondo ambiental de escritorio (constitución II 1.2.0).
+- Fuera de alcance en v1: sonido de interfaz, sección `/lab` y blog. El dominio propio (`ankordev-portafolio.dev`) entra en v1 desde el 2026-11-14. WebGL solo para el fondo ambiental de escritorio (constitución II 1.2.0).
 
 ## Brand Commitments
 

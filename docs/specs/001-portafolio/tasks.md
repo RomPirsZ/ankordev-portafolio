@@ -5,6 +5,7 @@
 > **Orden acordado 2026-11-02:** hasta pasar a Vercel Pro no se despliega nada comercial (servicios, precios, CTA ni formulario). Se adelantan las tareas que no lo son: T14 → T21–T23 → Fase 5. Esperan a Pro: el resto de T12 y T24–T26.
 > **Cambio 2026-11-06:** el hosting pasa a Cloudflare Workers Free (T09c), que admite uso comercial, y se descarta Vercel Pro. Lo que esperaba a Pro queda libre cuando producción esté en Cloudflare **y** el proyecto de Vercel desconectado: mientras siga conectado, cada push a `main` también despliega en Vercel Hobby.
 > **Replanificado 2026-11-13:** sin fecha fija de lanzamiento; se prioriza hacer cada parte bien. Orden: primero lo que queda del propio portafolio (Fase 6: T31 → T33 → T34), después los proyectos (Fase 5: T28 → T29 → T30, cada uno sin prisa) y al final T35.
+> **Fecha de lanzamiento 2026-11-14:** sábado 21 de noviembre de 2026, en el dominio propio `ankordev-portafolio.dev` (lo compra el dueño). Fase 5 desde hoy y a principios de semana; después, el dominio (T34b), el pulido y T35 el día 21. Si no da tiempo, se aplica la regla de arriba: se recorta el proyecto 003 (T29).
 
 ## Fase 1 — Base (objetivo: 2 nov)
 
@@ -75,20 +76,21 @@ Auditoría `quick` de solo código fuente sobre el diff de T26b–T26f (`02603a4
 
 - [x] T26g Aviso único de «tope alcanzado» al dueño — *una sola fuente con unos 81 tokens válidos podía llenar el tope y los contactos reales siguientes se guardaban sin que el dueño se enterase; el primero que pasa el tope manda un email sin datos del visitante (`notifyCapReached`); nunca más de 81 emails en 24 horas*
 
-## Fase 5 — Proyectos (sin fecha fija; después de la Fase 6)
+## Fase 5 — Proyectos (objetivo: 14–18 nov)
 
 - [x] T27 Proyecto 001 restaurante — *repo propio en `../restaurante/` (café ficticio «Molienda», Mérida), con su spec, plan y tareas en `docs/specs/001-sitio/`; M00–M10 hechas (revisión final de impeccable aprobada, `DESIGN.md`, Lighthouse móvil 99–100/100/100/100); sin despliegue hasta nuevo aviso; el caso de estudio va en T30*
 - [ ] T28 Proyecto 002 tienda (`docs/specs/003-tienda/`)
 - [ ] T29 Proyecto 003 reservas, versión mínima (`docs/specs/004-reservas/`)
 - [ ] T30 Casos de estudio con capturas y enlaces reales
 
-## Fase 6 — Pulido (sin fecha fija; siguiente)
+## Fase 6 — Pulido (hecha 2026-11-14)
 
 - [x] T31 Traducción EN completa + test e2e 5 — *hecha 2026-11-13: las páginas EN no dejan ver ningún texto que solo exista en español (texto, alt, aria-label, title, placeholder) y muestran la tarifa internacional; el selector lleva a la página equivalente en los 5 pares; se pule el subtítulo del hero en inglés; los comentarios de desarrollo ya no salen en el HTML. e2e 5 en `i18n.spec.ts`. Los casos de estudio siguen provisionales en ambos idiomas hasta T30*
 - [x] T32 SEO: metadatos, OG, sitemap, robots, JSON-LD — *hecha 2026-11-13, adelantada a T28–T31 a petición del usuario (Meta Explorer daba 74 de SEO): description, canonical, hreflang, Open Graph y Twitter en cada página; imágenes OG por idioma; `@astrojs/sitemap` 3.7.4; `robots.txt`; JSON-LD en el inicio. Detalle en el plan §10; e2e en `seo.spec.ts`*
 - [x] T33 Lighthouse CI con umbrales de la constitución — *hecha 2026-11-13: `npm run lighthouse` y paso bloqueante en la CI (móvil, mediana de 5 pasadas en `/`, `/en/` y un caso). El inicio daba 87 de rendimiento por TBT; el arranque de las animaciones ahora va por pasos (titular primero, sin cambios visibles) y queda en 98. Accesibilidad, buenas prácticas y SEO: 100. Detalle en el plan §8*
 - [x] T34 Checklist manual de seguridad y móvil (ver plan §9) — *hecha 2026-11-14: cabeceras de producción idénticas a `_headers` y `server-headers.ts`; securityheaders.com A+ (su aviso sobre `publickey-credentials-create` y `window-management` es de su lista desfasada: Chromium 156 las reconoce); Security Advisor sin errores y 2 avisos intencionales (plan §7); Android real con datos móviles sin fallos; envío real desde el móvil con email recibido; vista previa en WhatsApp con imagen en ES y EN*
 
-## Fase 7 — Lanzamiento (sin fecha fija)
+## Fase 7 — Lanzamiento (objetivo: sábado 21 nov)
 
+- [ ] T34b Dominio propio `ankordev-portafolio.dev`: dominio personalizado del Worker; `SITE_URL` (plan §10); hostname en Turnstile; `Canonical` de `security.txt` y `SECURITY.md`; `from` de Resend con el dominio verificado; token de Workers Builds limitado a la zona y regla de rate limiting en `/api/contact` (riesgos 1 y 2 del plan §1); decidir qué pasa con `workers.dev`. Tests y plan al día
 - [ ] T35 Revisión final, publicar y anunciar

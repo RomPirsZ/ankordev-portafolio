@@ -115,8 +115,8 @@ Los de la constitución (accesibilidad, rendimiento, seguridad, testing, privaci
 - [ ] ES e EN completos y enlazados entre sí.
 - [ ] Con movimiento reducido no hay animaciones.
 - [ ] Umbrales de Lighthouse de la constitución cumplidos en móvil.
-- [ ] Publicado el 11 de noviembre de 2026.
+- [ ] Publicado el 21 de noviembre de 2026 en el dominio propio `ankordev-portafolio.dev` (cambio 2026-11-14: antes, 11 de noviembre en `workers.dev`).
 
 ## 11. Fuera de alcance (v1.1, ODD)
 
-Efectos WebGL (salvo el fondo de §6), sonido de interfaz, sección `/lab` de experimentos, blog y dominio propio.
+Efectos WebGL (salvo el fondo de §6), sonido de interfaz, sección `/lab` de experimentos y blog. El dominio propio entra en v1 (cambio 2026-11-14).
