@@ -79,7 +79,7 @@ Auditoría `quick` de solo código fuente sobre el diff de T26b–T26f (`02603a4
 ## Fase 5 — Proyectos (objetivo: 14–18 nov)
 
 - [x] T27 Proyecto 001 restaurante — *repo propio en `../restaurante/` (café ficticio «Molienda», Mérida), con su spec, plan y tareas en `docs/specs/001-sitio/`; M00–M10 hechas (revisión final de impeccable aprobada, `DESIGN.md`, Lighthouse móvil 99–100/100/100/100); sin despliegue hasta nuevo aviso; el caso de estudio va en T30*
-- [ ] T28 Proyecto 002 tienda (`docs/specs/003-tienda/`)
+- [ ] T28 Proyecto 002 tienda — *repo propio en `../tienda/` (marca ficticia inspirada en un comercio de Guanare, decidido 2026-11-14), con su spec, plan y tareas en `docs/specs/001-tienda/`: catálogo, carrito con pedido por WhatsApp y asistente con IA (Claude Opus 5.5) en la web y en WhatsApp que solo responde con datos de la base de datos*
 - [ ] T29 Proyecto 003 reservas, versión mínima (`docs/specs/004-reservas/`)
 - [ ] T30 Casos de estudio con capturas y enlaces reales
 
