@@ -35,9 +35,11 @@ Cada una tiene un papel. No uses dos para el mismo trabajo.
 | Imágenes estáticas: OG para redes, portadas provisionales, ilustraciones | **canvas-design**, siempre con paleta y tipografía de `DESIGN.md` |
 | Prototipos o demos sueltos en claude.ai | **web-artifacts-builder** — nunca dentro de este repo |
 | Dirección estética en casos que impeccable no cubra | **frontend-design** — secundaria: antes de usarla, di qué no cubre impeccable y por qué |
+| Textos de marketing: titulares, frases de apoyo, CTA, títulos y descripciones | **copywriting** (la principal) y **landing-page-copy** (fórmulas de hero y objeciones); el tono y los textos de interfaz siguen siendo de PRODUCT.md y ux-designer |
 
 ### Choques conocidos
 
+- **Prueba social (copywriting y landing-page-copy):** proponen logos de clientes, testimonios, cifras y casos de éxito. Mientras no existan no se escriben ni se inventan (PRODUCT.md), y una afirmación sin respaldo se cambia por una que sí lo tenga.
 - **taste-skill** desaconseja etiquetas mono, líneas finas y retícula: aquí son parte de la spec §6 y de `DESIGN.md`. Mandan ellos.
 - **Scripts por CDN** (GSAP/Lenis en las escenas de taste-skill): no se copian. GSAP y Lenis van por npm según el plan, y la CSP solo permite `self`.
 - **Fotos de stock** (taste-skill descarga de Unsplash/Picsum): solo como ambientación, nunca presentadas como trabajo o clientes reales.
