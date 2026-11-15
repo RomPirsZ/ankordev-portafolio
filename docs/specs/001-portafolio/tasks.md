@@ -79,9 +79,9 @@ Auditoría `quick` de solo código fuente sobre el diff de T26b–T26f (`02603a4
 ## Fase 5 — Proyectos (objetivo: 14–18 nov)
 
 - [x] T27 Proyecto 001 restaurante — *repo propio en `../restaurante/` (café ficticio «Molienda», Mérida), con su spec, plan y tareas en `docs/specs/001-sitio/`; M00–M10 hechas (revisión final de impeccable aprobada, `DESIGN.md`, Lighthouse móvil 99–100/100/100/100); sin despliegue hasta nuevo aviso; el caso de estudio va en T30*
-- [ ] T28 Proyecto 002 tienda — *repo propio en `../tienda/` (marca ficticia inspirada en un comercio de Guanare, decidido 2026-11-14), con su spec, plan y tareas en `docs/specs/001-tienda/`: catálogo, carrito con pedido por WhatsApp y asistente con IA (Claude Opus 5.5) en la web y en WhatsApp que solo responde con datos de la base de datos*
+- [x] T28 Proyecto 002 tienda — *repo propio en `../tienda/` (marca ficticia «Don Pascal», Guanare, decidido 2026-11-14), con su spec, plan y tareas en `docs/specs/001-tienda/`: catálogo, carrito con pedido por WhatsApp y asistente con IA (Claude Opus 5.5) que solo responde con datos de la base de datos. Hecha 2026-11-15: en línea en https://don-pascal.ankordev.workers.dev (repo público RomPirsZ/don-pascal-tienda, Workers Builds), E00–E11 y E14–E17 hechas; Lighthouse móvil 100/96/99 y 100 en lo demás. Abiertas en la tienda: E12 (batería contra la API real, falta crédito; mientras, el chat remite a WhatsApp) y E13 (WhatsApp, aplazada por decisión del usuario). Caso de estudio en el portafolio (ES y EN, `src/content/projects/*/002-tienda.md`): publicado, con portada y 4 capturas reales de producción, stack, enlaces al sitio y al código, y lo pendiente dicho tal cual; sin conversación inventada en la captura del chat. Las listas del texto van como párrafos con entrada en negrita (el estilo del caso no da formato a listas). `projects.spec.ts` actualizado*
 - [ ] T29 Proyecto 003 reservas, versión mínima (`docs/specs/004-reservas/`)
-- [ ] T30 Casos de estudio con capturas y enlaces reales
+- [ ] T30 Casos de estudio con capturas y enlaces reales — *el de la tienda (002) ya está hecho con T28 (2026-11-15); faltan 001 y 003*
 
 ## Fase 6 — Pulido (hecha 2026-11-14)
 

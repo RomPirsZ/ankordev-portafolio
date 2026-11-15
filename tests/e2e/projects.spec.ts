@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('el inicio lista los proyectos publicables en orden, sin el borrador', async ({ page }) => {
   await page.goto('/');
   const titles = page.locator('#proyectos .project-title');
-  await expect(titles).toHaveText(['Restaurante / café local', 'Tienda online', 'App de reservas para barbería']);
+  await expect(titles).toHaveText(['Restaurante / café local', 'Don Pascal: tienda online', 'App de reservas para barbería']);
   await expect(page.locator('#proyectos')).not.toContainText('iglesia');
 });
 
@@ -22,9 +22,12 @@ test('cada fila abre su caso de estudio y se puede volver', async ({ page }) => 
   await page.locator('#proyectos .project-link').nth(1).click();
 
   await expect(page).toHaveURL(/\/proyectos\/002-tienda\/$/);
-  await expect(page.locator('h1')).toHaveText('Tienda online');
+  await expect(page.locator('h1')).toHaveText('Don Pascal: tienda online');
   await expect(page.getByRole('heading', { level: 2, name: 'Problema' })).toBeVisible();
-  await expect(page.locator('main img').first()).toHaveAttribute('alt', /experimento 002/);
+  await expect(page.locator('main img').first()).toHaveAttribute('alt', /^Inicio de Don Pascal/);
+  // Caso publicado (T28): enlaces reales al sitio y al repositorio
+  await expect(page.locator('main a[href="https://don-pascal.ankordev.workers.dev"]')).toBeVisible();
+  await expect(page.locator('main a[href="https://github.com/RomPirsZ/don-pascal-tienda"]')).toBeVisible();
 
   await page.getByRole('link', { name: 'Volver a proyectos' }).click();
   await expect(page).toHaveURL(/\/#proyectos$/);
