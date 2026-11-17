@@ -51,4 +51,5 @@ jobs:
           name: lighthouse
           path: .lighthouseci/reports/
           retention-days: 7
-      - run: npm audit --audit-level=high
+      # Falla con avisos high o critical, salvo las excepciones fechadas de scripts/audit.mjs
+      - run: npm run audit
