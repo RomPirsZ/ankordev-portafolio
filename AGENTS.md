@@ -13,7 +13,7 @@ Este proyecto usa **SDD (Spec-Driven Development)**. Antes de escribir código:
 5. No agregues dependencias fuera del plan sin preguntar.
 6. Si la spec o el plan son ambiguos o contradicen la constitución, pregunta antes de seguir.
 
-Idioma del código y comentarios: español solo donde aporte claridad. Textos de interfaz siempre en `src/i18n/`.
+Idioma: comentarios del código en inglés; documentación (specs, tasks, constitución, docs) y commits en español. Textos de interfaz siempre en `src/i18n/`.
 
 ## Contexto de producto y diseño
 
