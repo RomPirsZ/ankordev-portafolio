@@ -94,7 +94,7 @@ test.describe('con reduced-motion', () => {
   test('la navegación funciona sin animaciones ni clase motion', async ({ page }) => {
     await page.goto('/');
     await page.locator('.project-link').first().click();
-    await expect(page.locator('h1')).toHaveText('Restaurante / café local');
+    await expect(page.locator('h1')).toHaveText('Molienda: café de especialidad');
     await expect(page.locator('html')).not.toHaveClass(/\bmotion\b/);
     expect(await page.locator('h1 *').count()).toBe(0);
   });
