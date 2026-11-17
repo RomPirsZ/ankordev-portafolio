@@ -30,6 +30,7 @@ Cada una tiene un papel. No uses dos para el mismo trabajo.
 |---|---|
 | Construir o reformar UI, crítica, auditoría, pulido, modo live, mantener `DESIGN.md` | **impeccable** (`/impeccable <comando>`) — la principal |
 | Accesibilidad WCAG 2.2, formularios, textos de interfaz, i18n, UX móvil | **ux-designer** |
+| Escribir HTML, CSS o JS de cliente nuevo (patrones modernos de la plataforma, compatibilidad Baseline, alternativas) | **modern-web-guidance**: `search` y `retrieve` antes de escribir; no `legacy-scan` ni auditorías salvo que se pidan. Si una guía choca con la constitución, el plan o `DESIGN.md`, mandan ellos |
 | Revisión visual con capturas a varios anchos (inspector en navegador real) | **design-taste-frontend** (taste-skill) — solo su revisión, no su estilo |
 | Ajustar duraciones, curvas y escalonados de animaciones existentes | **transitions-polish** (`transitions review` / `transitions polish`) |
 | Imágenes estáticas: OG para redes, portadas provisionales, ilustraciones | **canvas-design**, siempre con paleta y tipografía de `DESIGN.md` |
