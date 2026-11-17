@@ -64,7 +64,7 @@ test('con Enter se abre un caso de estudio, el foco vuelve arriba y se regresa a
   await tabTo(page, '.project-link');
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/\/proyectos\/001-restaurante\/$/);
-  await expect(page.locator('h1')).toHaveText('Restaurante / café local');
+  await expect(page.locator('h1')).toHaveText('Molienda: café de especialidad');
 
   // En la página nueva, el primer Tab lleva a «Saltar al contenido», como en una carga normal
   await page.keyboard.press('Tab');

@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('el inicio lista los proyectos publicables en orden, sin el borrador', async ({ page }) => {
   await page.goto('/');
   const titles = page.locator('#proyectos .project-title');
-  await expect(titles).toHaveText(['Restaurante / café local', 'Don Pascal: tienda online', 'App de reservas para barbería']);
+  await expect(titles).toHaveText(['Molienda: café de especialidad', 'Don Pascal: tienda online', 'App de reservas para barbería']);
   await expect(page.locator('#proyectos')).not.toContainText('iglesia');
 });
 
@@ -31,6 +31,14 @@ test('cada fila abre su caso de estudio y se puede volver', async ({ page }) => 
 
   await page.getByRole('link', { name: 'Volver a proyectos' }).click();
   await expect(page).toHaveURL(/\/#proyectos$/);
+});
+
+test('el caso 001 (Molienda) está publicado con capturas y enlaces reales (T30)', async ({ page }) => {
+  await page.goto('/proyectos/001-restaurante/');
+  await expect(page.locator('h1')).toHaveText('Molienda: café de especialidad');
+  await expect(page.locator('main img').first()).toHaveAttribute('alt', /^Inicio de Molienda/);
+  await expect(page.locator('main a[href="https://molienda-cafe.ankordev.workers.dev"]')).toBeVisible();
+  await expect(page.locator('main a[href="https://github.com/RomPirsZ/molienda-cafe"]')).toBeVisible();
 });
 
 test('el caso de estudio enlaza con su versión en el otro idioma', async ({ page }) => {
