@@ -38,8 +38,9 @@ export default defineConfig({
       },
     }),
   ],
-  // Scripts y estilos siempre como archivos: así la CSP solo necesita el hash
-  // del script anti-parpadeo
+  // Scripts and styles always ship as files. The only inline blocks left are the theme
+  // anti-flicker script and the two scripts and one style Astro adds to hydrate islands:
+  // their four hashes live in public/_headers (tests/e2e/security.spec.ts checks them)
   build: { inlineStylesheets: 'never' },
   vite: {
     plugins: [tailwindcss()],

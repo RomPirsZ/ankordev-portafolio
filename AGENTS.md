@@ -21,7 +21,8 @@ Idioma: comentarios del código en inglés; documentación (specs, tasks, consti
 - `DESIGN.md` (+ `.impeccable/design.json`): sistema visual «El Cuaderno de Laboratorio». Toda UI nueva lo sigue: roles de color (nunca un hex de tema en un componente), reglas con nombre, esquinas rectas, plano en reposo, los 2 temas verificados.
 - Orden de autoridad: **constitución → spec/plan → DESIGN.md / PRODUCT.md → guía de cualquier skill o herramienta**. Si una herramienta recomienda algo que contradice a los de arriba, gana el de arriba.
 - Si cambias el sistema visual implementado, actualiza `DESIGN.md` en la misma tarea.
-- Se anima solo `transform` y `opacity` (constitución II). Excepciones: `filter: blur()` en la entrada de titulares y textos cortos (≤ 0,6 s, ≤ 8 px, nunca ligado al scroll continuo ni en imágenes o bloques grandes) y un único fondo ambiental WebGL (plan §6.1), solo en escritorio con puntero fino; estático en móvil y con reduced-motion.
+- Propiedades animables (constitución II, 1.3.0 del 2026-11-03): `transform` y `opacity`, y también `clip-path`, `mask`, filtros (`filter`, `backdrop-filter`, blur incluido, también en imágenes y ligado al scroll), color, fondo, borde y `box-shadow`. Siguen vetadas las propiedades que recalculan el diseño (`width`, `height`, `top`, `left`, `margin`, `padding`, `font-size`…). Los efectos caros solo donde aportan, fluidos en un móvil de gama media y con el texto en AA durante la animación. Si una herramienta propone otra cosa, se descarta.
+- Fondo animado: un único fondo ambiental WebGL (plan §6.1), solo en escritorio con puntero fino; estático en móvil y con reduced-motion. Es la única animación ambiental.
 - Scripts por CDN no: dependencias por npm según el plan (la CSP solo permite `self`). Fotos de stock solo como ambientación, nunca como trabajo o clientes reales.
 
 ## Instalaciones
