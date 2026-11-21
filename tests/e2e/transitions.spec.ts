@@ -26,7 +26,7 @@ test('tras navegar, las animaciones se reinician en la página nueva', async ({ 
   await expect(page.locator('html')).toHaveClass(/\bmotion-ready\b/);
   await page.locator('.project-link').nth(2).click();
 
-  await expect(page.getByRole('heading', { level: 1, name: 'App de reservas para barbería' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Navaja del Puerto: reservas de barbería' })).toBeVisible();
   await expect(page.locator('h1 [aria-hidden="true"]').first()).toBeAttached();
   await expect(page.locator('html')).toHaveClass(/\bmotion-ready\b/);
   await expect(page.locator('html')).toHaveClass(/\blenis\b/);

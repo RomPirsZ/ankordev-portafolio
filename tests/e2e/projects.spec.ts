@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('el inicio lista los proyectos publicables en orden, sin el borrador', async ({ page }) => {
   await page.goto('/');
   const titles = page.locator('#proyectos .project-title');
-  await expect(titles).toHaveText(['Molienda: café de especialidad', 'Don Pascal: tienda online', 'App de reservas para barbería']);
+  await expect(titles).toHaveText(['Molienda: café de especialidad', 'Don Pascal: tienda online', 'Navaja del Puerto: reservas de barbería']);
   await expect(page.locator('#proyectos')).not.toContainText('iglesia');
 });
 
@@ -41,12 +41,20 @@ test('el caso 001 (Molienda) está publicado con capturas y enlaces reales (T30)
   await expect(page.locator('main a[href="https://github.com/RomPirsZ/molienda-cafe"]')).toBeVisible();
 });
 
+test('el caso 003 (Navaja del Puerto) está publicado con capturas y enlaces reales (T30)', async ({ page }) => {
+  await page.goto('/proyectos/003-reservas/');
+  await expect(page.locator('h1')).toHaveText('Navaja del Puerto: reservas de barbería');
+  await expect(page.locator('main img').first()).toHaveAttribute('alt', /^Inicio de Navaja del Puerto/);
+  await expect(page.locator('main a[href="https://navaja-del-puerto.ankordev.workers.dev"]')).toBeVisible();
+  await expect(page.locator('main a[href="https://github.com/RomPirsZ/navaja-del-puerto"]')).toBeVisible();
+});
+
 test('el caso de estudio enlaza con su versión en el otro idioma', async ({ page }) => {
   await page.goto('/proyectos/003-reservas/');
   await page.locator('a[hreflang="en"]').click();
   await expect(page).toHaveURL(/\/en\/projects\/003-reservas\/$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-  await expect(page.locator('h1')).toHaveText('Barbershop booking app');
+  await expect(page.locator('h1')).toHaveText('Navaja del Puerto: barbershop booking');
 });
 
 test('un proyecto en borrador no tiene página', async ({ page }) => {
