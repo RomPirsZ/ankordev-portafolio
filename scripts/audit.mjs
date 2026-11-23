@@ -4,15 +4,9 @@
 // Sin dependencias: solo Node y npm.
 import { execFileSync } from 'node:child_process';
 
-const EXCEPCIONES = [
-  {
-    id: 'GHSA-fc5q-39xc-vjpf',
-    paquete: 'picomatch',
-    motivo:
-      'ReDoS con patrones de glob maliciosos. Sin versión corregida publicada (2026-11-17). Solo se usa al compilar, con patrones propios: un visitante no puede pasarle un patrón.',
-    caduca: '2026-12-01',
-  },
-];
+// No active exceptions. The picomatch one (GHSA-fc5q-39xc-vjpf) was removed on 2026-11-23:
+// npm audit no longer reports it.
+const EXCEPCIONES = [];
 
 let salida;
 try {
